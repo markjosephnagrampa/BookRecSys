@@ -56,14 +56,6 @@
             width: 80%;
         }
 
-        #alerts-space-div {
-            width: 20%;
-        }
-
-        #alerts-alert-div {
-            width: 80%;
-        }
-
         .card {
             width: 160px;
             height: 300px;
@@ -138,13 +130,6 @@
                 width: 70%;
             }
 
-            #alerts-space-div {
-                width: 30%;
-            }
-
-            #alerts-alert-div {
-                width: 70%;
-            }
         }
 
         @media screen and (max-width: 980px) {
@@ -197,14 +182,6 @@
                 width: 100%;
             }
 
-            #alerts-space-div {
-                width: 0%;
-            }
-
-            #alerts-alert-div {
-                width: 100%;
-            }
-
             .accordion-body {
                 max-height: 300px;
                 overflow: auto;
@@ -236,7 +213,7 @@
     </div>
     <div id="announcement" class="d-flex">
         <div id="announcement-space-div"></div>
-        <div id="announcement-alert-div" class="d-flex justify-content-center mx-4 mt-4">
+        <div id="announcement-alert-div" class="d-flex flex-column align-items-center">
         </div>
     </div>
     <div id="main-container" class="d-flex">
@@ -753,7 +730,7 @@
                     var obj = JSON.parse(data);
                     for (i = 0, len = obj["announcements"].length; i < len; i++) {
                         var html_element = ' \
-                            <div class="alert alert-warning alert-dismissible fade show" role = "alert" > \
+                            <div class="alert alert-warning alert-dismissible fade show mx-4 mt-2" role = "alert" > \
                             <strong><i class="fa fa-exclamation-triangle"></i> Announcement</strong> \
                             <p>'+obj["announcements"][i]["message"]+'</p> \
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \

@@ -120,7 +120,7 @@
         <h1>Manage Items</h1>
     </div>
     <div id="main-container" class="d-flex">
-        <div id="left-container" class="d-flex flex-column align-items-center">
+        <!--<div id="left-container" class="d-flex flex-column align-items-center">
             <h2 class="mt-2 mb-4">Add Book</h2>
             <form>
                 <div class="row mb-3">
@@ -257,66 +257,378 @@
                     </div>
                 </div>
             </form>
-        </div>
-        <div id="right-container" class="d-flex flex-column align-items-center p-2">
-            <h2 class="mt-2 mb-4">View Books</h2>
-            <div class="d-flex mb-4">
-                <input type="text" class="form-control me-2">
-                <button class="btn btn-primary"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>-->
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-2" style="text-align: center;">
+                    <button class="btn btn-lg btn-success m-2" data-bs-toggle="modal"
+                        data-bs-target="#add-book-modal"><i class="fa-solid fa-plus"></i> Add Book</button>
+                </div>
+                <div class="col-sm-9 col-10">
+                    <input type="text" class="form-control m-2">
+                </div>
+                <div class="col-sm-1 col-2">
+                    <button class="btn btn-primary m-2"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </div>
             </div>
-            <div class="table-responsive">
-                <table class="table table-bordered table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th>Cover</th>
-                            <th>Title</th>
-                            <th>Publisher</th>
-                            <th>Price</th>
-                            <th>Stock Qty</th>
-                            <th>View</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1474154022l/3._SY475_.jpg"
-                                    height="100" alt=""></td>
-                            <td>Harry Potter and the Sorcerer's Stone</td>
-                            <td>Bloomsbury (UK)</td>
-                            <td>Php 310.00</td>
-                            <td>15</td>
-                            <td><button class="btn btn-primary"><i class="fa-solid fa-eye"></i></button></td>
-                            <td><button class="btn btn-warning"><i class="fa-solid fa-pencil"></i></button></td>
-                            <td><button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button></td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1474154022l/3._SY475_.jpg"
-                                    height="100" alt=""></td>
-                            <td>Harry Potter and the Sorcerer's Stone</td>
-                            <td>Bloomsbury (UK)</td>
-                            <td>Php 310.00</td>
-                            <td>15</td>
-                            <td><button class="btn btn-primary"><i class="fa-solid fa-eye"></i></button></td>
-                            <td><button class="btn btn-warning"><i class="fa-solid fa-pencil"></i></button></td>
-                            <td><button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button></td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1474154022l/3._SY475_.jpg"
-                                    height="100" alt=""></td>
-                            <td>Harry Potter and the Sorcerer's Stone</td>
-                            <td>Bloomsbury (UK)</td>
-                            <td>Php 310.00</td>
-                            <td>15</td>
-                            <td><button class="btn btn-primary"><i class="fa-solid fa-eye"></i></button></td>
-                            <td><button class="btn btn-warning"><i class="fa-solid fa-pencil"></i></button></td>
-                            <td><button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button></td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="row">
+                <div class="table-responsive mt-4">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Cover</th>
+                                <th>Title</th>
+                                <th>Publisher</th>
+                                <th>Price</th>
+                                <th>Stock Qty</th>
+                                <th>View</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1474154022l/3._SY475_.jpg"
+                                        height="100" alt=""></td>
+                                <td>Harry Potter and the Sorcerer's Stone</td>
+                                <td>Bloomsbury (UK)</td>
+                                <td>Php 310.00</td>
+                                <td>15</td>
+                                <td><button class="btn btn-primary"><i class="fa-solid fa-eye"></i></button></td>
+                                <td><button class="btn btn-warning" data-bs-toggle="modal"
+                                        data-bs-target="#edit-book-modal"><i class="fa-solid fa-pencil"></i></button>
+                                </td>
+                                <td><button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button></td>
+                            </tr>
+                            <tr>
+                                <td><img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1474154022l/3._SY475_.jpg"
+                                        height="100" alt=""></td>
+                                <td>Harry Potter and the Sorcerer's Stone</td>
+                                <td>Bloomsbury (UK)</td>
+                                <td>Php 310.00</td>
+                                <td>15</td>
+                                <td><button class="btn btn-primary"><i class="fa-solid fa-eye"></i></button></td>
+                                <td><button class="btn btn-warning" data-bs-toggle="modal"
+                                        data-bs-target="#edit-book-modal"><i class="fa-solid fa-pencil"></i></button>
+                                </td>
+                                <td><button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button></td>
+                            </tr>
+                            <tr>
+                                <td><img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1474154022l/3._SY475_.jpg"
+                                        height="100" alt=""></td>
+                                <td>Harry Potter and the Sorcerer's Stone</td>
+                                <td>Bloomsbury (UK)</td>
+                                <td>Php 310.00</td>
+                                <td>15</td>
+                                <td><button class="btn btn-primary"><i class="fa-solid fa-eye"></i></button></td>
+                                <td><button class="btn btn-warning" data-bs-toggle="modal"
+                                        data-bs-target="#edit-book-modal"><i class="fa-solid fa-pencil"></i></button>
+                                </td>
+                                <td><button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
+    <div id="add-book-modal" class="modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Book</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row mb-3">
+                            <label for="title" class="col-sm-3 col-form-label"><b>Title:</b></label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="title">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="isbn" class="col-sm-3 col-form-label"><b>ISBN:</b></label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="isbn">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="price" class="col-sm-3 col-form-label"><b>Price (in Php):</b></label>
+                            <div class="col-sm-9">
+                                <input type="number" min="1" class="form-control" id="price">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="publisher2" class="col-sm-3 col-form-label"><b>Publisher:</b></label>
+                            <div class="col-sm-9">
+                                <input class="form-control" list="publisher" name="publisher" id="publisher2">
+                                <datalist id="publisher">
+                                    <option value="Internet Explorer">
+                                    <option value="Firefox">
+                                    <option value="Chrome">
+                                    <option value="Opera">
+                                    <option value="Safari">
+                                </datalist>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="publication-year" class="col-sm-3 col-form-label"><b>Publication
+                                    Year:</b></label>
+                            <div class="col-sm-9">
+                                <input type="number" class="form-control" id="publication-year">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="format" class="col-sm-3 col-form-label"><b>Format:</b></label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="format">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="description" class="col-sm-3 col-form-label"><b>Description:</b></label>
+                            <div class="col-sm-9">
+                                <textarea name="" class="form-control" id="description"></textarea>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="cover-image" class="col-sm-3 col-form-label"><b>Cover Image:</b></label>
+                            <div class="col-sm-9" style="text-align: center;">
+                                <img src="https://via.placeholder.com/130x200" width="130" height="200" alt="">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="cover-image" class="col-sm-3 col-form-label"><b>Image Selector:</b></label>
+                            <div class="col-sm-9" style="text-align: center;">
+                                <input type="file" id="cover-image" name="img" accept="image/*">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="stock-qty" class="col-sm-3 col-form-label"><b>Stock Qty:</b></label>
+                            <div class="col-sm-9">
+                                <input type="number" class="form-control" id="stock-qty">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="category2" class="col-sm-3 col-form-label"><b>Category:</b></label>
+                            <div class="col-sm-9">
+                                <input class="form-control" list="category" name="category" id="category2">
+                                <datalist id="category">
+                                    <option value="Internet Explorer">
+                                    <option value="Firefox">
+                                    <option value="Chrome">
+                                    <option value="Opera">
+                                    <option value="Safari">
+                                </datalist>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="author" class="col-sm-3 col-form-label"><b>Author(s):</b></label>
+                            <div class="col-sm-9">
+                                <button class="btn btn-success" id="author"><i class="fa-solid fa-plus"></i></button>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="author-1" class="col-3 col-form-label">Author 1:</label>
+                            <div class="col-7">
+                                <input type="text" class="form-control" id="author-1">
+                            </div>
+                            <div class="col-2">
+                                <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="author-2" class="col-3 col-form-label">Author 2:</label>
+                            <div class="col-7">
+                                <input type="text" class="form-control" id="author-2">
+                            </div>
+                            <div class="col-2">
+                                <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="genre" class="col-sm-3 col-form-label"><b>Genre(s):</b></label>
+                            <div class="col-sm-9">
+                                <button class="btn btn-success" id="genre"><i class="fa-solid fa-plus"></i></button>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="genre-1" class="col-3 col-form-label">Genre 1:</label>
+                            <div class="col-7">
+                                <input type="text" class="form-control" id="genre-1">
+                            </div>
+                            <div class="col-2">
+                                <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="genre-2" class="col-3 col-form-label">Genre 2:</label>
+                            <div class="col-7">
+                                <input type="text" class="form-control" id="genre-2">
+                            </div>
+                            <div class="col-2">
+                                <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Insert Book</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="edit-book-modal" class="modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Book</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row mb-3">
+                            <label for="title" class="col-sm-3 col-form-label"><b>Title:</b></label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="title" value="Harry Potter">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="isbn" class="col-sm-3 col-form-label"><b>ISBN:</b></label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="isbn" value="9876543210123">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="price" class="col-sm-3 col-form-label"><b>Price (in Php):</b></label>
+                            <div class="col-sm-9">
+                                <input type="number" min="1" class="form-control" id="price" value="230.50">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="publisher2" class="col-sm-3 col-form-label"><b>Publisher:</b></label>
+                            <div class="col-sm-9">
+                                <input class="form-control" list="publisher" name="publisher" id="publisher2"
+                                    value="Bloomberg Publishing">
+                                <datalist id="publisher">
+                                    <option value="Internet Explorer">
+                                    <option value="Firefox">
+                                    <option value="Chrome">
+                                    <option value="Opera">
+                                    <option value="Safari">
+                                </datalist>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="publication-year" class="col-sm-3 col-form-label"><b>Publication
+                                    Year:</b></label>
+                            <div class="col-sm-9">
+                                <input type="number" class="form-control" id="publication-year" value="1999">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="format" class="col-sm-3 col-form-label"><b>Format:</b></label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="format" value="Paperback">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="description" class="col-sm-3 col-form-label"><b>Description:</b></label>
+                            <div class="col-sm-9">
+                                <textarea name="" class="form-control" id="description"
+                                    value="Harry Potter and the Philosopher's Stone is a fantasy novel written by British author J. K. Rowling. The first novel in the Harry Potter series and Rowling's debut novel, it follows Harry Potter, a young wizard who discovers his magical heritage on his eleventh birthday, when he receives a letter of acceptance to Hogwarts School of Witchcraft and Wizardry. Harry makes close friends and a few enemies during his first year at the school and with the help of his friends, he faces an attempted comeback by the dark wizard Lord Voldemort, who killed Harry's parents, but failed to kill Harry when he was just 15 months old. "></textarea>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="cover-image" class="col-sm-3 col-form-label"><b>Cover Image:</b></label>
+                            <div class="col-sm-9" style="text-align: center;">
+                                <img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1474154022l/3._SY475_.jpg"
+                                    width="130" height="200" alt="">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="cover-image" class="col-sm-3 col-form-label"><b>Image Selector:</b></label>
+                            <div class="col-sm-9" style="text-align: center;">
+                                <input type="file" id="cover-image" name="img" accept="image/*">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="stock-qty" class="col-sm-3 col-form-label"><b>Stock Qty:</b></label>
+                            <div class="col-sm-9">
+                                <input type="number" class="form-control" id="stock-qty" value="23">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="category2" class="col-sm-3 col-form-label"><b>Category:</b></label>
+                            <div class="col-sm-9">
+                                <input class="form-control" list="category" name="category" id="category2">
+                                <datalist id="category">
+                                    <option value="Internet Explorer">
+                                    <option value="Firefox">
+                                    <option value="Chrome">
+                                    <option value="Opera">
+                                    <option value="Safari">
+                                </datalist>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="author" class="col-sm-3 col-form-label"><b>Author(s):</b></label>
+                            <div class="col-sm-9">
+                                <button class="btn btn-success" id="author"><i class="fa-solid fa-plus"></i></button>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="author-1" class="col-3 col-form-label">Author 1:</label>
+                            <div class="col-7">
+                                <input type="text" class="form-control" id="author-1">
+                            </div>
+                            <div class="col-2">
+                                <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="author-2" class="col-3 col-form-label">Author 2:</label>
+                            <div class="col-7">
+                                <input type="text" class="form-control" id="author-2">
+                            </div>
+                            <div class="col-2">
+                                <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="genre" class="col-sm-3 col-form-label"><b>Genre(s):</b></label>
+                            <div class="col-sm-9">
+                                <button class="btn btn-success" id="genre"><i class="fa-solid fa-plus"></i></button>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="genre-1" class="col-3 col-form-label">Genre 1:</label>
+                            <div class="col-7">
+                                <input type="text" class="form-control" id="genre-1">
+                            </div>
+                            <div class="col-2">
+                                <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="genre-2" class="col-3 col-form-label">Genre 2:</label>
+                            <div class="col-7">
+                                <input type="text" class="form-control" id="genre-2">
+                            </div>
+                            <div class="col-2">
+                                <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Insert Book</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
         crossorigin="anonymous"></script>
