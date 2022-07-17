@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../img/logo.ico">
+    <title>BookRecSys | Items</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        .no-style-a,
+        .no-style-a:hover,
+        .no-style-a:focus,
+        .no-style-a:active {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        #navbar {
+            height: 64px;
+        }
+
+        #navbar-logo {
+            width: 20%;
+        }
+
+        #navbar-links {
+            width: 60%;
+
+        }
+
+        #div-admin-dropdown {
+            width: 20%;
+            justify-content: right;
+        }
+
+        #left-container {
+            width: 40%;
+        }
+
+        #right-container {
+            width: 60%;
+        }
+
+        @media screen and (max-width: 970px) {
+            #navbar {
+                height: 260px;
+                flex-direction: column;
+            }
+
+            #navbar-logo {
+                width: 100%;
+                justify-content: center;
+            }
+
+            #navbar-links {
+                width: 100%;
+                flex-direction: column;
+            }
+
+            #div-admin-dropdown {
+                width: 100%;
+                justify-content: center;
+            }
+
+            #main-container {
+                flex-direction: column;
+            }
+
+            #left-container {
+                width: 100%;
+            }
+
+            #right-container {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="navbar" class="d-flex bg-dark text-white">
+        <div id="navbar-logo" class="d-flex align-items-center">
+            <a href="dashboard.html"><img src="../img/logo.ico" alt="logo" height="40" class="m-2"></a>
+            <span style="font-size:24px; font-weight: bold;"><a href="dashboard.html"
+                    class="no-style-a">BookRecSys</a></span>
+        </div>
+        <div id="navbar-links" class="d-flex align-items-center">
+            <button class="btn btn-dark me-2" onclick="location.href='dashboard.html'"><i
+                    class="fa-solid fa-clipboard-list"></i> Dashboard</button>
+            <button class="btn btn-dark me-2" onclick="location.href='items.html'"><i class="fa-solid fa-book-open"></i>
+                Items</button>
+            <button class="btn btn-dark me-2" onclick="location.href='transactions.html'"><i
+                    class="fa-solid fa-wallet"></i>
+                Transactions</button>
+            <button class="btn btn-dark" onclick="location.href='announcements.html'"><i
+                    class="fa-solid fa-exclamation-circle"></i> Announcements</button>
+        </div>
+        <div id="div-admin-dropdown" class="d-flex align-items-center">
+            <div class="dropdown">
+                <a class="btn btn-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-user-circle"></i> Admin John Doe
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <li><a class="dropdown-item" href="profile.html"><i class="fa-solid fa-user"></i> My Profile</a>
+                    </li>
+                    <li><a class="dropdown-item" href="../index.html"><i class="fa-solid fa-power-off"></i> Sign Out</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center my-2">
+        <h1>Manage Items</h1>
+    </div>
+    <div id="main-container" class="d-flex">
+        <div id="left-container" class="d-flex flex-column align-items-center">
+            <h2 class="mt-2 mb-4">Add Book</h2>
+            <form>
+                <div class="row mb-3">
+                    <label for="title" class="col-sm-3 col-form-label"><b>Title:</b></label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="title">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="isbn" class="col-sm-3 col-form-label"><b>ISBN:</b></label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="isbn">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="price" class="col-sm-3 col-form-label"><b>Price (in Php):</b></label>
+                    <div class="col-sm-9">
+                        <input type="number" min="1" class="form-control" id="price">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="publisher2" class="col-sm-3 col-form-label"><b>Publisher:</b></label>
+                    <div class="col-sm-9">
+                        <input class="form-control" list="publisher" name="publisher" id="publisher2">
+                        <datalist id="publisher">
+                            <option value="Internet Explorer">
+                            <option value="Firefox">
+                            <option value="Chrome">
+                            <option value="Opera">
+                            <option value="Safari">
+                        </datalist>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="publication-year" class="col-sm-3 col-form-label"><b>Publication Year:</b></label>
+                    <div class="col-sm-9">
+                        <input type="number" class="form-control" id="publication-year">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="format" class="col-sm-3 col-form-label"><b>Format:</b></label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="format">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="description" class="col-sm-3 col-form-label"><b>Description:</b></label>
+                    <div class="col-sm-9">
+                        <textarea name="" class="form-control" id="description"></textarea>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="cover-image" class="col-sm-3 col-form-label"><b>Cover Image:</b></label>
+                    <div class="col-sm-9">
+                        <img src="https://via.placeholder.com/130x200" width="130" height="200" alt="">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="cover-image" class="col-sm-3 col-form-label"><b>Image Selector:</b></label>
+                    <div class="col-sm-9">
+                        <input type="file" id="cover-image" name="img" accept="image/*">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="stock-qty" class="col-sm-3 col-form-label"><b>Stock Qty:</b></label>
+                    <div class="col-sm-9">
+                        <input type="number" class="form-control" id="stock-qty">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="category2" class="col-sm-3 col-form-label"><b>Category:</b></label>
+                    <div class="col-sm-9">
+                        <input class="form-control" list="category" name="category" id="category2">
+                        <datalist id="category">
+                            <option value="Internet Explorer">
+                            <option value="Firefox">
+                            <option value="Chrome">
+                            <option value="Opera">
+                            <option value="Safari">
+                        </datalist>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="author" class="col-sm-3 col-form-label"><b>Author(s):</b></label>
+                    <div class="col-sm-9">
+                        <button class="btn btn-success" id="author"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="author-1" class="col-3 col-form-label">Author 1:</label>
+                    <div class="col-7">
+                        <input type="text" class="form-control" id="author-1">
+                    </div>
+                    <div class="col-2">
+                        <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="author-2" class="col-3 col-form-label">Author 2:</label>
+                    <div class="col-7">
+                        <input type="text" class="form-control" id="author-2">
+                    </div>
+                    <div class="col-2">
+                        <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="genre" class="col-sm-3 col-form-label"><b>Genre(s):</b></label>
+                    <div class="col-sm-9">
+                        <button class="btn btn-success" id="genre"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="genre-1" class="col-3 col-form-label">Genre 1:</label>
+                    <div class="col-7">
+                        <input type="text" class="form-control" id="genre-1">
+                    </div>
+                    <div class="col-2">
+                        <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="genre-2" class="col-3 col-form-label">Author 2:</label>
+                    <div class="col-7">
+                        <input type="text" class="form-control" id="genre-2">
+                    </div>
+                    <div class="col-2">
+                        <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-12" style="text-align: center;">
+                        <button class="btn btn-primary btn-lg">Insert Book</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div id="right-container" class="d-flex flex-column align-items-center p-2">
+            <h2 class="mt-2 mb-4">View Books</h2>
+            <div class="d-flex mb-4">
+                <input type="text" class="form-control me-2">
+                <button class="btn btn-primary"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Cover</th>
+                            <th>Title</th>
+                            <th>Publisher</th>
+                            <th>Price</th>
+                            <th>Stock Qty</th>
+                            <th>View</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1474154022l/3._SY475_.jpg"
+                                    height="100" alt=""></td>
+                            <td>Harry Potter and the Sorcerer's Stone</td>
+                            <td>Bloomsbury (UK)</td>
+                            <td>Php 310.00</td>
+                            <td>15</td>
+                            <td><button class="btn btn-primary"><i class="fa-solid fa-eye"></i></button></td>
+                            <td><button class="btn btn-warning"><i class="fa-solid fa-pencil"></i></button></td>
+                            <td><button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td><img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1474154022l/3._SY475_.jpg"
+                                    height="100" alt=""></td>
+                            <td>Harry Potter and the Sorcerer's Stone</td>
+                            <td>Bloomsbury (UK)</td>
+                            <td>Php 310.00</td>
+                            <td>15</td>
+                            <td><button class="btn btn-primary"><i class="fa-solid fa-eye"></i></button></td>
+                            <td><button class="btn btn-warning"><i class="fa-solid fa-pencil"></i></button></td>
+                            <td><button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td><img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1474154022l/3._SY475_.jpg"
+                                    height="100" alt=""></td>
+                            <td>Harry Potter and the Sorcerer's Stone</td>
+                            <td>Bloomsbury (UK)</td>
+                            <td>Php 310.00</td>
+                            <td>15</td>
+                            <td><button class="btn btn-primary"><i class="fa-solid fa-eye"></i></button></td>
+                            <td><button class="btn btn-warning"><i class="fa-solid fa-pencil"></i></button></td>
+                            <td><button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

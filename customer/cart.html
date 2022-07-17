@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../img/logo.ico">
+    <title>BookRecSys | My Cart</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        #navbar {
+            height: 64px;
+        }
+
+        #navbar-logo {
+            width: 20%;
+        }
+
+        #navbar-search {
+            width: 50%;
+        }
+
+        #div-dashboard {
+            width: 10%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #div-cart {
+            width: 10%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #div-customer-dropdown {
+            width: 10%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #filter-selection {
+            width: 20%;
+        }
+
+        #popular-items {
+            width: 80%;
+        }
+
+        #announcement-space-div {
+            width: 20%;
+        }
+
+        #announcement-alert-div {
+            width: 80%;
+        }
+
+        #items>a>div {
+            margin: 10px;
+        }
+
+        .no-style-a,
+        .no-style-a:hover,
+        .no-style-a:focus,
+        .no-style-a:active {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .underlined-a-only,
+        .underlined-a-only:focus,
+        .underlined-a:active {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .underlined-a-only:hover {
+            text-decoration: underline;
+            color: inherit;
+        }
+
+        @media screen and (max-width: 1245px) {
+            #navbar-logo {
+                width: 20%;
+            }
+
+            #navbar-search {
+                width: 35%;
+            }
+
+            #div-dashboard {
+                width: 15%;
+                justify-content: end;
+            }
+
+            #div-cart {
+                width: 15%;
+            }
+
+            #div-customer-dropdown {
+                width: 15%;
+            }
+
+            #filter-selection {
+                width: 30%;
+            }
+
+            #popular-items {
+                width: 70%;
+            }
+
+            #announcement-space-div {
+                width: 30%;
+            }
+
+            #announcement-alert-div {
+                width: 70%;
+            }
+        }
+
+        @media screen and (max-width: 980px) {
+            #navbar {
+                display: flex;
+                flex-direction: column;
+                height: 230px;
+            }
+
+            #navbar-logo {
+                width: 100%;
+                justify-content: center;
+            }
+
+            #navbar-search {
+                justify-content: center;
+                width: 100%;
+            }
+
+            #div-dashboard {
+                width: 100%;
+                justify-content: center;
+            }
+
+            #div-cart {
+                width: 100%;
+            }
+
+            #div-customer-dropdown {
+                width: 100%;
+            }
+
+            #input-search {
+                width: 80%;
+            }
+
+            #main-container {
+                flex-direction: column;
+            }
+
+            #filter-selection {
+                width: 100%;
+            }
+
+            #popular-items {
+                width: 100%;
+            }
+
+            #announcement-space-div {
+                width: 0%;
+            }
+
+            #announcement-alert-div {
+                width: 100%;
+            }
+
+            .accordion-body {
+                max-height: 300px;
+                overflow: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="navbar" class="d-flex bg-dark text-white">
+        <div id="navbar-logo" class="d-flex align-items-center">
+            <a href="dashboard.html"><img src="../img/logo.ico" alt="logo" height="40" class="m-2"></a>
+            <span style="font-size:24px; font-weight: bold;"><a href="dashboard.html"
+                    class="no-style-a">BookRecSys</a></span>
+        </div>
+        <div id="navbar-search" class="d-flex align-items-center m-2">
+            <input type="text" id="input-search" class="form-control me-2">
+            <button class="btn btn-primary" onclick="location.href='search.html'"><i
+                    class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+        <div id="div-dashboard" class="d-flex align-items-center">
+            <button class="btn btn-dark" onclick="location.href='dashboard.html'"><i
+                    class="fa-solid fa-clipboard-list"></i> Dashboard</button>
+        </div>
+        <div id="div-cart" class="d-flex align-items-center">
+            <button class="btn btn-dark" onclick="location.href='cart.html'"><i class="fa-solid fa-shopping-cart"></i>
+                Cart <span class="badge bg-secondary">3</span></button>
+        </div>
+        <div id="div-customer-dropdown" class="d-flex align-items-center">
+            <div class="dropdown">
+                <a class="btn btn-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-user-circle"></i> John Doe
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <li><a class="dropdown-item" href="profile.html"><i class="fa-solid fa-user"></i> My Profile</a>
+                    </li>
+                    <li><a class="dropdown-item" href="transactions.html"><i class="fa-solid fa-wallet"></i> My
+                            Transactions</a></li>
+                    <li><a class="dropdown-item" href="../index.html"><i class="fa-solid fa-power-off"></i> Sign Out</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex flex-column align-items-center my-3">
+        <h2>My Cart</h2>
+        <span style="font-size: 24px;">There are <b>3</b> items.</span>
+    </div>
+    <div class="container">
+        <div class="row p-2">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover" style="text-align: center;">
+                    <thead>
+                        <tr>
+                            <th>Cover</th>
+                            <th>Title</th>
+                            <th>Qty</th>
+                            <th>Subtotal</th>
+                            <th>Decrease</th>
+                            <th>Increase</th>
+                            <th>Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmThmHM0Gxuo1WqbT56KeJMBATFyEiOGGIodK1PBxOwOn_Xek0R3ZDBP04&s=5"
+                                    alt="" height="100"></td>
+                            <td>ASP.NET Core 5 for Beginners</td>
+                            <td>1</td>
+                            <td>Php 310.00</td>
+                            <td><button class="btn btn-secondary"><i class="fa-solid fa-minus"></i></button></td>
+                            <td><button class="btn btn-secondary"><i class="fa-solid fa-plus"></i></button></td>
+                            <td><button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhOm7jx4ndEmXzmTNRdteNAS-VQsDwU8PQJU49guoH&usqp=CAE&s"
+                                    alt="" height="100"></td>
+                            <td>Learn Ruby on Rails</td>
+                            <td>1</td>
+                            <td>Php 320.00</td>
+                            <td><button class="btn btn-secondary"><i class="fa-solid fa-minus"></i></button></td>
+                            <td><button class="btn btn-secondary"><i class="fa-solid fa-plus"></i></button></td>
+                            <td><button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3VrK2cNns8wFMjACGUfpL88SLgYq9axrNMLagKDg8hpiTdRN4vXcz7HE8&s=5"
+                                    alt="" height="100"></td>
+                            <td>The Road to Learn React: Your Journey to Master Plain Yet Pragmatic React.JS</td>
+                            <td>1</td>
+                            <td>Php 330.00</td>
+                            <td><button class="btn btn-secondary"><i class="fa-solid fa-minus"></i></button></td>
+                            <td><button class="btn btn-secondary"><i class="fa-solid fa-plus"></i></button></td>
+                            <td><button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row p-2">
+            <div class="col-lg-8 offset-lg-2">
+                <form>
+                    <div class="row mb-3">
+                        <label for="cartTotal" class="col-sm-3 col-form-label" style="font-weight: bold;">Cart
+                            Total (in Php):</label>
+                        <div class="col-sm-9">
+                            <input type="number" class="form-control" id="cartTotal" value="710.00" step=".01" disabled>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="changeFor" class="col-sm-3 col-form-label" style="font-weight: bold;">Change
+                            For (in Php):</label>
+                        <div class="col-sm-9">
+                            <input type="number" class="form-control" id="changeFor" step=".01">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="shippingAddress" class="col-sm-3 col-form-label" style="font-weight: bold;">Shipping
+                            Address:</label>
+                        <div class="col-sm-9">
+                            <textarea class="form-control" id="shippingAddress">
+                            </textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center p-2">
+            <button class="btn btn-success btn-lg"><i class="fa-solid fa-money-bill-wave"></i> Checkout</button>
+        </div>
+        <br><br><br><br>
+    </div>
+    <nav class="navbar fixed-bottom bg-dark">
+        <div class="container-fluid text-white d-flex justify-content-center align-items-center p-2">
+            <div class="me-2"><strong>Copyright &copy; 2022</strong> All rights reserved.</div>
+            <div><a href="policy.html" class="text-secondary">Privacy Policy</a></div>
+        </div>
+    </nav>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

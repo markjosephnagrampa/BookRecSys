@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/logo.ico">
+    <title>BookRecSys | Policy</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        #navbar {
+            height: 64px;
+        }
+
+        #navbar-logo {
+            width: 20%;
+        }
+
+        #navbar-search {
+            width: 60%;
+        }
+
+        #navbar-register {
+            width: 10%;
+            display: flex;
+            align-items: center;
+            justify-content: end;
+        }
+
+        #navbar-login {
+            width: 10%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .no-style-a,
+        .no-style-a:hover,
+        .no-style-a:focus,
+        .no-style-a:active {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        p {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+        @media screen and (max-width: 1245px) {
+            #navbar-logo {
+                width: 20%;
+            }
+
+            #navbar-search {
+                width: 50%;
+            }
+
+            #navbar-register {
+                width: 15%;
+                justify-content: end;
+            }
+
+            #navbar-login {
+                width: 15%;
+            }
+
+        }
+
+        @media screen and (max-width: 980px) {
+            #navbar {
+                display: flex;
+                flex-direction: column;
+                height: 215px;
+            }
+
+            #navbar-logo {
+                width: 100%;
+                justify-content: center;
+            }
+
+            #navbar-search {
+                justify-content: center;
+                width: 100%;
+            }
+
+            #navbar-register {
+                width: 100%;
+                justify-content: center;
+            }
+
+            #navbar-login {
+                width: 100%;
+            }
+
+            #input-search {
+                width: 80%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="navbar" class="d-flex bg-dark text-white">
+        <div id="navbar-logo" class="d-flex align-items-center">
+            <a href="index.html"><img src="img/logo.ico" alt="logo" height="40" class="m-2"></a>
+            <span style="font-size:24px; font-weight: bold;"><a href="index.html"
+                    class="no-style-a">BookRecSys</a></span>
+        </div>
+        <div id="navbar-search" class="d-flex align-items-center m-2">
+            <input type="text" id="input-search" class="form-control me-2">
+            <button class="btn btn-primary" onclick="location.href='search.html'"><i
+                    class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+        <div id="navbar-register">
+            <button class="btn btn-dark m-2" data-bs-toggle="modal" data-bs-target="#registerModal"><i
+                    class="fa-solid fa-key"></i> Register</button>
+        </div>
+        <div id="navbar-login">
+            <button class="btn btn-dark m-2" data-bs-toggle="modal" data-bs-target="#loginModal"><i
+                    class="fa-solid fa-unlock"></i> Log In</button>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row mt-4">
+            <div class="col-xxl-8 offset-xxl-2">
+                <h2 class="mb-4">Privacy Policy</h2>
+                <h4>Personal Information Collected</h4>
+                <p class="mb-4">While using our website or availing of our services, we may ask you to provide us with
+                    certain
+                    personal
+                    information that can be used to identify you or to contact you. Personal information can include but
+                    is not
+                    limited to your name, email, and shipping address. We may also record and collect your purchase
+                    history,
+                    product preference, and transactions created on our website.</p>
+                <h4>Non-personal Information Collected</h4>
+                <p class="mb-4">Non-personal information refers to information that cannot be used to identify a user.
+                    Similar to
+                    other
+                    websites, our server receives information such as logs and data whenever a user visits our website.
+                    These
+                    may include your IP address and general geographic location.</p>
+                <h4>Sharing and Protection of Information Collected</h4>
+                <p>We will not share or disclose your information with other parties except in fraud protection and
+                    lawful
+                    compliance capacities. We may only share your information if so complied by the law, if required by
+                    a
+                    judicial proceeding or court order.</p>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="registerModalLabel">Register</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex flex-column">
+                    <div class="m-2">
+                        <label for="first-name" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="first-name">
+                    </div>
+                    <div class="m-2">
+                        <label for="last-name" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="last-name">
+                    </div>
+                    <div class="m-2">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email">
+                    </div>
+                    <div class="m-2">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password">
+                    </div>
+                    <div class="m-2">
+                        <label for="confirm-password" class="form-label">Confirm Password</label>
+                        <input type="password" class="form-control" id="confirm-password">
+                    </div>
+                    <div class="form-check m-2">
+                        <input class="form-check-input" type="checkbox" value="" id="terms-check" checked>
+                        <label class="form-check-label" for="terms-check">
+                            I agree with the website's Terms of Service and Privacy Policy.
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Register</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Log In</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex flex-column">
+                    <div class="m-2">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email">
+                    </div>
+                    <div class="m-2">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="location.href='customer/dashboard.html'">Log
+                        In</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nav class="navbar fixed-bottom bg-dark">
+        <div class="container-fluid text-white d-flex justify-content-center align-items-center p-2">
+            <div class="me-2"><strong>Copyright &copy; 2022</strong> All rights reserved.</div>
+            <div><a href="policy.html" class="text-secondary">Privacy Policy</a></div>
+        </div>
+    </nav>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

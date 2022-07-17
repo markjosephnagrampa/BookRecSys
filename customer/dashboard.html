@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../img/logo.ico">
+    <title>BookRecSys | Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        #navbar {
+            height: 64px;
+        }
+
+        #navbar-logo {
+            width: 20%;
+        }
+
+        #navbar-search {
+            width: 50%;
+        }
+
+        #div-dashboard {
+            width: 10%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #div-cart {
+            width: 10%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #div-customer-dropdown {
+            width: 10%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #filter-selection {
+            width: 20%;
+        }
+
+        #popular-items {
+            width: 80%;
+        }
+
+        #announcement-space-div {
+            width: 20%;
+        }
+
+        #announcement-alert-div {
+            width: 80%;
+        }
+
+        .card {
+            width: 160px;
+            height: 300px;
+            border-radius: 4px;
+            background: #fff;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, .08), 0 0 6px rgba(0, 0, 0, .05);
+            transition: .3s transform cubic-bezier(.155, 1.105, .295, 1.12), .3s box-shadow, .3s -webkit-transform cubic-bezier(.155, 1.105, .295, 1.12);
+            cursor: pointer;
+        }
+
+        .card-body {
+            overflow: auto;
+            height: 250px;
+        }
+
+        #items>a>div {
+            margin: 10px;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
+        }
+
+        .no-style-a,
+        .no-style-a:hover,
+        .no-style-a:focus,
+        .no-style-a:active {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .underlined-a-only,
+        .underlined-a-only:focus,
+        .underlined-a:active {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .underlined-a-only:hover {
+            text-decoration: underline;
+            color: inherit;
+        }
+
+        @media screen and (max-width: 1245px) {
+            #navbar-logo {
+                width: 20%;
+            }
+
+            #navbar-search {
+                width: 35%;
+            }
+
+            #div-dashboard {
+                width: 15%;
+                justify-content: end;
+            }
+
+            #div-cart {
+                width: 15%;
+            }
+
+            #div-customer-dropdown {
+                width: 15%;
+            }
+
+            #filter-selection {
+                width: 30%;
+            }
+
+            #popular-items {
+                width: 70%;
+            }
+
+            #announcement-space-div {
+                width: 30%;
+            }
+
+            #announcement-alert-div {
+                width: 70%;
+            }
+        }
+
+        @media screen and (max-width: 980px) {
+            #navbar {
+                display: flex;
+                flex-direction: column;
+                height: 230px;
+            }
+
+            #navbar-logo {
+                width: 100%;
+                justify-content: center;
+            }
+
+            #navbar-search {
+                justify-content: center;
+                width: 100%;
+            }
+
+            #div-dashboard {
+                width: 100%;
+                justify-content: center;
+            }
+
+            #div-cart {
+                width: 100%;
+            }
+
+            #div-customer-dropdown {
+                width: 100%;
+            }
+
+            #input-search {
+                width: 80%;
+            }
+
+            #main-container {
+                flex-direction: column;
+            }
+
+            #filter-selection {
+                width: 100%;
+            }
+
+            #popular-items {
+                width: 100%;
+            }
+
+            #announcement-space-div {
+                width: 0%;
+            }
+
+            #announcement-alert-div {
+                width: 100%;
+            }
+
+            .accordion-body {
+                max-height: 300px;
+                overflow: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="navbar" class="d-flex bg-dark text-white">
+        <div id="navbar-logo" class="d-flex align-items-center">
+            <a href="dashboard.html"><img src="../img/logo.ico" alt="logo" height="40" class="m-2"></a>
+            <span style="font-size:24px; font-weight: bold;"><a href="dashboard.html"
+                    class="no-style-a">BookRecSys</a></span>
+        </div>
+        <div id="navbar-search" class="d-flex align-items-center m-2">
+            <input type="text" id="input-search" class="form-control me-2">
+            <button class="btn btn-primary" onclick="location.href='search.html'"><i
+                    class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+        <div id="div-dashboard" class="d-flex align-items-center">
+            <button class="btn btn-dark" onclick="location.href='dashboard.html'"><i
+                    class="fa-solid fa-clipboard-list"></i> Dashboard</button>
+        </div>
+        <div id="div-cart" class="d-flex align-items-center">
+            <button class="btn btn-dark" onclick="location.href='cart.html'"><i class="fa-solid fa-shopping-cart"></i>
+                Cart <span class="badge bg-secondary">3</span></button>
+        </div>
+        <div id="div-customer-dropdown" class="d-flex align-items-center">
+            <div class="dropdown">
+                <a class="btn btn-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-user-circle"></i> John Doe
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <li><a class="dropdown-item" href="profile.html"><i class="fa-solid fa-user"></i> My Profile</a>
+                    </li>
+                    <li><a class="dropdown-item" href="#"><i class="fa-solid fa-wallet"></i> My Transactions</a></li>
+                    <li><a class="dropdown-item" href="../index.html"><i class="fa-solid fa-power-off"></i> Sign Out</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="announcement" class="d-flex">
+        <div id="announcement-space-div"></div>
+        <div id="announcement-alert-div" class="d-flex justify-content-center mx-4 mt-4">
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong><i class="fa fa-exclamation-triangle"></i> Announcement</strong>
+                <p>We would be having scheduled server maintenance on July 5, 2022 from 3am to 5am PST. The website
+                    would be
+                    unavailable during this period.</p>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+    <div id="main-container" class="d-flex">
+        <div id="filter-selection" class="p-2">
+            <h2 style="text-align: center;">Filter Selection</h2>
+            <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button bg-dark text-white" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Category
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                        data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <a href="" class="underlined-a-only d-flex justify-content-between">
+                                        <span class="text-secondary">New Releases</span>
+                                        <span class="badge text-bg-secondary">4</span>
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="" class="underlined-a-only d-flex justify-content-between">
+                                        <span class="text-secondary">Featured Collections</span>
+                                        <span class="badge text-bg-secondary">12</span>
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="" class="underlined-a-only d-flex justify-content-between">
+                                        <span class="text-secondary">From Page to Screen</span>
+                                        <span class="badge text-bg-secondary">102</span>
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="" class="underlined-a-only d-flex justify-content-between">
+                                        <span class="text-secondary">Business</span>
+                                        <span class="badge text-bg-secondary">23</span>
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="" class="underlined-a-only d-flex justify-content-between">
+                                        <span class="text-secondary">Summer Collection</span>
+                                        <span class="badge text-bg-secondary">12</span>
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="" class="underlined-a-only d-flex justify-content-between">
+                                        <span class="text-secondary">Autumn Collection</span>
+                                        <span class="badge text-bg-secondary">25</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button collapsed bg-dark text-white" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false"
+                            aria-controls="collapseTwo">
+                            Genre
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                        data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <a href="" class="underlined-a-only d-flex justify-content-between">
+                                        <span class="text-secondary">New Releases</span>
+                                        <span class="badge text-bg-secondary">4</span>
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="" class="underlined-a-only d-flex justify-content-between">
+                                        <span class="text-secondary">Featured Collections</span>
+                                        <span class="badge text-bg-secondary">12</span>
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="" class="underlined-a-only d-flex justify-content-between">
+                                        <span class="text-secondary">From Page to Screen</span>
+                                        <span class="badge text-bg-secondary">102</span>
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="" class="underlined-a-only d-flex justify-content-between">
+                                        <span class="text-secondary">Business</span>
+                                        <span class="badge text-bg-secondary">23</span>
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="" class="underlined-a-only d-flex justify-content-between">
+                                        <span class="text-secondary">Summer Collection</span>
+                                        <span class="badge text-bg-secondary">12</span>
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="" class="underlined-a-only d-flex justify-content-between">
+                                        <span class="text-secondary">Autumn Collection</span>
+                                        <span class="badge text-bg-secondary">25</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingThree">
+                        <button class="accordion-button collapsed bg-dark text-white" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false"
+                            aria-controls="collapseThree">
+                            Author
+                        </button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                        data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <a href="" class="underlined-a-only d-flex justify-content-between">
+                                        <span class="text-secondary">New Releases</span>
+                                        <span class="badge text-bg-secondary">4</span>
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="" class="underlined-a-only d-flex justify-content-between">
+                                        <span class="text-secondary">Featured Collections</span>
+                                        <span class="badge text-bg-secondary">12</span>
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="" class="underlined-a-only d-flex justify-content-between">
+                                        <span class="text-secondary">From Page to Screen</span>
+                                        <span class="badge text-bg-secondary">102</span>
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="" class="underlined-a-only d-flex justify-content-between">
+                                        <span class="text-secondary">Business</span>
+                                        <span class="badge text-bg-secondary">23</span>
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="" class="underlined-a-only d-flex justify-content-between">
+                                        <span class="text-secondary">Summer Collection</span>
+                                        <span class="badge text-bg-secondary">12</span>
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="" class="underlined-a-only d-flex justify-content-between">
+                                        <span class="text-secondary">Autumn Collection</span>
+                                        <span class="badge text-bg-secondary">25</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingFour">
+                        <button class="accordion-button collapsed bg-dark text-white" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false"
+                            aria-controls="collapseFour">
+                            Publisher
+                        </button>
+                    </h2>
+                    <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+                        data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <a href="" class="underlined-a-only d-flex justify-content-between">
+                                        <span class="text-secondary">New Releases</span>
+                                        <span class="badge text-bg-secondary">4</span>
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="" class="underlined-a-only d-flex justify-content-between">
+                                        <span class="text-secondary">Featured Collections</span>
+                                        <span class="badge text-bg-secondary">12</span>
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="" class="underlined-a-only d-flex justify-content-between">
+                                        <span class="text-secondary">From Page to Screen</span>
+                                        <span class="badge text-bg-secondary">102</span>
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="" class="underlined-a-only d-flex justify-content-between">
+                                        <span class="text-secondary">Business</span>
+                                        <span class="badge text-bg-secondary">23</span>
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="" class="underlined-a-only d-flex justify-content-between">
+                                        <span class="text-secondary">Summer Collection</span>
+                                        <span class="badge text-bg-secondary">12</span>
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="" class="underlined-a-only d-flex justify-content-between">
+                                        <span class="text-secondary">Autumn Collection</span>
+                                        <span class="badge text-bg-secondary">25</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="popular-items" class="p-2 d-flex flex-column align-items-center">
+            <h1>Recommended For You</h1>
+            <div id="items" class="d-flex flex-wrap justify-content-center">
+                <a href="item.html" class="no-style-a">
+                    <div class="card">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1598041763l/55056253._SX318_.jpg"
+                                alt="..." class="mb-3">
+                            <span style="font-weight: bold; font-size: 12px; text-align: center;">Classical
+                                Mythology</span>
+                            <span style="font-size: 10px; text-align: center;">Mark P.O. Morford</span>
+                            <span style="font-size: 12px; text-align: center;" class="mb-2">Php 300.00</span>
+                        </div>
+                        <div class="d-flex justify-content-center mb-2">
+                            <button class="btn btn-primary" style="font-size: 12px;"><i
+                                    class="fa-solid fa-shopping-cart"></i> Add to Cart</button>
+                        </div>
+                    </div>
+                </a>
+                <a href="item.html" class="no-style-a">
+                    <div class="card">
+                        <div class="card-body d-flex flex-column justify-content-center p-2">
+                            <img src="https://m.media-amazon.com/images/I/41ZYsdQb4xL.jpg" alt="..." class="mb-3">
+                            <span style="font-weight: bold; font-size: 12px; text-align: center;">Classical
+                                Mythology</span>
+                            <span style="font-size: 10px; text-align: center;">Mark P.O. Morford</span>
+                            <span style="font-size: 12px; text-align: center;" class="mb-2">Php 300.00</span>
+                        </div>
+                        <div class="d-flex justify-content-center mb-2">
+                            <button class="btn btn-primary" style="font-size: 12px;"><i
+                                    class="fa-solid fa-shopping-cart"></i> Add to Cart</button>
+                        </div>
+                    </div>
+                </a>
+                <a href="item.html" class="no-style-a">
+                    <div class="card">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <img src="https://images-na.ssl-images-amazon.com/images/I/51TOjQdTawL._SY445_SX342_QL70_ML2_.jpg"
+                                alt="..." class="mb-3">
+                            <span style="font-weight: bold; font-size: 12px; text-align: center;">Classical
+                                Mythology</span>
+                            <span style="font-size: 10px; text-align: center;">Mark P.O. Morford</span>
+                            <span style="font-size: 12px; text-align: center;" class="mb-2">Php 300.00</span>
+                        </div>
+                        <div class="d-flex justify-content-center mb-2">
+                            <button class="btn btn-primary" style="font-size: 12px;"><i
+                                    class="fa-solid fa-shopping-cart"></i> Add to Cart</button>
+                        </div>
+                    </div>
+                </a>
+                <a href="item.html" class="no-style-a">
+                    <div class="card">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <img src="https://images-na.ssl-images-amazon.com/images/I/41SKdYdrI2L._SX379_BO1,204,203,200_.jpg"
+                                alt="..." class="mb-3">
+                            <span style="font-weight: bold; font-size: 12px; text-align: center;">Classical
+                                Mythology</span>
+                            <span style="font-size: 10px; text-align: center;">Mark P.O. Morford</span>
+                            <span style="font-size: 12px; text-align: center;" class="mb-2">Php 300.00</span>
+                        </div>
+                        <div class="d-flex justify-content-center mb-2">
+                            <button class="btn btn-primary" style="font-size: 12px;"><i
+                                    class="fa-solid fa-shopping-cart"></i> Add to Cart</button>
+                        </div>
+                    </div>
+                </a>
+                <a href="item.html" class="no-style-a">
+                    <div class="card">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <img src="https://images-na.ssl-images-amazon.com/images/I/513hckkf2qL._SX404_BO1,204,203,200_.jpg"
+                                alt="..." class="mb-3">
+                            <span style="font-weight: bold; font-size: 12px; text-align: center;">Classical
+                                Mythology</span>
+                            <span style="font-size: 10px; text-align: center;">Mark P.O. Morford</span>
+                            <span style="font-size: 12px; text-align: center;" class="mb-2">Php 300.00</span>
+                        </div>
+                        <div class="d-flex justify-content-center mb-2">
+                            <button class="btn btn-primary" style="font-size: 12px;"><i
+                                    class="fa-solid fa-shopping-cart"></i> Add to Cart</button>
+                        </div>
+                    </div>
+                </a>
+                <a href="item.html" class="no-style-a">
+                    <div class="card">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1535673522l/41573140._SX318_.jpg"
+                                alt="..." class="mb-3">
+                            <span style="font-weight: bold; font-size: 12px; text-align: center;">Classical
+                                Mythology</span>
+                            <span style="font-size: 10px; text-align: center;">Mark P.O. Morford</span>
+                            <span style="font-size: 12px; text-align: center;" class="mb-2">Php 300.00</span>
+                        </div>
+                        <div class="d-flex justify-content-center mb-2">
+                            <button class="btn btn-primary" style="font-size: 12px;"><i
+                                    class="fa-solid fa-shopping-cart"></i> Add to Cart</button>
+                        </div>
+                    </div>
+                </a>
+                <a href="item.html" class="no-style-a">
+                    <div class="card">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1536259468l/41727439._SX318_.jpg"
+                                alt="..." class="mb-3">
+                            <span style="font-weight: bold; font-size: 12px; text-align: center;">Classical
+                                Mythology</span>
+                            <span style="font-size: 10px; text-align: center;">Mark P.O. Morford</span>
+                            <span style="font-size: 12px; text-align: center;" class="mb-2">Php 300.00</span>
+                        </div>
+                        <div class="d-flex justify-content-center mb-2">
+                            <button class="btn btn-primary" style="font-size: 12px;"><i
+                                    class="fa-solid fa-shopping-cart"></i> Add to Cart</button>
+                        </div>
+                    </div>
+                </a>
+                <a href="item.html" class="no-style-a">
+                    <div class="card">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1577275684l/49866139._SY475_.jpg"
+                                alt="..." class="mb-3">
+                            <span style="font-weight: bold; font-size: 12px; text-align: center;">Classical
+                                Mythology</span>
+                            <span style="font-size: 10px; text-align: center;">Mark P.O. Morford</span>
+                            <span style="font-size: 12px; text-align: center;" class="mb-2">Php 300.00</span>
+                        </div>
+                        <div class="d-flex justify-content-center mb-2">
+                            <button class="btn btn-primary" style="font-size: 12px;"><i
+                                    class="fa-solid fa-shopping-cart"></i> Add to Cart</button>
+                        </div>
+                    </div>
+                </a>
+                <a href="item.html" class="no-style-a">
+                    <div class="card">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <img src="https://images-na.ssl-images-amazon.com/images/I/61u2pS4rU6S.jpg" alt="..."
+                                class="mb-3">
+                            <span style="font-weight: bold; font-size: 12px; text-align: center;">Classical
+                                Mythology</span>
+                            <span style="font-size: 10px; text-align: center;">Mark P.O. Morford</span>
+                            <span style="font-size: 12px; text-align: center;" class="mb-2">Php 300.00</span>
+                        </div>
+                        <div class="d-flex justify-content-center mb-2">
+                            <button class="btn btn-primary" style="font-size: 12px;"><i
+                                    class="fa-solid fa-shopping-cart"></i> Add to Cart</button>
+                        </div>
+                    </div>
+                </a>
+                <a href="item.html" class="no-style-a">
+                    <div class="card">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <img src="https://media.wiley.com/product_data/coverImage300/87/11186519/1118651987.jpg"
+                                alt="..." class="mb-3">
+                            <span style="font-weight: bold; font-size: 12px; text-align: center;">Classical
+                                Mythology</span>
+                            <span style="font-size: 10px; text-align: center;">Mark P.O. Morford</span>
+                            <span style="font-size: 12px; text-align: center;" class="mb-2">Php 300.00</span>
+                        </div>
+                        <div class="d-flex justify-content-center mb-2">
+                            <button class="btn btn-primary" style="font-size: 12px;"><i
+                                    class="fa-solid fa-shopping-cart"></i> Add to Cart</button>
+                        </div>
+                    </div>
+                </a>
+                <a href="item.html" class="no-style-a">
+                    <div class="card">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <img src="https://cdn.shortpixel.ai/spai/q_lossy+w_150+to_webp+ret_img/https://m.media-amazon.com/images/I/514Lbvt36zL._SL160_.jpg"
+                                alt="..." class="mb-3">
+                            <span style="font-weight: bold; font-size: 12px; text-align: center;">Classical
+                                Mythology</span>
+                            <span style="font-size: 10px; text-align: center;">Mark P.O. Morford</span>
+                            <span style="font-size: 12px; text-align: center;" class="mb-2">Php 300.00</span>
+                        </div>
+                        <div class="d-flex justify-content-center mb-2">
+                            <button class="btn btn-primary" style="font-size: 12px;"><i
+                                    class="fa-solid fa-shopping-cart"></i> Add to Cart</button>
+                        </div>
+                    </div>
+                </a>
+                <a href="item.html" class="no-style-a">
+                    <div class="card">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <img src="https://cdn.shortpixel.ai/spai/q_lossy+w_150+to_webp+ret_img/https://m.media-amazon.com/images/I/51hmb3dkkzL._SL160_.jpg"
+                                alt="..." class="mb-3">
+                            <span style="font-weight: bold; font-size: 12px; text-align: center;">Classical
+                                Mythology</span>
+                            <span style="font-size: 10px; text-align: center;">Mark P.O. Morford</span>
+                            <span style="font-size: 12px; text-align: center;" class="mb-2">Php 300.00</span>
+                        </div>
+                        <div class="d-flex justify-content-center mb-2">
+                            <button class="btn btn-primary" style="font-size: 12px;"><i
+                                    class="fa-solid fa-shopping-cart"></i> Add to Cart</button>
+                        </div>
+                    </div>
+                </a>
+                <a href="item.html" class="no-style-a">
+                    <div class="card">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <img src="https://cdn.shortpixel.ai/spai/q_lossy+w_150+to_webp+ret_img/https://m.media-amazon.com/images/I/31p-j0E2FSL._SL160_.jpg"
+                                alt="..." class="mb-3">
+                            <span style="font-weight: bold; font-size: 12px; text-align: center;">Classical
+                                Mythology</span>
+                            <span style="font-size: 10px; text-align: center;">Mark P.O. Morford</span>
+                            <span style="font-size: 12px; text-align: center;" class="mb-2">Php 300.00</span>
+                        </div>
+                        <div class="d-flex justify-content-center mb-2">
+                            <button class="btn btn-primary" style="font-size: 12px;"><i
+                                    class="fa-solid fa-shopping-cart"></i> Add to Cart</button>
+                        </div>
+                    </div>
+                </a>
+                <a href="item.html" class="no-style-a">
+                    <div class="card">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <img src="https://images-na.ssl-images-amazon.com/images/I/71YNqR4it9L.jpg" alt="..."
+                                class="mb-3">
+                            <span style="font-weight: bold; font-size: 12px; text-align: center;">Classical
+                                Mythology</span>
+                            <span style="font-size: 10px; text-align: center;">Mark P.O. Morford</span>
+                            <span style="font-size: 12px; text-align: center;" class="mb-2">Php 300.00</span>
+                        </div>
+                        <div class="d-flex justify-content-center mb-2">
+                            <button class="btn btn-primary" style="font-size: 12px;"><i
+                                    class="fa-solid fa-shopping-cart"></i> Add to Cart</button>
+                        </div>
+                    </div>
+                </a>
+                <a href="item.html" class="no-style-a">
+                    <div class="card">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <img src="https://m.media-amazon.com/images/I/418nSN91rmS._SL500_.jpg" alt="..."
+                                class="mb-3">
+                            <span style="font-weight: bold; font-size: 12px; text-align: center;">Classical
+                                Mythology</span>
+                            <span style="font-size: 10px; text-align: center;">Mark P.O. Morford</span>
+                            <span style="font-size: 12px; text-align: center;" class="mb-2">Php 300.00</span>
+                        </div>
+                        <div class="d-flex justify-content-center mb-2">
+                            <button class="btn btn-primary" style="font-size: 12px;"><i
+                                    class="fa-solid fa-shopping-cart"></i> Add to Cart</button>
+                        </div>
+                    </div>
+                </a>
+                <a href="item.html" class="no-style-a">
+                    <div class="card">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <img src="https://images-na.ssl-images-amazon.com/images/I/51BqNmSO6uL._SX404_BO1,204,203,200_.jpg"
+                                alt="..." class="mb-3">
+                            <span style="font-weight: bold; font-size: 12px; text-align: center;">Classical
+                                Mythology</span>
+                            <span style="font-size: 10px; text-align: center;">Mark P.O. Morford</span>
+                            <span style="font-size: 12px; text-align: center;" class="mb-2">Php 300.00</span>
+                        </div>
+                        <div class="d-flex justify-content-center mb-2">
+                            <button class="btn btn-primary" style="font-size: 12px;"><i
+                                    class="fa-solid fa-shopping-cart"></i> Add to Cart</button>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <nav class="navbar fixed-bottom bg-dark">
+        <div class="container-fluid text-white d-flex justify-content-center align-items-center p-2">
+            <div class="me-2"><strong>Copyright &copy; 2022</strong> All rights reserved.</div>
+            <div><a href="policy.html" class="text-secondary">Privacy Policy</a></div>
+        </div>
+    </nav>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
