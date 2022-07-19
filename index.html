@@ -650,6 +650,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body d-flex flex-column">
+                    <div class="m-2" id="div-register-alert">
+                    </div>
                     <div class="m-2">
                         <label for="first-name" class="form-label">First Name</label>
                         <input type="text" class="form-control" id="first-name">
@@ -732,7 +734,7 @@
                         var html_element = ' \
                             <div class="alert alert-warning alert-dismissible fade show mx-4 mt-2" role = "alert" > \
                             <strong><i class="fa fa-exclamation-triangle"></i> Announcement</strong> \
-                            <p>'+obj["announcements"][i]["message"]+'</p> \
+                            <p>'+ obj["announcements"][i]["message"] + '</p> \
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
                             </div> \
                             ';
@@ -741,39 +743,91 @@
                 }
             });
         });
-        /*
+
         $("#register").click(function () {
             var firstName = $("#first-name").val();
             var lastName = $("#last-name").val();
             var email = $("#register-email").val();
             var password = $("#register-password").val();
             var c_password = $("#confirm-password").val();
-            var termsCheck = $("#terms-check").val();
+            var termsCheck = $("#terms-check");
 
-            if(firstName && lastName && email && password && c_password && termsCheck){
-                var formData = new FormData();
-				formData.append("Register", "set");
-				formData.append("first_name", firstName);
-                formData.append("last_name", lastName);
-                formData.append("email_address", email);
-                formData.append("password", password);
+            if (firstName && lastName && email && password && c_password && termsCheck.is(':checked')) {
 
-                $.ajax({
-					type: "POST",
-					url: "Register_API.php",
-					data: formData,             
-					cache: false,
-					contentType: false,
-					processData: false,
-					success: function(data)
-					{
-                        var obj = JSON.parse(data);
-                        if (obj["response"] == "invalid credentials") {
-                        }
-                    }
-                });
+                if (password != c_password) {
+                    var html_element = ' \
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert"> \
+                        Password fields don\'t match. \
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                        </div > \
+                        ';
+                    $("#div-register-alert").html(html_element);
+                }
+
+                else {
+                    $.getJSON('https://api.ipgeolocation.io/ipgeo?apiKey=4acd5b1aaed6452c9338757d75f88de7', function (data) {
+                        var obj = data;
+                        var city = obj["city"];
+                        var state = obj["state_prov"];
+                        var country = obj["country_name"];
+
+                        var formData = new FormData();
+                        formData.append("Register", "set");
+                        formData.append("first_name", firstName);
+                        formData.append("last_name", lastName);
+                        formData.append("email_address", email);
+                        formData.append("password", password);
+                        formData.append("city", city);
+                        formData.append("state", state);
+                        formData.append("country", country);
+
+                        $.ajax({
+                            type: "POST",
+                            url: "Register_API.php",
+                            data: formData,
+                            cache: false,
+                            contentType: false,
+                            processData: false,
+                            success: function (data) {
+                                var obj = JSON.parse(data);
+                                if (obj["response"] == "register success") {
+                                    var html_element = ' \
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert"> \
+                                        You have successfully registered a new account. \
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                                        </div > \
+                                        ';
+                                    $("#div-register-alert").html(html_element);
+                                    $("#first-name").val("");
+                                    $("#last-name").val("");
+                                    $("#register-email").val("");
+                                    $("#register-password").val("");
+                                    $("#confirm-password").val("");
+                                }
+                                else if (obj["response"] == "email taken") {
+                                    var html_element = ' \
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert"> \
+                                        That email address is already taken. \
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                                        </div > \
+                                        ';
+                                    $("#div-register-alert").html(html_element);
+                                }
+                                else if (obj["response"] == "db error") {
+                                    var html_element = ' \
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert"> \
+                                        There was an error registering your account. Please try again. \
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                                        </div > \
+                                        ';
+                                    $("#div-register-alert").html(html_element);
+                                }
+                            }
+                        });
+                    });
+                }
             }
-        });*/
+        });
         $("#login").click(function () {
             var email = $("#login-email").val();
             var password = $("#login-password").val();
@@ -825,10 +879,23 @@
                         else if (obj["response"] == "login success") {
                             if (obj["user"]["is_admin"] == 0) {
                                 sessionStorage.clear();
+                                sessionStorage.setItem("user_ID", JSON.stringify(obj["user"]["user_ID"]));
+                                sessionStorage.setItem("first_name", JSON.stringify(obj["user"]["first_name"]));
+                                sessionStorage.setItem("last_name", JSON.stringify(obj["user"]["last_name"]));
+                                sessionStorage.setItem("email_address", JSON.stringify(obj["user"]["email_address"]));
+                                sessionStorage.setItem("city", JSON.stringify(obj["user"]["city"]));
+                                sessionStorage.setItem("state", JSON.stringify(obj["user"]["state"]));
+                                sessionStorage.setItem("country", JSON.stringify(obj["user"]["country"]));
+                                sessionStorage.setItem("is_admin", JSON.stringify(obj["user"]["is_admin"]));
                                 window.location.replace("customer/dashboard.html");
                             }
                             else {
                                 sessionStorage.clear();
+                                sessionStorage.setItem("user_ID", JSON.stringify(obj["user"]["user_ID"]));
+                                sessionStorage.setItem("first_name", JSON.stringify(obj["user"]["first_name"]));
+                                sessionStorage.setItem("last_name", JSON.stringify(obj["user"]["last_name"]));
+                                sessionStorage.setItem("email_address", JSON.stringify(obj["user"]["email_address"]));
+                                sessionStorage.setItem("is_admin", JSON.stringify(obj["user"]["is_admin"]));
                                 window.location.replace("admin/dashboard.html");
                             }
                         }

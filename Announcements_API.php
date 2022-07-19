@@ -21,26 +21,26 @@
     if(isset($_POST["GetAnnouncements"])){				
 		$myObj = new stdClass();
         $myObj->announcements = array();
-    }
 
-    $sql = "SELECT * from announcements where message_expiry > '".date("Y-m-d H:i:s")."'
+        $sql = "SELECT * from announcements where message_expiry > '".date("Y-m-d H:i:s")."'
 				";
 
-    $result = $conn->query($sql);
+        $result = $conn->query($sql);
 
-    $i = 0;
-    while($row = $result->fetch_assoc()) {
-        $myObj->announcements[$i] = new stdClass();
-        foreach ($row as $key => $value) {
-            $myObj->announcements[$i]->$key = $value;
+        $i = 0;
+        while($row = $result->fetch_assoc()) {
+            $myObj->announcements[$i] = new stdClass();
+            foreach ($row as $key => $value) {
+                $myObj->announcements[$i]->$key = $value;
+            }
+            $i++;
         }
-        $i++;
-    }
 
-    $myJSON = json_encode($myObj);
-    echo $myJSON;	
-    $conn->close();
-    exit();
+        $myJSON = json_encode($myObj);
+        echo $myJSON;	
+        $conn->close();
+        exit();
+    }
 
     function test_input($data) {
         $data = trim($data);
