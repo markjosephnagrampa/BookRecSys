@@ -827,6 +827,16 @@
                     });
                 }
             }
+
+            else{
+                var html_element = ' \
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert"> \
+                    Please fill out all required fields. \
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                    </div > \
+                    ';
+                $("#div-register-alert").html(html_element);
+            }
         });
         $("#login").click(function () {
             var email = $("#login-email").val();
@@ -879,28 +889,26 @@
                         else if (obj["response"] == "login success") {
                             if (obj["user"]["is_admin"] == 0) {
                                 sessionStorage.clear();
-                                sessionStorage.setItem("user_ID", JSON.stringify(obj["user"]["user_ID"]));
-                                sessionStorage.setItem("first_name", JSON.stringify(obj["user"]["first_name"]));
-                                sessionStorage.setItem("last_name", JSON.stringify(obj["user"]["last_name"]));
-                                sessionStorage.setItem("email_address", JSON.stringify(obj["user"]["email_address"]));
-                                sessionStorage.setItem("city", JSON.stringify(obj["user"]["city"]));
-                                sessionStorage.setItem("state", JSON.stringify(obj["user"]["state"]));
-                                sessionStorage.setItem("country", JSON.stringify(obj["user"]["country"]));
-                                sessionStorage.setItem("is_admin", JSON.stringify(obj["user"]["is_admin"]));
+                                sessionStorage.setItem("user", JSON.stringify(obj["user"]));
                                 window.location.replace("customer/dashboard.html");
                             }
                             else {
                                 sessionStorage.clear();
-                                sessionStorage.setItem("user_ID", JSON.stringify(obj["user"]["user_ID"]));
-                                sessionStorage.setItem("first_name", JSON.stringify(obj["user"]["first_name"]));
-                                sessionStorage.setItem("last_name", JSON.stringify(obj["user"]["last_name"]));
-                                sessionStorage.setItem("email_address", JSON.stringify(obj["user"]["email_address"]));
-                                sessionStorage.setItem("is_admin", JSON.stringify(obj["user"]["is_admin"]));
+                                sessionStorage.setItem("user", JSON.stringify(obj["user"]));
                                 window.location.replace("admin/dashboard.html");
                             }
                         }
                     }
                 });
+            }
+            else{
+                var html_element = ' \
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert"> \
+                    Please fill out all required fields. \
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                    </div > \
+                    ';
+                $("#div-login-alert").html(html_element);
             }
         });
     </script>
