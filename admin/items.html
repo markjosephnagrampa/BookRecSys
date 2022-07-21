@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <style>
         .no-style-a,
         .no-style-a:hover,
@@ -120,144 +121,6 @@
         <h1>Manage Items</h1>
     </div>
     <div id="main-container" class="d-flex">
-        <!--<div id="left-container" class="d-flex flex-column align-items-center">
-            <h2 class="mt-2 mb-4">Add Book</h2>
-            <form>
-                <div class="row mb-3">
-                    <label for="title" class="col-sm-3 col-form-label"><b>Title:</b></label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control" id="title">
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="isbn" class="col-sm-3 col-form-label"><b>ISBN:</b></label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control" id="isbn">
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="price" class="col-sm-3 col-form-label"><b>Price (in Php):</b></label>
-                    <div class="col-sm-9">
-                        <input type="number" min="1" class="form-control" id="price">
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="publisher2" class="col-sm-3 col-form-label"><b>Publisher:</b></label>
-                    <div class="col-sm-9">
-                        <input class="form-control" list="publisher" name="publisher" id="publisher2">
-                        <datalist id="publisher">
-                            <option value="Internet Explorer">
-                            <option value="Firefox">
-                            <option value="Chrome">
-                            <option value="Opera">
-                            <option value="Safari">
-                        </datalist>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="publication-year" class="col-sm-3 col-form-label"><b>Publication Year:</b></label>
-                    <div class="col-sm-9">
-                        <input type="number" class="form-control" id="publication-year">
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="format" class="col-sm-3 col-form-label"><b>Format:</b></label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control" id="format">
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="description" class="col-sm-3 col-form-label"><b>Description:</b></label>
-                    <div class="col-sm-9">
-                        <textarea name="" class="form-control" id="description"></textarea>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="cover-image" class="col-sm-3 col-form-label"><b>Cover Image:</b></label>
-                    <div class="col-sm-9">
-                        <img src="https://via.placeholder.com/130x200" width="130" height="200" alt="">
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="cover-image" class="col-sm-3 col-form-label"><b>Image Selector:</b></label>
-                    <div class="col-sm-9">
-                        <input type="file" id="cover-image" name="img" accept="image/*">
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="stock-qty" class="col-sm-3 col-form-label"><b>Stock Qty:</b></label>
-                    <div class="col-sm-9">
-                        <input type="number" class="form-control" id="stock-qty">
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="category2" class="col-sm-3 col-form-label"><b>Category:</b></label>
-                    <div class="col-sm-9">
-                        <input class="form-control" list="category" name="category" id="category2">
-                        <datalist id="category">
-                            <option value="Internet Explorer">
-                            <option value="Firefox">
-                            <option value="Chrome">
-                            <option value="Opera">
-                            <option value="Safari">
-                        </datalist>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="author" class="col-sm-3 col-form-label"><b>Author(s):</b></label>
-                    <div class="col-sm-9">
-                        <button class="btn btn-success" id="author"><i class="fa-solid fa-plus"></i></button>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="author-1" class="col-3 col-form-label">Author 1:</label>
-                    <div class="col-7">
-                        <input type="text" class="form-control" id="author-1">
-                    </div>
-                    <div class="col-2">
-                        <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="author-2" class="col-3 col-form-label">Author 2:</label>
-                    <div class="col-7">
-                        <input type="text" class="form-control" id="author-2">
-                    </div>
-                    <div class="col-2">
-                        <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="genre" class="col-sm-3 col-form-label"><b>Genre(s):</b></label>
-                    <div class="col-sm-9">
-                        <button class="btn btn-success" id="genre"><i class="fa-solid fa-plus"></i></button>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="genre-1" class="col-3 col-form-label">Genre 1:</label>
-                    <div class="col-7">
-                        <input type="text" class="form-control" id="genre-1">
-                    </div>
-                    <div class="col-2">
-                        <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="genre-2" class="col-3 col-form-label">Author 2:</label>
-                    <div class="col-7">
-                        <input type="text" class="form-control" id="genre-2">
-                    </div>
-                    <div class="col-2">
-                        <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-sm-12" style="text-align: center;">
-                        <button class="btn btn-primary btn-lg">Insert Book</button>
-                    </div>
-                </div>
-            </form>
-        </div>-->
         <div class="container">
             <div class="row">
                 <div class="col-sm-2" style="text-align: center;">
@@ -340,7 +203,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form action="javascript:void(0);">
                         <div class="row mb-3">
                             <label for="title" class="col-sm-3 col-form-label"><b>Title:</b></label>
                             <div class="col-sm-9">
@@ -425,49 +288,37 @@
                         <div class="row mb-3">
                             <label for="author" class="col-sm-3 col-form-label"><b>Author(s):</b></label>
                             <div class="col-sm-9">
-                                <button class="btn btn-success" id="author"><i class="fa-solid fa-plus"></i></button>
+                                <button class="btn btn-success" id="add-author"><i
+                                        class="fa-solid fa-plus"></i></button>
                             </div>
                         </div>
-                        <div class="row mb-3">
-                            <label for="author-1" class="col-3 col-form-label">Author 1:</label>
-                            <div class="col-7">
-                                <input type="text" class="form-control" id="author-1">
-                            </div>
-                            <div class="col-2">
-                                <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label for="author-2" class="col-3 col-form-label">Author 2:</label>
-                            <div class="col-7">
-                                <input type="text" class="form-control" id="author-2">
-                            </div>
-                            <div class="col-2">
-                                <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                        <div id="authors">
+                            <div class="row mb-3" id="div-author-1">
+                                <label id="label-author-1" class="col-3 col-form-label">Author 1:</label>
+                                <div class="col-7">
+                                    <input type="text" class="form-control" id="author-1">
+                                </div>
+                                <div class="col-2">
+                                    <button class="btn btn-danger" id="delete-author-1"><i
+                                            class="fa-solid fa-trash"></i></button>
+                                </div>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="genre" class="col-sm-3 col-form-label"><b>Genre(s):</b></label>
                             <div class="col-sm-9">
-                                <button class="btn btn-success" id="genre"><i class="fa-solid fa-plus"></i></button>
+                                <button class="btn btn-success" id="add-genre"><i class="fa-solid fa-plus"></i></button>
                             </div>
                         </div>
-                        <div class="row mb-3">
-                            <label for="genre-1" class="col-3 col-form-label">Genre 1:</label>
-                            <div class="col-7">
-                                <input type="text" class="form-control" id="genre-1">
-                            </div>
-                            <div class="col-2">
-                                <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label for="genre-2" class="col-3 col-form-label">Genre 2:</label>
-                            <div class="col-7">
-                                <input type="text" class="form-control" id="genre-2">
-                            </div>
-                            <div class="col-2">
-                                <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                        <div id="genres">
+                            <div class="row mb-3" id="div-genre-1">
+                                <label id="label-genre-1" class="col-3 col-form-label">Genre 1:</label>
+                                <div class="col-7">
+                                    <input type="text" class="form-control" id="genre-1">
+                                </div>
+                                <div class="col-2">
+                                    <button class="btn btn-danger" id="delete-genre-1"><i class="fa-solid fa-trash"></i></button>
+                                </div>
                             </div>
                         </div>
                     </form>
@@ -487,7 +338,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form action="javascript:void(0);">
                         <div class="row mb-3">
                             <label for="title" class="col-sm-3 col-form-label"><b>Title:</b></label>
                             <div class="col-sm-9">
@@ -575,31 +426,34 @@
                         <div class="row mb-3">
                             <label for="author" class="col-sm-3 col-form-label"><b>Author(s):</b></label>
                             <div class="col-sm-9">
-                                <button class="btn btn-success" id="author"><i class="fa-solid fa-plus"></i></button>
+                                <button class="btn btn-success" id="edit-add-author"><i
+                                        class="fa-solid fa-plus"></i></button>
                             </div>
                         </div>
-                        <div class="row mb-3">
-                            <label for="author-1" class="col-3 col-form-label">Author 1:</label>
-                            <div class="col-7">
-                                <input type="text" class="form-control" id="author-1">
+                        <div id="edit-authors">
+                            <div class="row mb-3">
+                                <label for="author-1" class="col-3 col-form-label">Author 1:</label>
+                                <div class="col-7">
+                                    <input type="text" class="form-control" id="author-1">
+                                </div>
+                                <div class="col-2">
+                                    <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                                </div>
                             </div>
-                            <div class="col-2">
-                                <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label for="author-2" class="col-3 col-form-label">Author 2:</label>
-                            <div class="col-7">
-                                <input type="text" class="form-control" id="author-2">
-                            </div>
-                            <div class="col-2">
-                                <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                            <div class="row mb-3">
+                                <label for="author-2" class="col-3 col-form-label">Author 2:</label>
+                                <div class="col-7">
+                                    <input type="text" class="form-control" id="author-2">
+                                </div>
+                                <div class="col-2">
+                                    <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                                </div>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="genre" class="col-sm-3 col-form-label"><b>Genre(s):</b></label>
                             <div class="col-sm-9">
-                                <button class="btn btn-success" id="genre"><i class="fa-solid fa-plus"></i></button>
+                                <button class="btn btn-success" id="add-genre"><i class="fa-solid fa-plus"></i></button>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -628,7 +482,86 @@
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function () {
+            // Check if user is logged in
+            if (sessionStorage.getItem("user") === null) {
+                window.location.replace("../InvalidAccess.html");
+            }
+            // Load company data on the profile page
+            var user = JSON.parse(sessionStorage.getItem("user"));
 
+            // Check Account Type
+            if (user["is_admin"] == false) {
+                window.location.replace("../InvalidAccess.html");
+            }
+            // Load user name on header
+            $("#div-admin-name").html("Admin " + user["first_name"] + " " + user["last_name"]);
+        });
+        var author_count = 1;
+        $("#add-author").click(function () {
+            author_count++;
+            var html_element = ' \
+            <div class="row mb-3" id="div-author-'+ author_count + '"> \
+                <label id = "label-author-'+ author_count + '" class="col-3 col-form-label">Author ' + author_count + ':</label> \
+                <div class="col-7"> \
+                    <input type="text" class="form-control" id="author-'+ author_count + '"> \
+                </div> \
+                <div class="col-2"> \
+                    <button class="btn btn-danger" id="delete-author-'+ author_count + '"><i class="fa-solid fa-trash"></i></button> \
+                </div> \
+            </div> \
+                ';
+            $("#authors").append(html_element);
+        });
+        $(document).on("click", '[id^=delete-author]', function (event) {
+            var id = this.id.match(/[0-9]+/);
+            var id_index = parseInt(id[0]);
+            $("#div-author-" + id_index).remove();
+
+            // Adjust label and ids of succeeding elements
+            for (var i = id_index; i < author_count; i++) {
+                $("#label-author-" + (i + 1)).html("Author " + i + ":");
+                $("#label-author-" + (i + 1)).attr("id", "label-author-" + i);
+                $("#author-" + (i + 1)).attr("id", "author-" + i);
+                $("#delete-author-" + (i + 1)).attr("id", "delete-author-" + i);
+                $("#div-author-" + (i + 1)).attr("id", "div-author-" + i);
+            }
+            author_count--;
+        });
+
+        var genre_count = 1;
+        $("#add-genre").click(function () {
+            genre_count++;
+            var html_element = ' \
+            <div class="row mb-3" id="div-genre-'+ genre_count + '"> \
+                <label id = "label-genre-'+ genre_count + '" class="col-3 col-form-label">Genre ' + genre_count + ':</label> \
+                <div class="col-7"> \
+                    <input type="text" class="form-control" id="genre-'+ genre_count + '"> \
+                </div> \
+                <div class="col-2"> \
+                    <button class="btn btn-danger" id="delete-genre-'+ genre_count + '"><i class="fa-solid fa-trash"></i></button> \
+                </div> \
+            </div> \
+                ';
+            $("#genres").append(html_element);
+        });
+        $(document).on("click", '[id^=delete-genre]', function (event) {
+            var id = this.id.match(/[0-9]+/);
+            var id_index = parseInt(id[0]);
+            $("#div-genre-" + id_index).remove();
+
+            // Adjust label and ids of succeeding elements
+            for (var i = id_index; i < genre_count; i++) {
+                $("#label-genre-" + (i + 1)).html("Genre " + i + ":");
+                $("#label-genre-" + (i + 1)).attr("id", "label-genre-" + i);
+                $("#genre-" + (i + 1)).attr("id", "genre-" + i);
+                $("#delete-genre-" + (i + 1)).attr("id", "delete-genre-" + i);
+                $("#div-genre-" + (i + 1)).attr("id", "div-genre-" + i);
+            }
+            genre_count--;
+        });
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
         crossorigin="anonymous"></script>
