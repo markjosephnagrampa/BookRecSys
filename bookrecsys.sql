@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 18, 2022 at 11:04 PM
+-- Generation Time: Jul 22, 2022 at 12:49 AM
 -- Server version: 5.7.38-0ubuntu0.18.04.1
 -- PHP Version: 7.2.24-0ubuntu0.18.04.13
 
@@ -54,12 +54,12 @@ CREATE TABLE `books` (
   `book_ID` int(11) NOT NULL,
   `category_ID` int(11) DEFAULT NULL,
   `publisher_ID` int(11) NOT NULL,
+  `format_ID` int(11) NOT NULL,
   `ISBN` varchar(13) DEFAULT NULL,
   `title` varchar(200) NOT NULL,
   `price` decimal(5,2) NOT NULL,
   `publication_year` int(4) NOT NULL,
-  `format` varchar(100) NOT NULL,
-  `description` varchar(1000) NOT NULL,
+  `description` varchar(1000) DEFAULT NULL,
   `cover_image_loc` varchar(1000) NOT NULL,
   `stock_qty` int(11) NOT NULL,
   `is_for_training` tinyint(1) NOT NULL,
@@ -145,6 +145,17 @@ CREATE TABLE `event_types` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `formats`
+--
+
+CREATE TABLE `formats` (
+  `format_ID` int(11) NOT NULL,
+  `format_name` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `genres`
 --
 
@@ -176,6 +187,13 @@ CREATE TABLE `publishers` (
   `publisher_ID` int(11) NOT NULL,
   `publisher_name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `publishers`
+--
+
+INSERT INTO `publishers` (`publisher_ID`, `publisher_name`) VALUES
+(1, 'Penguin Random House');
 
 -- --------------------------------------------------------
 
@@ -259,7 +277,8 @@ ALTER TABLE `authors`
 ALTER TABLE `books`
   ADD PRIMARY KEY (`book_ID`),
   ADD KEY `category_ID` (`category_ID`),
-  ADD KEY `publisher_ID` (`publisher_ID`);
+  ADD KEY `publisher_ID` (`publisher_ID`),
+  ADD KEY `format_ID` (`format_ID`);
 
 --
 -- Indexes for table `book_authors`
@@ -307,6 +326,13 @@ ALTER TABLE `events`
 ALTER TABLE `event_types`
   ADD PRIMARY KEY (`event_type_ID`),
   ADD UNIQUE KEY `name` (`name`);
+
+--
+-- Indexes for table `formats`
+--
+ALTER TABLE `formats`
+  ADD PRIMARY KEY (`format_ID`),
+  ADD UNIQUE KEY `format_name` (`format_name`);
 
 --
 -- Indexes for table `genres`
@@ -401,6 +427,11 @@ ALTER TABLE `events`
 ALTER TABLE `event_types`
   MODIFY `event_type_ID` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT for table `formats`
+--
+ALTER TABLE `formats`
+  MODIFY `format_ID` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `genres`
 --
 ALTER TABLE `genres`
@@ -414,7 +445,7 @@ ALTER TABLE `impressions`
 -- AUTO_INCREMENT for table `publishers`
 --
 ALTER TABLE `publishers`
-  MODIFY `publisher_ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `publisher_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `transactions`
 --
@@ -445,7 +476,8 @@ ALTER TABLE `announcements`
 --
 ALTER TABLE `books`
   ADD CONSTRAINT `books_ibfk_1` FOREIGN KEY (`category_ID`) REFERENCES `categories` (`category_ID`),
-  ADD CONSTRAINT `books_ibfk_2` FOREIGN KEY (`publisher_ID`) REFERENCES `publishers` (`publisher_ID`);
+  ADD CONSTRAINT `books_ibfk_2` FOREIGN KEY (`publisher_ID`) REFERENCES `publishers` (`publisher_ID`),
+  ADD CONSTRAINT `books_ibfk_3` FOREIGN KEY (`format_ID`) REFERENCES `formats` (`format_ID`);
 
 --
 -- Constraints for table `book_authors`

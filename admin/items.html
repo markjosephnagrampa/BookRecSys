@@ -106,7 +106,7 @@
             <div class="dropdown">
                 <a class="btn btn-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                     data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fa-solid fa-user-circle"></i> Admin John Doe
+                    <i class="fa-solid fa-user-circle"></i> <span id="div-admin-name"></span>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                     <li><a class="dropdown-item" href="profile.html"><i class="fa-solid fa-user"></i> My Profile</a>
@@ -205,7 +205,8 @@
                 <div class="modal-body">
                     <form action="javascript:void(0);">
                         <div class="row mb-3">
-                            <label for="title" class="col-sm-3 col-form-label"><b>Title:</b></label>
+                            <label for="title" class="col-sm-3 col-form-label"><span class="text-danger">*</span><b>
+                                    Title:</b></label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="title">
                             </div>
@@ -217,33 +218,32 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="price" class="col-sm-3 col-form-label"><b>Price (in Php):</b></label>
+                            <label for="price" class="col-sm-3 col-form-label"><span class="text-danger">*</span><b>
+                                    Price (in Php):</b></label>
                             <div class="col-sm-9">
                                 <input type="number" min="1" class="form-control" id="price">
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="publisher2" class="col-sm-3 col-form-label"><b>Publisher:</b></label>
+                            <label for="publisher2" class="col-sm-3 col-form-label"><span
+                                    class="text-danger">*</span><b> Publisher:</b></label>
                             <div class="col-sm-9">
                                 <input class="form-control" list="publisher" name="publisher" id="publisher2">
                                 <datalist id="publisher">
-                                    <option value="Internet Explorer">
-                                    <option value="Firefox">
-                                    <option value="Chrome">
-                                    <option value="Opera">
-                                    <option value="Safari">
                                 </datalist>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="publication-year" class="col-sm-3 col-form-label"><b>Publication
+                            <label for="publication-year" class="col-sm-3 col-form-label"><span
+                                    class="text-danger">*</span><b> Publication
                                     Year:</b></label>
                             <div class="col-sm-9">
                                 <input type="number" class="form-control" id="publication-year">
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="format" class="col-sm-3 col-form-label"><b>Format:</b></label>
+                            <label for="format" class="col-sm-3 col-form-label"><span class="text-danger">*</span><b>
+                                    Format:</b></label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="format">
                             </div>
@@ -255,7 +255,8 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="cover-image" class="col-sm-3 col-form-label"><b>Cover Image:</b></label>
+                            <label for="cover-image" class="col-sm-3 col-form-label"><span
+                                    class="text-danger">*</span><b> Cover Image:</b></label>
                             <div class="col-sm-9" style="text-align: center;">
                                 <img src="https://via.placeholder.com/130x200" width="130" height="200" alt="">
                             </div>
@@ -267,7 +268,8 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="stock-qty" class="col-sm-3 col-form-label"><b>Stock Qty:</b></label>
+                            <label for="stock-qty" class="col-sm-3 col-form-label"><span class="text-danger">*</span><b>
+                                    Stock Qty:</b></label>
                             <div class="col-sm-9">
                                 <input type="number" class="form-control" id="stock-qty">
                             </div>
@@ -294,12 +296,13 @@
                         </div>
                         <div id="authors">
                             <div class="row mb-3" id="div-author-1">
-                                <label id="label-author-1" class="col-3 col-form-label">Author 1:</label>
+                                <label id="label-author-1" class="col-3 col-form-label"><span
+                                        class="text-danger">*</span> Author 1:</label>
                                 <div class="col-7">
                                     <input type="text" class="form-control" id="author-1">
                                 </div>
                                 <div class="col-2">
-                                    <button class="btn btn-danger" id="delete-author-1"><i
+                                    <button class="btn btn-danger" id="delete-author-1" disabled><i
                                             class="fa-solid fa-trash"></i></button>
                                 </div>
                             </div>
@@ -312,19 +315,22 @@
                         </div>
                         <div id="genres">
                             <div class="row mb-3" id="div-genre-1">
-                                <label id="label-genre-1" class="col-3 col-form-label">Genre 1:</label>
+                                <label id="label-genre-1" class="col-3 col-form-label"><span
+                                        class="text-danger">*</span> Genre 1:</label>
                                 <div class="col-7">
                                     <input type="text" class="form-control" id="genre-1">
                                 </div>
                                 <div class="col-2">
-                                    <button class="btn btn-danger" id="delete-genre-1"><i class="fa-solid fa-trash"></i></button>
+                                    <button class="btn btn-danger" id="delete-genre-1" disabled><i
+                                            class="fa-solid fa-trash"></i></button>
                                 </div>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Insert Book</button>
+                    <button type="button" class="btn btn-primary" id="insert-book"><i class="fa-solid fa-plus"></i>
+                        Insert Book</button>
                 </div>
             </div>
         </div>
@@ -362,7 +368,7 @@
                             <div class="col-sm-9">
                                 <input class="form-control" list="publisher" name="publisher" id="publisher2"
                                     value="Bloomberg Publishing">
-                                <datalist id="publisher">
+                                <datalist id="edit-publisher">
                                     <option value="Internet Explorer">
                                     <option value="Firefox">
                                     <option value="Chrome">
@@ -497,6 +503,25 @@
             }
             // Load user name on header
             $("#div-admin-name").html("Admin " + user["first_name"] + " " + user["last_name"]);
+
+            // Load all publishers on add book modal datalist
+            var formData = new FormData();
+            formData.append("GetPublishers", "set");
+
+            $.ajax({
+                type: "POST",
+                url: "GetPublishers_API.php",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    for(var i = 0; i < obj["publishers"].length; i++){
+                        $("#publisher").append("<option value='"+obj["publishers"][i]["publisher_name"]+"'>");
+                    }
+                }
+            });
         });
         var author_count = 1;
         $("#add-author").click(function () {
