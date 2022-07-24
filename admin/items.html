@@ -214,14 +214,14 @@
                         <div class="row mb-3">
                             <label for="isbn" class="col-sm-3 col-form-label"><b>ISBN:</b></label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="isbn">
+                                <input type="text" class="form-control" id="isbn" minlength="10" maxlength="13">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="price" class="col-sm-3 col-form-label"><span class="text-danger">*</span><b>
                                     Price (in Php):</b></label>
                             <div class="col-sm-9">
-                                <input type="number" min="1" class="form-control" id="price">
+                                <input type="number" min="1" step=".01" class="form-control" id="price">
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -238,14 +238,16 @@
                                     class="text-danger">*</span><b> Publication
                                     Year:</b></label>
                             <div class="col-sm-9">
-                                <input type="number" class="form-control" id="publication-year">
+                                <input type="number" class="form-control" id="publication_year" min="1" max="9999">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="format" class="col-sm-3 col-form-label"><span class="text-danger">*</span><b>
                                     Format:</b></label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="format">
+                                <input class="form-control" list="format" name="format" id="format2">
+                                <datalist id="format">
+                                </datalist>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -258,20 +260,20 @@
                             <label for="cover-image" class="col-sm-3 col-form-label"><span
                                     class="text-danger">*</span><b> Cover Image:</b></label>
                             <div class="col-sm-9" style="text-align: center;">
-                                <img src="https://via.placeholder.com/130x200" width="130" height="200" alt="">
+                                <img id = "output" src="https://via.placeholder.com/130x200" width="130" height="200" alt="">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="cover-image" class="col-sm-3 col-form-label"><b>Image Selector:</b></label>
                             <div class="col-sm-9" style="text-align: center;">
-                                <input type="file" id="cover-image" name="img" accept="image/*">
+                                <input type="file" id="cover_img_loc" name="img" accept="image/*" onchange="loadFile(event)">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="stock-qty" class="col-sm-3 col-form-label"><span class="text-danger">*</span><b>
                                     Stock Qty:</b></label>
                             <div class="col-sm-9">
-                                <input type="number" class="form-control" id="stock-qty">
+                                <input type="number" class="form-control" id="stock_qty" min="1">
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -279,11 +281,6 @@
                             <div class="col-sm-9">
                                 <input class="form-control" list="category" name="category" id="category2">
                                 <datalist id="category">
-                                    <option value="Internet Explorer">
-                                    <option value="Firefox">
-                                    <option value="Chrome">
-                                    <option value="Opera">
-                                    <option value="Safari">
                                 </datalist>
                             </div>
                         </div>
@@ -328,14 +325,16 @@
                         </div>
                     </form>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer d-flex flex-column">
+                    <div id="alert-add-book">
+                    </div>
                     <button type="button" class="btn btn-primary" id="insert-book"><i class="fa-solid fa-plus"></i>
                         Insert Book</button>
                 </div>
             </div>
         </div>
     </div>
-
+<!--
     <div id="edit-book-modal" class="modal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
@@ -487,8 +486,13 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <script>
+        var loadFile = function(event) {
+			var image = document.getElementById('output');
+			image.src = URL.createObjectURL(event.target.files[0]);
+		};
+
         $(document).ready(function () {
             // Check if user is logged in
             if (sessionStorage.getItem("user") === null) {
@@ -517,8 +521,46 @@
                 processData: false,
                 success: function (data) {
                     var obj = JSON.parse(data);
-                    for(var i = 0; i < obj["publishers"].length; i++){
-                        $("#publisher").append("<option value='"+obj["publishers"][i]["publisher_name"]+"'>");
+                    for (var i = 0; i < obj["publishers"].length; i++) {
+                        $("#publisher").append("<option value='" + obj["publishers"][i]["publisher_name"] + "'>");
+                    }
+                }
+            });
+
+            // Load all formats on add book modal datalist
+            var formData = new FormData();
+            formData.append("GetFormats", "set");
+
+            $.ajax({
+                type: "POST",
+                url: "GetFormats_API.php",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    for (var i = 0; i < obj["formats"].length; i++) {
+                        $("#format").append("<option value='" + obj["formats"][i]["format_name"] + "'>");
+                    }
+                }
+            });
+
+            // Load all categories on add book modal datalist
+            var formData = new FormData();
+            formData.append("GetCategories", "set");
+
+            $.ajax({
+                type: "POST",
+                url: "GetCategories_API.php",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    for (var i = 0; i < obj["categories"].length; i++) {
+                        $("#category").append("<option value='" + obj["categories"][i]["category_name"] + "'>");
                     }
                 }
             });
@@ -585,6 +627,85 @@
                 $("#div-genre-" + (i + 1)).attr("id", "div-genre-" + i);
             }
             genre_count--;
+        });
+
+        $("#insert-book").click(function () {
+            // 1. Validate Required Fields
+            var title = $("#title").val();
+            var price = $("#price").val();
+            var publisher = $("#publisher2").val();
+            var publication_year = $("#publication_year").val();
+            var format = $("#format2").val();
+            var cover_img_loc = $("#cover_img_loc").val();
+            var stock_qty = $("#stock_qty").val();
+            var author_1 = $("#author-1").val();
+            var genre_1 = $("#genre-1").val();
+
+            if (title && price && publisher && publication_year && format && cover_img_loc && stock_qty && author_1 && genre_1) {
+                // Check if price is between .01 to 99999.99
+                var float_price = parseFloat(price);
+                if(float_price == NaN || (float_price < .01 || float_price > 99999.99)){
+                    var html_element = ' \
+                    <div class="alert alert-danger alert-dismissible fade show m-2" role="alert"> \
+                        Please enter a valid price between .01 and 99999.99. \
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                    </div> \
+                    ';
+                    $("#alert-add-book").html(html_element);
+                }
+
+                // Check if publication year is between 1 and 9999.
+                var int_publication_year = parseInt(publication_year);
+                if(int_publication_year == NaN || (int_publication_year < 1 || int_publication_year > 9999)){
+                    var html_element = ' \
+                    <div class="alert alert-danger alert-dismissible fade show m-2" role="alert"> \
+                        Please enter a valid publication year between 1 and the current year. \
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                    </div> \
+                    ';
+                    $("#alert-add-book").html(html_element);
+                }
+
+                // Check if stock qty is between 1 and 99999999999.
+                var int_stock_qty = parseInt(stock_qty);
+                if(int_stock_qty == NaN || (int_stock_qty < 1 || int_stock_qty > 99999999999)){
+                    var html_element = ' \
+                    <div class="alert alert-danger alert-dismissible fade show m-2" role="alert"> \
+                        Please enter a valid stock qty value between 1 and 99999999999. \
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                    </div> \
+                    ';
+                    $("#alert-add-book").html(html_element);
+                }
+
+                // OPTIONAL FIELDS 
+                
+                // 1. Check if ISBN is a 10 or 13 digit code
+                let isbn10 = /^\d{10}$/;
+                let isbn13 = /^\d{13}$/;
+                var isbn = $("#isbn").val();
+                
+                if(!isbn10.test(isbn) && !isbn13.test(isbn) && isbn){
+                    var html_element = ' \
+                    <div class="alert alert-danger alert-dismissible fade show m-2" role="alert"> \
+                        ISBN must be a 10-digit code, 13-digit code, or null value. \
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                    </div> \
+                    ';
+                    $("#alert-add-book").html(html_element);
+                }
+
+            }
+            else {
+                var html_element = ' \
+                    <div class="alert alert-danger alert-dismissible fade show m-2" role="alert"> \
+                        Please fill out all required fields. \
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                    </div> \
+                ';
+                $("#alert-add-book").html(html_element);
+            }
+
         });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"

@@ -18,14 +18,14 @@
 		$a = test_input($b);
 	}
 
-    if(isset($_POST["GetPublishers"])){
-        $sql = "SELECT * from publishers";
+    if(isset($_POST["GetCategories"])){
+        $sql = "SELECT * from categories";
         $result = $conn->query($sql);
-        $myObj->publishers = array();
+        $myObj->categories = array();
         $i=0;
         while($row = $result->fetch_assoc()) {
-            $myObj->publishers[$i] = new stdClass();
-            $myObj->publishers[$i]->publisher_name = $row["publisher_name"];
+            $myObj->categories[$i] = new stdClass();
+            $myObj->categories[$i]->category_name = $row["category_name"];
             $i++;
         }
         $myJSON = json_encode($myObj);
