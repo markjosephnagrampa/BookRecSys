@@ -1,0 +1,11 @@
+Step 1: LAMP Server
+Step 2: phpmyadmin
+	(before testing)
+	sudo vi /etc/apache2/apache2.conf
+	Include /etc/phpmyadmin/apache.conf
+	sudo systemctl restart apache2.service
+Step 3: Totara Dependencies
+Step 4: uwsgi-model-update requirements.txt
+Step 5: sudo chmod -R 777 /var/www/html
+	sudo chgrp www-data -R /var/www/html
+	

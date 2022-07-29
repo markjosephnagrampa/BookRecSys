@@ -117,6 +117,12 @@
             </div>
         </div>
     </div>
+
+    <div class="container">
+        <div id="div-alert">
+
+        </div>
+    </div>
     <div class="d-flex justify-content-center my-2">
         <h1>Manage Items</h1>
     </div>
@@ -260,13 +266,15 @@
                             <label for="cover-image" class="col-sm-3 col-form-label"><span
                                     class="text-danger">*</span><b> Cover Image:</b></label>
                             <div class="col-sm-9" style="text-align: center;">
-                                <img id = "output" src="https://via.placeholder.com/130x200" width="130" height="200" alt="">
+                                <img id="output" src="https://via.placeholder.com/130x200" width="130" height="200"
+                                    alt="">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="cover-image" class="col-sm-3 col-form-label"><b>Image Selector:</b></label>
                             <div class="col-sm-9" style="text-align: center;">
-                                <input type="file" id="cover_img_loc" name="img" accept="image/*" onchange="loadFile(event)">
+                                <input type="file" id="cover_img_loc" name="img" accept="image/*"
+                                    onchange="loadFile(event)">
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -334,7 +342,7 @@
             </div>
         </div>
     </div>
-<!--
+    <!--
     <div id="edit-book-modal" class="modal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
@@ -488,10 +496,10 @@
         </div>
     </div> -->
     <script>
-        var loadFile = function(event) {
-			var image = document.getElementById('output');
-			image.src = URL.createObjectURL(event.target.files[0]);
-		};
+        var loadFile = function (event) {
+            var image = document.getElementById('output');
+            image.src = URL.createObjectURL(event.target.files[0]);
+        };
 
         $(document).ready(function () {
             // Check if user is logged in
@@ -637,6 +645,8 @@
             var publication_year = $("#publication_year").val();
             var format = $("#format2").val();
             var cover_img_loc = $("#cover_img_loc").val();
+            var image = $('#cover_img_loc').prop('files')[0];
+            var hasImage = ($('#cover_img_loc').get(0).files.length === 0) ? "false" : "true";
             var stock_qty = $("#stock_qty").val();
             var author_1 = $("#author-1").val();
             var genre_1 = $("#genre-1").val();
@@ -644,7 +654,7 @@
             if (title && price && publisher && publication_year && format && cover_img_loc && stock_qty && author_1 && genre_1) {
                 // Check if price is between .01 to 99999.99
                 var float_price = parseFloat(price);
-                if(float_price == NaN || (float_price < .01 || float_price > 99999.99)){
+                if (float_price == NaN || (float_price < .01 || float_price > 99999.99)) {
                     var html_element = ' \
                     <div class="alert alert-danger alert-dismissible fade show m-2" role="alert"> \
                         Please enter a valid price between .01 and 99999.99. \
@@ -652,11 +662,12 @@
                     </div> \
                     ';
                     $("#alert-add-book").html(html_element);
+                    return;
                 }
 
                 // Check if publication year is between 1 and 9999.
                 var int_publication_year = parseInt(publication_year);
-                if(int_publication_year == NaN || (int_publication_year < 1 || int_publication_year > 9999)){
+                if (int_publication_year == NaN || (int_publication_year < 1 || int_publication_year > 9999)) {
                     var html_element = ' \
                     <div class="alert alert-danger alert-dismissible fade show m-2" role="alert"> \
                         Please enter a valid publication year between 1 and the current year. \
@@ -664,11 +675,12 @@
                     </div> \
                     ';
                     $("#alert-add-book").html(html_element);
+                    return;
                 }
 
                 // Check if stock qty is between 1 and 99999999999.
                 var int_stock_qty = parseInt(stock_qty);
-                if(int_stock_qty == NaN || (int_stock_qty < 1 || int_stock_qty > 99999999999)){
+                if (int_stock_qty == NaN || (int_stock_qty < 1 || int_stock_qty > 99999999999)) {
                     var html_element = ' \
                     <div class="alert alert-danger alert-dismissible fade show m-2" role="alert"> \
                         Please enter a valid stock qty value between 1 and 99999999999. \
@@ -676,16 +688,32 @@
                     </div> \
                     ';
                     $("#alert-add-book").html(html_element);
+                    return;
+                }
+
+                // Check if cover image has a valid file extension
+                let img_regex = /(.*?)\.(tiff|pjp|jfif|gif|svg|bmp|png|jpeg|svgz|jpg|webp|ico|xbm|dib|tif|pjpeg|avif)$/;
+                if (!img_regex.test(cover_img_loc)) {
+                    var html_element = ' \
+                    <div class="alert alert-danger alert-dismissible fade show m-2" role="alert"> \
+                        Please enter an image with a different file extension. \
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                    </div> \
+                    ';
+                    $("#alert-add-book").html(html_element);
+                    return;
                 }
 
                 // OPTIONAL FIELDS 
-                
+                var description = $("#description").val();
+                var category = $("#category2").val();
+                var isbn = $("#isbn").val();
+
                 // 1. Check if ISBN is a 10 or 13 digit code
                 let isbn10 = /^\d{10}$/;
                 let isbn13 = /^\d{13}$/;
-                var isbn = $("#isbn").val();
-                
-                if(!isbn10.test(isbn) && !isbn13.test(isbn) && isbn){
+
+                if (!isbn10.test(isbn) && !isbn13.test(isbn) && isbn) {
                     var html_element = ' \
                     <div class="alert alert-danger alert-dismissible fade show m-2" role="alert"> \
                         ISBN must be a 10-digit code, 13-digit code, or null value. \
@@ -693,7 +721,86 @@
                     </div> \
                     ';
                     $("#alert-add-book").html(html_element);
+                    return;
                 }
+
+                // CALL API TO INSERT BOOK
+
+                var formData = new FormData();
+                formData.append("InsertBook", "set");
+                formData.append("title", title);
+                formData.append("price", price);
+                formData.append("publisher", publisher);
+                formData.append("publication_year", publication_year);
+                formData.append("format", format);
+                formData.append("image", image);
+                formData.append("stock_qty", stock_qty);
+                formData.append("description", description);
+                formData.append("category", category);
+                formData.append("isbn", isbn);
+
+                // load all authors and genres
+                for (var i = 1; i <= author_count; i++) {
+                    formData.append('author[]', $("#author-" + i).val());
+                }
+                for (var i = 1; i <= genre_count; i++) {
+                    formData.append('genre[]', $("#genre-" + i).val());
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: "InsertBook_API.php",
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        var obj = JSON.parse(data);
+                        console.log(obj);
+                        if (obj["error"] == 1) {
+                            var html_element = ' \
+                                <div class="alert alert-danger alert-dismissible fade show m-2" role="alert"> \
+                                    '+obj["response"]+' \
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                                </div> \
+                            ';
+                            $("#alert-add-book").html(html_element);
+                        }
+                        else if(obj["error"] == 0){
+                            var html_element = ' \
+                                <div class="alert alert-success alert-dismissible fade show m-2" role="alert"> \
+                                    '+obj["response"]+' \
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                                </div> \
+                            ';
+                            $("#div-alert").html(html_element);
+                            $("#add-book-modal .btn-close").click();
+
+                            // Reset Modal Content
+                            $("#title").val("");
+                            $("#isbn").val("");
+                            $("#price").val("");
+                            $("#publisher2").val("");
+                            $("#publication_year").val("");
+                            $("#format2").val("");
+                            $("#description").val("");
+                            $("#output").attr("src","https://via.placeholder.com/130x200");
+                            $("#cover_img_loc").val("");
+                            $("#stock_qty").val("");
+                            $("#category2").val("");
+                            $("#author-1").val("");
+                            $("#genre-1").val("");
+                            for(var i = author_count; i > 1; i--){
+                                $("#delete-author-"+i).click();
+                            }
+                            author_count = 1;
+                            for(var i = genre_count; i > 1; i--){
+                                $("#delete-genre-"+i).click();
+                            }
+                            genre_count = 1;
+                        }
+                    }
+                });
 
             }
             else {
