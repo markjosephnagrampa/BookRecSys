@@ -15,7 +15,7 @@
 	
     // Clean POST inputs
 	foreach ($_POST as $a => $b) {
-		$a = test_input($b);
+		$_POST[$a] = test_input($b);
 	}
 
     if(isset($_POST["GetPublishers"])){

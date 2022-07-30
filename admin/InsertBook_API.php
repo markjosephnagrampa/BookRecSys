@@ -13,9 +13,9 @@
 	  die("Connection failed: " . $conn->connect_error);
 	}
 	
-    // Clean POST inputs
+    // Clean POST inputs and remove all single quotes
 	foreach ($_POST as $a => $b) {
-		$a = test_input($b);
+		$_POST[$a] = test_input($b);
 	}
 
     if(isset($_POST["InsertBook"])){
@@ -163,17 +163,19 @@
             }
         }
         // 5. Insert book record.
+
+        $sql = "";
+        
         if($category_ID == -1){
-            $category_ID = NULL;
+            $sql = "INSERT into books (publisher_ID,format_ID,ISBN,title,price,publication_year,description,cover_image_loc,stock_qty,is_for_training,is_deleted)
+                VALUES ('".$publisher_ID."','".$format_ID."','".$_POST["isbn"]."','".$_POST["title"]."','".$_POST["price"]."','".$_POST["publication_year"]."','".$_POST["description"]."',' ','".$_POST["stock_qty"]."','1','0')
+            ";
         }
-
-        // 5.1. Remove all single quotes in description field.
-
-        $_POST["description"] = preg_replace('/\'/','',$_POST["description"]);
-
-        $sql = "INSERT into books (category_ID,publisher_ID,format_ID,ISBN,title,price,publication_year,description,cover_image_loc,stock_qty,is_for_training,is_deleted)
-                VALUES ('".$category_ID."','".$publisher_ID."','".$format_ID."','".$_POST["isbn"]."','".$_POST["title"]."','".$_POST["price"]."','".$_POST["publication_year"]."','".$_POST["description"]."',' ','".$_POST["stock_qty"]."','1','0')
-        ";
+        else{
+            $sql = "INSERT into books (category_ID,publisher_ID,format_ID,ISBN,title,price,publication_year,description,cover_image_loc,stock_qty,is_for_training,is_deleted)
+                    VALUES ('".$category_ID."','".$publisher_ID."','".$format_ID."','".$_POST["isbn"]."','".$_POST["title"]."','".$_POST["price"]."','".$_POST["publication_year"]."','".$_POST["description"]."',' ','".$_POST["stock_qty"]."','1','0')
+            ";
+        }
 
         $last_id = -1;
         if ($conn->query($sql) === TRUE) {
@@ -325,6 +327,7 @@
         $data = trim($data);
         $data = stripslashes($data);
         $data = htmlspecialchars($data);
+        $data = preg_replace('/\'/',"",$data);
         return $data;
     }
     

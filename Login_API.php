@@ -15,7 +15,7 @@
 	
     // Clean POST inputs
 	foreach ($_POST as $a => $b) {
-		$a = test_input($b);
+		$_POST[$a] = test_input($b);
 	}
 
     if(isset($_POST["Login"])){				
@@ -83,6 +83,7 @@
         $data = trim($data);
         $data = stripslashes($data);
         $data = htmlspecialchars($data);
+        $data = preg_replace('/\'/',"",$data);
         return $data;
       }
 ?>
