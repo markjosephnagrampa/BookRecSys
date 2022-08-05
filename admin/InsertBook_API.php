@@ -12,10 +12,17 @@
 	if ($conn->connect_error) {
 	  die("Connection failed: " . $conn->connect_error);
 	}
-	
+    
     // Clean POST inputs and remove all single quotes
 	foreach ($_POST as $a => $b) {
-		$_POST[$a] = test_input($b);
+        if(strcmp($a,"author") == 0 || strcmp($a,"genre") == 0){ 
+            foreach($_POST[$a] as $c => $d){
+                $_POST[$a][$c] = test_input($d);
+            }
+        }
+		else {
+            $_POST[$a] = test_input($b);
+        }
 	}
 
     if(isset($_POST["InsertBook"])){
@@ -164,6 +171,11 @@
         }
         // 5. Insert book record.
 
+        // 5.1. Truncate description if it's too long.
+        if(strlen($_POST["description"]) > 1000){
+            $_POST["description"] = substr($_POST["description"],0,997)."...";
+        }
+
         $sql = "";
         
         if($category_ID == -1){
@@ -266,7 +278,7 @@
 
         // 7. Edit book record to include image location.
         if(file_exists($destination)){
-            $sql = "UPDATE books SET cover_image_loc = '".$destination."' WHERE book_ID = '".$last_id."'";
+            $sql = "UPDATE books SET cover_image_loc = '".$last_id.".".$imageFileType."' WHERE book_ID = '".$last_id."'";
             if ($conn->query($sql) === TRUE) {
             }
             else{
