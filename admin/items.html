@@ -322,6 +322,153 @@
             </div>
         </div>
     </div>
+    <div id="view-book-modal" class="modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">View Book</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="javascript:void(0);">
+                        <div class="row mb-3">
+                            <label for="view-title" class="col-sm-3 col-form-label"><span
+                                    class="text-danger">*</span><b>
+                                    Title:</b></label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="view-title" disabled>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="view-isbn" class="col-sm-3 col-form-label"><b>ISBN:</b></label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="view-isbn" minlength="10" maxlength="13"
+                                    disabled>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="view-price" class="col-sm-3 col-form-label"><span
+                                    class="text-danger">*</span><b>
+                                    Price (in Php):</b></label>
+                            <div class="col-sm-9">
+                                <input type="number" min="1" step=".01" class="form-control" id="view-price" disabled>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="view-publisher2" class="col-sm-3 col-form-label"><span
+                                    class="text-danger">*</span><b> Publisher:</b></label>
+                            <div class="col-sm-9">
+                                <input class="form-control" list="view-publisher" name="view-publisher"
+                                    id="view-publisher2" disabled>
+                                <datalist id="view-publisher">
+                                </datalist>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="view-publication-year" class="col-sm-3 col-form-label"><span
+                                    class="text-danger">*</span><b> Publication
+                                    Year:</b></label>
+                            <div class="col-sm-9">
+                                <input type="number" class="form-control" id="view-publication_year" min="1" max="9999"
+                                    disabled>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="view-format" class="col-sm-3 col-form-label"><span
+                                    class="text-danger">*</span><b>
+                                    Format:</b></label>
+                            <div class="col-sm-9">
+                                <input class="form-control" list="view-format" name="view-format" id="view-format2"
+                                    disabled>
+                                <datalist id="view-format">
+                                </datalist>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="view-description" class="col-sm-3 col-form-label"><b>Description:</b></label>
+                            <div class="col-sm-9">
+                                <textarea name="" class="form-control" id="view-description" disabled></textarea>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="view-cover-image" class="col-sm-3 col-form-label"><span
+                                    class="text-danger">*</span><b> Cover Image:</b></label>
+                            <div class="col-sm-9" style="text-align: center;">
+                                <img id="view-output" src="https://via.placeholder.com/130x200" width="130" height="200"
+                                    alt="">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="view-cover-image" class="col-sm-3 col-form-label"><b>Image Selector:</b></label>
+                            <div class="col-sm-9" style="text-align: center;">
+                                <input type="file" id="view-cover_img_loc" name="img" accept="image/*"
+                                    onchange="loadFile(event)" disabled>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="view-stock-qty" class="col-sm-3 col-form-label"><span
+                                    class="text-danger">*</span><b>
+                                    Stock Qty:</b></label>
+                            <div class="col-sm-9">
+                                <input type="number" class="form-control" id="view-stock_qty" min="1" disabled>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="view-category2" class="col-sm-3 col-form-label"><b>Category:</b></label>
+                            <div class="col-sm-9">
+                                <input class="form-control" list="view-category" name="view-category"
+                                    id="view-category2" disabled>
+                                <datalist id="view-category">
+                                </datalist>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="view-author" class="col-sm-3 col-form-label"><b>Author(s):</b></label>
+                            <div class="col-sm-9">
+                                <button class="btn btn-success" id="view-add-author" disabled><i
+                                        class="fa-solid fa-plus"></i></button>
+                            </div>
+                        </div>
+                        <div id="view-authors">
+                            <!--<div class="row mb-3" id="view-div-author-1">
+                                <label id="view-label-author-1" class="col-3 col-form-label"><span
+                                        class="text-danger">*</span> Author 1:</label>
+                                <div class="col-7">
+                                    <input type="text" class="form-control" id="view-author-1" disabled>
+                                </div>
+                                <div class="col-2">
+                                    <button class="btn btn-danger" id="view-delete-author-1" disabled><i
+                                            class="fa-solid fa-trash"></i></button>
+                                </div>
+                            </div>-->
+                        </div>
+                        <div class="row mb-3">
+                            <label for="view-genre" class="col-sm-3 col-form-label"><b>Genre(s):</b></label>
+                            <div class="col-sm-9">
+                                <button class="btn btn-success" id="view-add-genre" disabled><i
+                                        class="fa-solid fa-plus"></i></button>
+                            </div>
+                        </div>
+                        <div id="view-genres">
+                            <!--
+                            <div class="row mb-3" id="view-div-genre-1">
+                                <label id="view-label-genre-1" class="col-3 col-form-label"><span
+                                        class="text-danger">*</span> Genre 1:</label>
+                                <div class="col-7">
+                                    <input type="text" class="form-control" id="view-genre-1" disabled>
+                                </div>
+                                <div class="col-2">
+                                    <button class="btn btn-danger" id="view-delete-genre-1" disabled><i
+                                            class="fa-solid fa-trash"></i></button>
+                                </div>
+                            </div>
+                            -->
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <!--
     <div id="edit-book-modal" class="modal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -575,7 +722,7 @@
                                 <td>'+ obj["books"][i]["publisher_name"] + '</td> \
                                 <td>Php '+ obj["books"][i]["price"] + '</td> \
                                 <td>'+ obj["books"][i]["stock_qty"] + '</td> \
-                                <td><button class="btn btn-primary" id="view-book-'+ obj["books"][i]["book_ID"] + '"><i class="fa-solid fa-eye"></i></button></td> \
+                                <td><button class="btn btn-primary" id="view-book-'+ obj["books"][i]["book_ID"] + '" data-bs-toggle="modal" data-bs-target="#view-book-modal"><i class="fa-solid fa-eye"></i></button></td> \
                                 <td><button class="btn btn-warning" id="edit-book-'+ obj["books"][i]["book_ID"] + '" data-bs-toggle="modal" \
                                         data-bs-target="#add-book-modal"><i class="fa-solid fa-pencil"></i></button> \
                                 </td> \
@@ -687,7 +834,7 @@
                                 <td>'+ obj["books"][i]["publisher_name"] + '</td> \
                                 <td>Php '+ obj["books"][i]["price"] + '</td> \
                                 <td>'+ obj["books"][i]["stock_qty"] + '</td> \
-                                <td><button class="btn btn-primary" id="view-book-'+ obj["books"][i]["book_ID"] + '"><i class="fa-solid fa-eye"></i></button></td> \
+                                <td><button class="btn btn-primary" id="view-book-'+ obj["books"][i]["book_ID"] + '" data-bs-toggle="modal" data-bs-target="#view-book-modal"><i class="fa-solid fa-eye"></i></button></td> \
                                 <td><button class="btn btn-warning" id="edit-book-'+ obj["books"][i]["book_ID"] + '" data-bs-toggle="modal" \
                                         data-bs-target="#add-book-modal"><i class="fa-solid fa-pencil"></i></button> \
                                 </td> \
@@ -762,7 +909,7 @@
                                 <td>'+ obj["books"][i]["publisher_name"] + '</td> \
                                 <td>Php '+ obj["books"][i]["price"] + '</td> \
                                 <td>'+ obj["books"][i]["stock_qty"] + '</td> \
-                                <td><button class="btn btn-primary" id="view-book-'+ obj["books"][i]["book_ID"] + '"><i class="fa-solid fa-eye"></i></button></td> \
+                                <td><button class="btn btn-primary" id="view-book-'+ obj["books"][i]["book_ID"] + '" data-bs-toggle="modal" data-bs-target="#view-book-modal"><i class="fa-solid fa-eye"></i></button></td> \
                                 <td><button class="btn btn-warning" id="edit-book-'+ obj["books"][i]["book_ID"] + '" data-bs-toggle="modal" \
                                         data-bs-target="#add-book-modal"><i class="fa-solid fa-pencil"></i></button> \
                                 </td> \
@@ -774,6 +921,68 @@
                 }
             });
 
+        });
+
+        $(document).on("click", '[id^=view-book-]', function (event) {
+            var id = this.id.match(/[0-9]+/);
+            var id_index = parseInt(id[0]);
+
+            var formData = new FormData();
+            formData.append("GetBookDetails", "set");
+            formData.append("book_ID", id_index);
+            $.ajax({
+                type: "POST",
+                url: "GetBookDetails_API.php",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    $("#view-title").val(obj["book"]["title"]);
+                    $("#view-isbn").val(obj["book"]["ISBN"]);
+                    $("#view-price").val(obj["book"]["price"]);
+                    $("#view-publisher2").val(obj["book"]["publisher"]);
+                    $("#view-publication_year").val(obj["book"]["publication_year"]);
+                    $("#view-format2").val(obj["book"]["format"]);
+                    $("#view-description").val(obj["book"]["description"]);
+                    $("#view-output").attr("src", obj["book"]["cover_image_loc"]);
+                    $("#view-stock_qty").val(obj["book"]["stock_qty"]);
+                    $("#view-category2").val(obj["book"]["category"]);
+                    $("#view-authors").html("");
+                    $("#view-genres").html("");
+
+                    for (var i = 0; i < obj["authors"].length; i++) {
+                        var html_element = ' \
+                            <div class="row mb-3" id="view-div-author-'+ (i + 1) + '"> \
+                                <label id = "view-label-author-'+ (i + 1) + '" class="col-3 col-form-label">Author ' + (i + 1) + ':</label> \
+                                <div class="col-7"> \
+                                    <input disabled type="text" value = "'+ obj["authors"][i] + '" class="form-control" id="view-author-' + (i + 1) + '"> \
+                                </div> \
+                                <div class="col-2"> \
+                                    <button disabled class="btn btn-danger" id="view-delete-author-'+ (i + 1) + '"><i class="fa-solid fa-trash"></i></button> \
+                                </div> \
+                            </div> \
+                                ';
+                        $("#view-authors").append(html_element);
+                    }
+
+                    for (var i = 0; i < obj["genres"].length; i++) {
+                        var html_element = ' \
+                            <div class="row mb-3" id="view-div-genre-'+ (i + 1) + '"> \
+                                <label id = "view-label-genre-'+ (i + 1) + '" class="col-3 col-form-label">Genre ' + (i + 1) + ':</label> \
+                                <div class="col-7"> \
+                                    <input disabled type="text" value = "'+ obj["genres"][i] + '" class="form-control" id="view-genre-' + (i + 1) + '"> \
+                                </div> \
+                                <div class="col-2"> \
+                                    <button disabled class="btn btn-danger" id="view-delete-genre-'+ (i + 1) + '"><i class="fa-solid fa-trash"></i></button> \
+                                </div> \
+                            </div> \
+                                ';
+                        $("#view-genres").append(html_element);
+                    }
+                }
+            });
         });
 
         $(document).on("click", '[id^=pagination]', function (event) {
@@ -852,7 +1061,7 @@
                                 <td>'+ obj["books"][i]["publisher_name"] + '</td> \
                                 <td>Php '+ obj["books"][i]["price"] + '</td> \
                                 <td>'+ obj["books"][i]["stock_qty"] + '</td> \
-                                <td><button class="btn btn-primary" id="view-book-'+ obj["books"][i]["book_ID"] + '"><i class="fa-solid fa-eye"></i></button></td> \
+                                <td><button class="btn btn-primary" id="view-book-'+ obj["books"][i]["book_ID"] + '" data-bs-toggle="modal" data-bs-target="#view-book-modal"><i class="fa-solid fa-eye"></i></button></td> \
                                 <td><button class="btn btn-warning" id="edit-book-'+ obj["books"][i]["book_ID"] + '" data-bs-toggle="modal" \
                                         data-bs-target="#add-book-modal"><i class="fa-solid fa-pencil"></i></button> \
                                 </td> \
