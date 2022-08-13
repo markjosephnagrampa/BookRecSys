@@ -469,7 +469,6 @@
             </div>
         </div>
     </div>
-    <!--
     <div id="edit-book-modal" class="modal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
@@ -480,151 +479,152 @@
                 <div class="modal-body">
                     <form action="javascript:void(0);">
                         <div class="row mb-3">
-                            <label for="title" class="col-sm-3 col-form-label"><b>Title:</b></label>
+                            <label for="edit-title" class="col-sm-3 col-form-label"><span
+                                    class="text-danger">*</span><b>
+                                    Title:</b></label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="title" value="Harry Potter">
+                                <input type="text" class="form-control" id="edit-title">
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="isbn" class="col-sm-3 col-form-label"><b>ISBN:</b></label>
+                            <label for="edit-isbn" class="col-sm-3 col-form-label"><b>ISBN:</b></label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="isbn" value="9876543210123">
+                                <input type="text" class="form-control" id="edit-isbn" minlength="10" maxlength="13">
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="price" class="col-sm-3 col-form-label"><b>Price (in Php):</b></label>
+                            <label for="edit-price" class="col-sm-3 col-form-label"><span
+                                    class="text-danger">*</span><b>
+                                    Price (in Php):</b></label>
                             <div class="col-sm-9">
-                                <input type="number" min="1" class="form-control" id="price" value="230.50">
+                                <input type="number" min="1" step=".01" class="form-control" id="edit-price">
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="publisher2" class="col-sm-3 col-form-label"><b>Publisher:</b></label>
+                            <label for="edit-publisher2" class="col-sm-3 col-form-label"><span
+                                    class="text-danger">*</span><b> Publisher:</b></label>
                             <div class="col-sm-9">
-                                <input class="form-control" list="publisher" name="publisher" id="publisher2"
-                                    value="Bloomberg Publishing">
+                                <input class="form-control" list="edit-publisher" name="edit-publisher"
+                                    id="edit-publisher2">
                                 <datalist id="edit-publisher">
-                                    <option value="Internet Explorer">
-                                    <option value="Firefox">
-                                    <option value="Chrome">
-                                    <option value="Opera">
-                                    <option value="Safari">
                                 </datalist>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="publication-year" class="col-sm-3 col-form-label"><b>Publication
+                            <label for="edit-publication-year" class="col-sm-3 col-form-label"><span
+                                    class="text-danger">*</span><b> Publication
                                     Year:</b></label>
                             <div class="col-sm-9">
-                                <input type="number" class="form-control" id="publication-year" value="1999">
+                                <input type="number" class="form-control" id="edit-publication_year" min="1" max="9999">
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="format" class="col-sm-3 col-form-label"><b>Format:</b></label>
+                            <label for="edit-format" class="col-sm-3 col-form-label"><span
+                                    class="text-danger">*</span><b>
+                                    Format:</b></label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="format" value="Paperback">
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label for="description" class="col-sm-3 col-form-label"><b>Description:</b></label>
-                            <div class="col-sm-9">
-                                <textarea name="" class="form-control" id="description"
-                                    value="Harry Potter and the Philosopher's Stone is a fantasy novel written by British author J. K. Rowling. The first novel in the Harry Potter series and Rowling's debut novel, it follows Harry Potter, a young wizard who discovers his magical heritage on his eleventh birthday, when he receives a letter of acceptance to Hogwarts School of Witchcraft and Wizardry. Harry makes close friends and a few enemies during his first year at the school and with the help of his friends, he faces an attempted comeback by the dark wizard Lord Voldemort, who killed Harry's parents, but failed to kill Harry when he was just 15 months old. "></textarea>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label for="cover-image" class="col-sm-3 col-form-label"><b>Cover Image:</b></label>
-                            <div class="col-sm-9" style="text-align: center;">
-                                <img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1474154022l/3._SY475_.jpg"
-                                    width="130" height="200" alt="">
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label for="cover-image" class="col-sm-3 col-form-label"><b>Image Selector:</b></label>
-                            <div class="col-sm-9" style="text-align: center;">
-                                <input type="file" id="cover-image" name="img" accept="image/*">
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label for="stock-qty" class="col-sm-3 col-form-label"><b>Stock Qty:</b></label>
-                            <div class="col-sm-9">
-                                <input type="number" class="form-control" id="stock-qty" value="23">
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label for="category2" class="col-sm-3 col-form-label"><b>Category:</b></label>
-                            <div class="col-sm-9">
-                                <input class="form-control" list="category" name="category" id="category2">
-                                <datalist id="category">
-                                    <option value="Internet Explorer">
-                                    <option value="Firefox">
-                                    <option value="Chrome">
-                                    <option value="Opera">
-                                    <option value="Safari">
+                                <input class="form-control" list="edit-format" name="edit-format" id="edit-format2">
+                                <datalist id="edit-format">
                                 </datalist>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="author" class="col-sm-3 col-form-label"><b>Author(s):</b></label>
+                            <label for="edit-description" class="col-sm-3 col-form-label"><b>Description:</b></label>
+                            <div class="col-sm-9">
+                                <textarea name="" class="form-control" id="edit-description"></textarea>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="edit-cover-image" class="col-sm-3 col-form-label"><span
+                                    class="text-danger">*</span><b> Cover Image:</b></label>
+                            <div class="col-sm-9" style="text-align: center;">
+                                <img id="edit-output" src="https://via.placeholder.com/130x200" width="130" height="200"
+                                    alt="">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="edit-cover-image" class="col-sm-3 col-form-label"><b>Image Selector:</b></label>
+                            <div class="col-sm-9" style="text-align: center;">
+                                <input type="file" id="edit-cover_img_loc" name="img" accept="image/*"
+                                    onchange="loadFile2(event)">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="edit-stock-qty" class="col-sm-3 col-form-label"><span
+                                    class="text-danger">*</span><b>
+                                    Stock Qty:</b></label>
+                            <div class="col-sm-9">
+                                <input type="number" class="form-control" id="edit-stock_qty" min="1">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="edit-category2" class="col-sm-3 col-form-label"><b>Category:</b></label>
+                            <div class="col-sm-9">
+                                <input class="form-control" list="edit-category" name="edit-category"
+                                    id="edit-category2">
+                                <datalist id="edit-category">
+                                </datalist>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="edit-author" class="col-sm-3 col-form-label"><b>Author(s):</b></label>
                             <div class="col-sm-9">
                                 <button class="btn btn-success" id="edit-add-author"><i
                                         class="fa-solid fa-plus"></i></button>
                             </div>
                         </div>
                         <div id="edit-authors">
-                            <div class="row mb-3">
-                                <label for="author-1" class="col-3 col-form-label">Author 1:</label>
+                            <div class="row mb-3" id="edit-div-author-1">
+                                <label id="edit-label-author-1" class="col-3 col-form-label"><span
+                                        class="text-danger">*</span> Author 1:</label>
                                 <div class="col-7">
-                                    <input type="text" class="form-control" id="author-1">
+                                    <input type="text" class="form-control" id="edit-author-1">
                                 </div>
                                 <div class="col-2">
-                                    <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label for="author-2" class="col-3 col-form-label">Author 2:</label>
-                                <div class="col-7">
-                                    <input type="text" class="form-control" id="author-2">
-                                </div>
-                                <div class="col-2">
-                                    <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                                    <button class="btn btn-danger" id="edit-delete-author-1" disabled><i
+                                            class="fa-solid fa-trash"></i></button>
                                 </div>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="genre" class="col-sm-3 col-form-label"><b>Genre(s):</b></label>
+                            <label for="edit-genre" class="col-sm-3 col-form-label"><b>Genre(s):</b></label>
                             <div class="col-sm-9">
-                                <button class="btn btn-success" id="add-genre"><i class="fa-solid fa-plus"></i></button>
+                                <button class="btn btn-success" id="edit-add-genre"><i
+                                        class="fa-solid fa-plus"></i></button>
                             </div>
                         </div>
-                        <div class="row mb-3">
-                            <label for="genre-1" class="col-3 col-form-label">Genre 1:</label>
-                            <div class="col-7">
-                                <input type="text" class="form-control" id="genre-1">
-                            </div>
-                            <div class="col-2">
-                                <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label for="genre-2" class="col-3 col-form-label">Genre 2:</label>
-                            <div class="col-7">
-                                <input type="text" class="form-control" id="genre-2">
-                            </div>
-                            <div class="col-2">
-                                <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                        <div id="edit-genres">
+                            <div class="row mb-3" id="div-genre-1">
+                                <label id="edit-label-genre-1" class="col-3 col-form-label"><span
+                                        class="text-danger">*</span> Genre 1:</label>
+                                <div class="col-7">
+                                    <input type="text" class="form-control" id="edit-genre-1">
+                                </div>
+                                <div class="col-2">
+                                    <button class="btn btn-danger" id="edit-delete-genre-1" disabled><i
+                                            class="fa-solid fa-trash"></i></button>
+                                </div>
                             </div>
                         </div>
                     </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Insert Book</button>
+                <div class="modal-footer d-flex flex-column">
+                    <div id="alert-edit-book">
+                    </div>
+                    <button type="button" class="btn btn-warning" id="btn-modal-edit-book"><i class="fa-solid fa-pencil"></i>
+                        Edit Book</button>
                 </div>
             </div>
         </div>
-    </div> -->
+    </div>
     <script>
         var loadFile = function (event) {
             var image = document.getElementById('output');
+            image.src = URL.createObjectURL(event.target.files[0]);
+        };
+
+        var loadFile2 = function (event) {
+            var image = document.getElementById('edit-output');
             image.src = URL.createObjectURL(event.target.files[0]);
         };
 
@@ -724,7 +724,7 @@
                                 <td>'+ obj["books"][i]["stock_qty"] + '</td> \
                                 <td><button class="btn btn-primary" id="view-book-'+ obj["books"][i]["book_ID"] + '" data-bs-toggle="modal" data-bs-target="#view-book-modal"><i class="fa-solid fa-eye"></i></button></td> \
                                 <td><button class="btn btn-warning" id="edit-book-'+ obj["books"][i]["book_ID"] + '" data-bs-toggle="modal" \
-                                        data-bs-target="#add-book-modal"><i class="fa-solid fa-pencil"></i></button> \
+                                        data-bs-target="#edit-book-modal"><i class="fa-solid fa-pencil"></i></button> \
                                 </td> \
                                 <td><button class="btn btn-danger" id="delete-book-'+ obj["books"][i]["book_ID"] + '"><i class="fa-solid fa-trash"></i></button></td> \
                             </tr> \
@@ -754,7 +754,6 @@
 
                     if (total_pages > 1) {
                         $("#pagination-ul").append('<li id="li-pagination-previous" class="page-item disabled"><a class="page-link" href="javascript:void(0)" id="pagination-previous">Previous</a></li>');
-
 
                         for (var i = 1; i <= total_pages && i < 6; i++) {
                             if (i == current_page) {
@@ -836,7 +835,7 @@
                                 <td>'+ obj["books"][i]["stock_qty"] + '</td> \
                                 <td><button class="btn btn-primary" id="view-book-'+ obj["books"][i]["book_ID"] + '" data-bs-toggle="modal" data-bs-target="#view-book-modal"><i class="fa-solid fa-eye"></i></button></td> \
                                 <td><button class="btn btn-warning" id="edit-book-'+ obj["books"][i]["book_ID"] + '" data-bs-toggle="modal" \
-                                        data-bs-target="#add-book-modal"><i class="fa-solid fa-pencil"></i></button> \
+                                        data-bs-target="#edit-book-modal"><i class="fa-solid fa-pencil"></i></button> \
                                 </td> \
                                 <td><button class="btn btn-danger" id="delete-book-'+ obj["books"][i]["book_ID"] + '"><i class="fa-solid fa-trash"></i></button></td> \
                             </tr> \
@@ -911,7 +910,7 @@
                                 <td>'+ obj["books"][i]["stock_qty"] + '</td> \
                                 <td><button class="btn btn-primary" id="view-book-'+ obj["books"][i]["book_ID"] + '" data-bs-toggle="modal" data-bs-target="#view-book-modal"><i class="fa-solid fa-eye"></i></button></td> \
                                 <td><button class="btn btn-warning" id="edit-book-'+ obj["books"][i]["book_ID"] + '" data-bs-toggle="modal" \
-                                        data-bs-target="#add-book-modal"><i class="fa-solid fa-pencil"></i></button> \
+                                        data-bs-target="#edit-book-modal"><i class="fa-solid fa-pencil"></i></button> \
                                 </td> \
                                 <td><button class="btn btn-danger" id="delete-book-'+ obj["books"][i]["book_ID"] + '"><i class="fa-solid fa-trash"></i></button></td> \
                             </tr> \
@@ -984,6 +983,176 @@
                 }
             });
         });
+
+        $(document).on("click", '[id^=edit-book-]', function (event) {
+            var id = this.id.match(/[0-9]+/);
+            var id_index = parseInt(id[0]);
+            edit_ID = id_index;
+
+            var formData = new FormData();
+            formData.append("GetBookDetails", "set");
+            formData.append("book_ID", id_index);
+            $.ajax({
+                type: "POST",
+                url: "GetBookDetails_API.php",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    $("#edit-title").val(obj["book"]["title"]);
+                    $("#edit-isbn").val(obj["book"]["ISBN"]);
+                    $("#edit-price").val(obj["book"]["price"]);
+                    $("#edit-publisher2").val(obj["book"]["publisher"]);
+                    $("#edit-publication_year").val(obj["book"]["publication_year"]);
+                    $("#edit-format2").val(obj["book"]["format"]);
+                    $("#edit-description").val(obj["book"]["description"]);
+                    $("#edit-output").attr("src", obj["book"]["cover_image_loc"]);
+                    $("#edit-stock_qty").val(obj["book"]["stock_qty"]);
+                    $("#edit-category2").val(obj["book"]["category"]);
+                    $("#edit-authors").html("");
+                    $("#edit-genres").html("");
+
+                    for (var i = 0; i < obj["authors"].length; i++) {
+
+                        var html_element = '';
+                        if (i == 0) {
+                            html_element = ' \
+                            <div class="row mb-3" id="edit-div-author-'+ (i + 1) + '"> \
+                                <label id = "edit-label-author-'+ (i + 1) + '" class="col-3 col-form-label"><span class = "text-danger">*</span> Author ' + (i + 1) + ':</label> \
+                                <div class="col-7"> \
+                                    <input type="text" value = "'+ obj["authors"][i] + '" class="form-control" id="edit-author-' + (i + 1) + '"> \
+                                </div> \
+                                <div class="col-2"> \
+                                    <button disabled class="btn btn-danger" id="edit-delete-author-'+ (i + 1) + '"><i class="fa-solid fa-trash"></i></button> \
+                                </div> \
+                            </div> \
+                                ';
+                        }
+                        else {
+                            html_element = ' \
+                            <div class="row mb-3" id="edit-div-author-'+ (i + 1) + '"> \
+                                <label id = "edit-label-author-'+ (i + 1) + '" class="col-3 col-form-label">Author ' + (i + 1) + ':</label> \
+                                <div class="col-7"> \
+                                    <input type="text" value = "'+ obj["authors"][i] + '" class="form-control" id="edit-author-' + (i + 1) + '"> \
+                                </div> \
+                                <div class="col-2"> \
+                                    <button class="btn btn-danger" id="edit-delete-author-'+ (i + 1) + '"><i class="fa-solid fa-trash"></i></button> \
+                                </div> \
+                            </div> \
+                                ';
+                        }
+
+                        $("#edit-authors").append(html_element);
+                    }
+                    edit_author_count = obj["authors"].length;
+
+                    for (var i = 0; i < obj["genres"].length; i++) {
+
+                        var html_element = '';
+
+                        if (i == 0) {
+                            html_element = ' \
+                            <div class="row mb-3" id="edit-div-genre-'+ (i + 1) + '"> \
+                                <label id = "edit-label-genre-'+ (i + 1) + '" class="col-3 col-form-label"><span class="text-danger">*</span> Genre ' + (i + 1) + ':</label> \
+                                <div class="col-7"> \
+                                    <input type="text" value = "'+ obj["genres"][i] + '" class="form-control" id="edit-genre-' + (i + 1) + '"> \
+                                </div> \
+                                <div class="col-2"> \
+                                    <button disabled class="btn btn-danger" id="edit-delete-genre-'+ (i + 1) + '"><i class="fa-solid fa-trash"></i></button> \
+                                </div> \
+                            </div> \
+                                ';
+                        }
+                        else {
+                            html_element = ' \
+                            <div class="row mb-3" id="edit-div-genre-'+ (i + 1) + '"> \
+                                <label id = "edit-label-genre-'+ (i + 1) + '" class="col-3 col-form-label">Genre ' + (i + 1) + ':</label> \
+                                <div class="col-7"> \
+                                    <input type="text" value = "'+ obj["genres"][i] + '" class="form-control" id="edit-genre-' + (i + 1) + '"> \
+                                </div> \
+                                <div class="col-2"> \
+                                    <button class="btn btn-danger" id="edit-delete-genre-'+ (i + 1) + '"><i class="fa-solid fa-trash"></i></button> \
+                                </div> \
+                            </div> \
+                                ';
+                        }
+                        $("#edit-genres").append(html_element);
+                    }
+
+                    edit_genre_count = obj["genres"].length;
+                }
+            });
+        });
+
+        var edit_author_count = 0;
+        var edit_genre_count = 0;
+
+        $("#edit-add-author").click(function () {
+            edit_author_count++;
+            var html_element = ' \
+            <div class="row mb-3" id="edit-div-author-'+ edit_author_count + '"> \
+                <label id = "edit-label-author-'+ edit_author_count + '" class="col-3 col-form-label">Author ' + edit_author_count + ':</label> \
+                <div class="col-7"> \
+                    <input type="text" class="form-control" id="edit-author-'+ edit_author_count + '"> \
+                </div> \
+                <div class="col-2"> \
+                    <button class="btn btn-danger" id="edit-delete-author-'+ edit_author_count + '"><i class="fa-solid fa-trash"></i></button> \
+                </div> \
+            </div> \
+                ';
+            $("#edit-authors").append(html_element);
+        });
+        $(document).on("click", '[id^=edit-delete-author]', function (event) {
+            var id = this.id.match(/[0-9]+/);
+            var id_index = parseInt(id[0]);
+            $("#edit-div-author-" + id_index).remove();
+
+            // Adjust label and ids of succeeding elements
+            for (var i = id_index; i < edit_author_count; i++) {
+                $("#edit-label-author-" + (i + 1)).html("Author " + i + ":");
+                $("#edit-label-author-" + (i + 1)).attr("id", "edit-label-author-" + i);
+                $("#edit-author-" + (i + 1)).attr("id", "edit-author-" + i);
+                $("#edit-delete-author-" + (i + 1)).attr("id", "edit-delete-author-" + i);
+                $("#edit-div-author-" + (i + 1)).attr("id", "edit-div-author-" + i);
+            }
+            edit_author_count--;
+        });
+
+        $("#edit-add-genre").click(function () {
+            edit_genre_count++;
+            var html_element = ' \
+            <div class="row mb-3" id="edit-div-genre-'+ edit_genre_count + '"> \
+                <label id = "edit-label-genre-'+ edit_genre_count + '" class="col-3 col-form-label">Genre ' + edit_genre_count + ':</label> \
+                <div class="col-7"> \
+                    <input type="text" class="form-control" id="edit-genre-'+ edit_genre_count + '"> \
+                </div> \
+                <div class="col-2"> \
+                    <button class="btn btn-danger" id="edit-delete-genre-'+ edit_genre_count + '"><i class="fa-solid fa-trash"></i></button> \
+                </div> \
+            </div> \
+                ';
+            $("#edit-genres").append(html_element);
+        });
+
+        $(document).on("click", '[id^=edit-delete-genre]', function (event) {
+            var id = this.id.match(/[0-9]+/);
+            var id_index = parseInt(id[0]);
+            $("#edit-div-genre-" + id_index).remove();
+
+            // Adjust label and ids of succeeding elements
+            for (var i = id_index; i < edit_genre_count; i++) {
+                $("#edit-label-genre-" + (i + 1)).html("Genre " + i + ":");
+                $("#edit-label-genre-" + (i + 1)).attr("id", "edit-label-genre-" + i);
+                $("#edit-genre-" + (i + 1)).attr("id", "edit-genre-" + i);
+                $("#edit-delete-genre-" + (i + 1)).attr("id", "edit-delete-genre-" + i);
+                $("#edit-div-genre-" + (i + 1)).attr("id", "edit-div-genre-" + i);
+            }
+            edit_genre_count--;
+        });
+
+
 
         $(document).on("click", '[id^=pagination]', function (event) {
             var id = this.id.match(/[0-9]+/);
@@ -1063,7 +1232,7 @@
                                 <td>'+ obj["books"][i]["stock_qty"] + '</td> \
                                 <td><button class="btn btn-primary" id="view-book-'+ obj["books"][i]["book_ID"] + '" data-bs-toggle="modal" data-bs-target="#view-book-modal"><i class="fa-solid fa-eye"></i></button></td> \
                                 <td><button class="btn btn-warning" id="edit-book-'+ obj["books"][i]["book_ID"] + '" data-bs-toggle="modal" \
-                                        data-bs-target="#add-book-modal"><i class="fa-solid fa-pencil"></i></button> \
+                                        data-bs-target="#edit-book-modal"><i class="fa-solid fa-pencil"></i></button> \
                                 </td> \
                                 <td><button class="btn btn-danger" id="delete-book-'+ obj["books"][i]["book_ID"] + '"><i class="fa-solid fa-trash"></i></button></td> \
                             </tr> \
@@ -1279,7 +1448,7 @@
                                 </div> \
                             ';
                             $("#div-alert").html(html_element);
-                            $("#add-book-modal .btn-close").click();
+                            $("#add-book-modal").modal("hide");
 
                             // Reset Modal Content
                             $("#title").val("");
@@ -1316,6 +1485,189 @@
                     </div> \
                 ';
                 $("#alert-add-book").html(html_element);
+            }
+
+        });
+
+        var edit_ID = -1;
+
+        $("#btn-modal-edit-book").click(function () {
+            // 1. Validate Required Fields
+            var title = $("#edit-title").val();
+            var price = $("#edit-price").val();
+            var publisher = $("#edit-publisher2").val();
+            var publication_year = $("#edit-publication_year").val();
+            var format = $("#edit-format2").val();
+            var cover_img_loc = $("#edit-cover_img_loc").val();
+            var image = $('#edit-cover_img_loc').prop('files')[0];
+            var hasImage = ($('#edit-cover_img_loc').get(0).files.length === 0) ? "false" : "true";
+            var stock_qty = $("#edit-stock_qty").val();
+            var author_1 = $("#edit-author-1").val();
+            var genre_1 = $("#edit-genre-1").val();
+
+            if (title && price && publisher && publication_year && format && stock_qty && author_1 && genre_1) {
+                // Check if price is between .01 to 99999.99
+                var float_price = parseFloat(price);
+                if (float_price == NaN || (float_price < .01 || float_price > 99999.99)) {
+                    var html_element = ' \
+                    <div class="alert alert-danger alert-dismissible fade show m-2" role="alert"> \
+                        Please enter a valid price between .01 and 99999.99. \
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                    </div> \
+                    ';
+                    $("#alert-edit-book").html(html_element);
+                    return;
+                }
+
+                // Check if publication year is between 1 and 9999.
+                var int_publication_year = parseInt(publication_year);
+                if (int_publication_year == NaN || (int_publication_year < 1 || int_publication_year > 9999)) {
+                    var html_element = ' \
+                    <div class="alert alert-danger alert-dismissible fade show m-2" role="alert"> \
+                        Please enter a valid publication year between 1 and the current year. \
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                    </div> \
+                    ';
+                    $("#alert-edit-book").html(html_element);
+                    return;
+                }
+
+                // Check if stock qty is between 1 and 99999999999.
+                var int_stock_qty = parseInt(stock_qty);
+                if (int_stock_qty == NaN || (int_stock_qty < 1 || int_stock_qty > 99999999999)) {
+                    var html_element = ' \
+                    <div class="alert alert-danger alert-dismissible fade show m-2" role="alert"> \
+                        Please enter a valid stock qty value between 1 and 99999999999. \
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                    </div> \
+                    ';
+                    $("#alert-edit-book").html(html_element);
+                    return;
+                }
+
+                // Check if cover image has a valid file extension
+                let img_regex = /(.*?)\.(tiff|pjp|jfif|gif|svg|bmp|png|jpeg|svgz|jpg|webp|ico|xbm|dib|tif|pjpeg|avif)$/;
+                if (!img_regex.test(cover_img_loc) && cover_img_loc) {
+                    var html_element = ' \
+                    <div class="alert alert-danger alert-dismissible fade show m-2" role="alert"> \
+                        Please enter an image with a different file extension. \
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                    </div> \
+                    ';
+                    $("#alert-edit-book").html(html_element);
+                    return;
+                }
+
+                // OPTIONAL FIELDS 
+                var description = $("#edit-description").val();
+                var category = $("#edit-category2").val();
+                var isbn = $("#edit-isbn").val();
+
+                // 1. Check if ISBN is a 10 or 13 digit code
+                let isbn10 = /^\d{10}$/;
+                let isbn13 = /^\d{13}$/;
+
+                if (!isbn10.test(isbn) && !isbn13.test(isbn) && isbn) {
+                    var html_element = ' \
+                    <div class="alert alert-danger alert-dismissible fade show m-2" role="alert"> \
+                        ISBN must be a 10-digit code, 13-digit code, or null value. \
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                    </div> \
+                    ';
+                    $("#alert-edit-book").html(html_element);
+                    return;
+                }
+
+                // CALL API TO INSERT BOOK
+
+                var formData = new FormData();
+                formData.append("EditBook", "set");
+                formData.append("book_ID", edit_ID);
+                formData.append("title", title);
+                formData.append("price", price);
+                formData.append("publisher", publisher);
+                formData.append("publication_year", publication_year);
+                formData.append("format", format);
+                formData.append("image", image);
+                formData.append("stock_qty", stock_qty);
+                formData.append("description", description);
+                formData.append("category", category);
+                formData.append("isbn", isbn);
+
+                // load all authors and genres
+                for (var i = 1; i <= edit_author_count; i++) {
+                    formData.append('author[]', $("#edit-author-" + i).val());
+                }
+                for (var i = 1; i <= edit_genre_count; i++) {
+                    formData.append('genre[]', $("#edit-genre-" + i).val());
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: "EditBook_API.php",
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        var obj = JSON.parse(data);
+                        console.log(obj);
+                        if (obj["error"] == 1) {
+                            var html_element = ' \
+                                <div class="alert alert-danger alert-dismissible fade show m-2" role="alert"> \
+                                    '+ obj["response"] + ' \
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                                </div> \
+                            ';
+                            $("#alert-edit-book").html(html_element);
+                        }
+                        else if (obj["error"] == 0) {
+                            var html_element = ' \
+                                <div class="alert alert-success alert-dismissible fade show m-2" role="alert"> \
+                                    '+ obj["response"] + ' \
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                                </div> \
+                            ';
+                            $("#div-alert").html(html_element);
+                            $("#edit-book-modal").modal("hide");
+
+                            // Reset Modal Content
+                            $("#edit-title").val("");
+                            $("#edit-isbn").val("");
+                            $("#edit-price").val("");
+                            $("#edit-publisher2").val("");
+                            $("#edit-publication_year").val("");
+                            $("#edit-format2").val("");
+                            $("#edit-description").val("");
+                            $("#edit-output").attr("src", "https://via.placeholder.com/130x200");
+                            $("#edit-cover_img_loc").val("");
+                            $("#edit-stock_qty").val("");
+                            $("#edit-category2").val("");
+                            $("#edit-author-1").val("");
+                            $("#edit-genre-1").val("");
+                            for (var i = edit_author_count; i > 1; i--) {
+                                $("#edit-delete-author-" + i).click();
+                            }
+                            edit_author_count = 1;
+                            for (var i = edit_genre_count; i > 1; i--) {
+                                $("#edit-delete-genre-" + i).click();
+                            }
+                            edit_genre_count = 1;
+
+                            edit_ID = -1;
+                        }
+                    }
+                });
+
+            }
+            else {
+                var html_element = ' \
+                    <div class="alert alert-danger alert-dismissible fade show m-2" role="alert"> \
+                        Please fill out all required fields. \
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                    </div> \
+                ';
+                $("#alert-edit-book").html(html_element);
             }
 
         });

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 04, 2022 at 11:01 PM
+-- Generation Time: Aug 12, 2022 at 11:54 PM
 -- Server version: 5.7.39-0ubuntu0.18.04.2
 -- PHP Version: 7.2.24-0ubuntu0.18.04.13
 
@@ -66,7 +66,12 @@ INSERT INTO `authors` (`author_ID`, `author_name`) VALUES
 (17, 'Margaret Mitchell'),
 (18, 'John Green'),
 (19, 'Douglas Adams'),
-(20, 'Shel Silverstein');
+(20, 'Shel Silverstein'),
+(21, 'Emily BrontÃ«'),
+(22, 'Richard J. Dunn'),
+(23, 'David Timson'),
+(24, 'Charlotte BrontÃ«'),
+(25, 'Robert Heindel');
 
 -- --------------------------------------------------------
 
@@ -101,13 +106,14 @@ INSERT INTO `books` (`book_ID`, `category_ID`, `publisher_ID`, `format_ID`, `ISB
 (17, NULL, 5, 2, '9999999999999', 'Pride and Prejudice', '300.00', 2000, 'Alternate cover edition of ISBN 9780679783268Since its immediate success in 1813, Pride and Prejudice has remained one of the most popular novels in the English language. Jane Austen called this brilliant work &quot;her own darling child&quot; and its vivacious heroine, Elizabeth Bennet, &quot;as delightful a creature as ever appeared in print.&quot; The romantic clash between the opinionated Elizabeth and her proud beau, Mr. Darcy, is a splendid performance of civilized sparring. And Jane Austens radiant wit sparkles as her characters dance a delicate quadrille of flirtation and intrigue, making this book the most superb comedy of manners of Regency England.', '17.jpg', 50, 1, 0),
 (18, NULL, 6, 2, '9780316015844', 'Twilight', '300.00', 2006, 'About three things I was absolutely positive.\r\n\r\nFirst, Edward was a vampire.\r\n\r\nSecond, there was a part of himâ€”and I didnt know how dominant that part might beâ€”that thirsted for my blood.\r\n\r\nAnd third, I was unconditionally and irrevocably in love with him.\r\n\r\nDeeply seductive and extraordinarily suspenseful, Twilight is a love story with bite.', '18.jpg', 50, 1, 0),
 (19, NULL, 7, 1, '9780375831003', 'The Book Thief', '300.00', 2006, 'Librarians note: An alternate cover edition can be found hereIt is 1939. Nazi Germany. The country is holding its breath. Death has never been busier, and will be busier still.By her brothers graveside, Liesels life is changed when she picks up a single object, partially hidden in the snow. It is The Gravediggers Handbook, left behind there by accident, and it is her first act of book thievery. So begins a love affair with books and words, as Liesel, with the help of her accordian-playing foster father, learns to read. Soon she is stealing books from Nazi book-burnings, the mayors wifes library, wherever there are books to be found.But these are dangerous times. When Liesels foster family hides a Jew in their basement, Liesels world is both opened up, and closed down.In superbly crafted writing that burns with intensity, award-winning author Markus Zusak has given us one of the most enduring stories of our time.(Note: this title was not published as YA fiction)', '19.jpg', 50, 1, 0),
-(20, NULL, 8, 3, '9780451526342', 'Animal Farm', '300.00', 1996, 'Librarians note: There is an Alternate Cover Edition for this edition of this book here.A farm is taken over by its overworked, mistreated animals. With flaming idealism and stirring slogans, they set out to create a paradise of progress, justice, and equality. Thus the stage is set for one of the most telling satiric fables ever penned â€“a razor-edged fairy tale for grown-ups that records the evolution from revolution against tyranny to a totalitarianism just as terrible. When Animal Farm was first published, Stalinist Russia was seen as its target. Today it is devastatingly clear that wherever and whenever freedom is attacked, under whatever banner, the cutting clarity and savage comedy of George Orwellâ€™s masterpiece have a meaning and message still ferociously fresh.', '20.jpg', 50, 1, 0),
+(20, NULL, 8, 3, '9780451526341', 'Animal Farm', '430.00', 1996, 'Librarians note: There is an Alternate Cover Edition for this edition of this book here.A farm is taken over by its overworked, mistreated animals. With flaming idealism and stirring slogans, they set out to create a paradise of progress, justice, and equality. Thus the stage is set for one of the most telling satiric fables ever penned â€“a razor-edged fairy tale for grown-ups that records the evolution from revolution against tyranny to a totalitarianism just as terrible. When Animal Farm was first published, Stalinist Russia was seen as its target. Today it is devastatingly clear that wherever and whenever freedom is attacked, under whatever banner, the cutting clarity and savage comedy of George Orwellâ€™s masterpiece have a meaning and message still ferociously fresh.', '20.jpg', 50, 1, 0),
 (21, NULL, 9, 2, '9999999999999', 'The Chronicles of Narnia', '300.00', 2002, 'Journeys to the end of the world, fantastic creatures, and epic battles between good and evilâ€”what more could any reader ask for in one book? The book that has it all is The Lion, the Witch and the Wardrobe, written in 1949 by Clive Staples Lewis. But Lewis did not stop there. Six more books followed, and together they became known as The Chronicles of Narnia.For the past fifty years, The Chronicles of Narnia have transcended the fantasy genre to become part of the canon of classic literature. Each of the seven books is a masterpiece, drawing the reader into a land where magic meets reality, and the result is a fictional world whose scope has fascinated generations.This edition presents all seven booksâ€”unabridgedâ€”in one impressive volume. The books are presented here in chronlogical order, each chapter graced with an illustration by the original artist, Pauline Baynes. Deceptively simple and direct, The Chronicles of Narnia continue to captivate fans with adventures, character...', '21.jpg', 50, 1, 0),
 (22, NULL, 10, 3, '9780345538376', 'J.R.R. Tolkien 4-Book Boxed Set: The Hobbit and The Lord of the Rings', '300.00', 2012, 'This four-volume, boxed set contains J.R.R. Tolkiens epic masterworks The Hobbit and the three volumes of The Lord of the Rings (The Fellowship of the Ring, The Two Towers, and The Return of the King).In The Hobbit, Bilbo Baggins is whisked away from his comfortable, unambitious life in Hobbiton by the wizard Gandalf and a company of dwarves. He finds himself caught up in a plot to raid the treasure hoard of Smaug the Magnificent, a large and very dangerous dragon.The Lord of the Rings tells of the great quest undertaken by Frodo Baggins and the Fellowship of the Ring: Gandalf the wizard; the hobbits Merry, Pippin, and Sam; Gimli the dwarf; Legolas the elf; Boromir of Gondor; and a tall, mysterious stranger called Strider. J.R.R. Tolkiens three volume masterpiece is at once a classic myth and a modern fairy taleâ€”a story of high and heroic adventure set in the unforgettable landscape of Middle-earth', '22.jpg', 50, 1, 0),
 (23, NULL, 11, 3, '9780446675536', 'Gone with the Wind', '300.00', 1999, 'Scarlett OHara, the beautiful, spoiled daughter of a well-to-do Georgia plantation owner, must use every means at her disposal to claw her way out of the poverty she finds herself in after Shermans March to the Sea.', '23.jpg', 50, 1, 0),
 (24, NULL, 12, 1, '9999999999999', 'The Fault in Our Stars', '300.00', 2012, 'Despite the tumor-shrinking medical miracle that has bought her a few years, Hazel has never been anything but terminal, her final chapter inscribed upon diagnosis. But when a gorgeous plot twist named Augustus Waters suddenly appears at Cancer Kid Support Group, Hazels story is about to be completely rewritten.Insightful, bold, irreverent, and raw, The Fault in Our Stars is award-winning author John Greens most ambitious and heartbreaking work yet, brilliantly exploring the funny, thrilling, and tragic business of being alive and in love.', '24.jpg', 50, 1, 0),
 (25, NULL, 13, 2, '9999999999999', 'The Hitchhikers Guide to the Galaxy', '300.00', 2007, 'Seconds before the Earth is demolished to make way for a galactic freeway, Arthur Dent is plucked off the planet by his friend Ford Prefect, a researcher for the revised edition of The Hitchhikers Guide to the Galaxy who, for the last fifteen years, has been posing as an out-of-work actor.Together this dynamic pair begin a journey through space aided by quotes from The Hitchhikers Guide (&quot;A towel is about the most massively useful thing an interstellar hitchhiker can have&quot;) and a galaxy-full of fellow travelers: Zaphod Beeblebroxâ€”the two-headed, three-armed ex-hippie and totally out-to-lunch president of the galaxy; Trillian, Zaphods girlfriend (formally Tricia McMillan), whom Arthur tried to pick up at a cocktail party once upon a time zone; Marvin, a paranoid, brilliant, and chronically depressed robot; Veet Voojagig, a former graduate student who is obsessed with the disappearance of all the ballpoint pens he bought over the years.', '25.jpg', 50, 1, 0),
-(26, NULL, 14, 1, '9780060256654', 'The Giving Tree', '300.00', 1964, '&quot;Once there was a tree...and she loved a little boy.&quot;So begins a story of unforgettable perception, beautifully written and illustrated by the gifted and versatile Shel Silverstein.Every day the boy would come to the tree to eat her apples, swing from her branches, or slide down her trunk...and the tree was happy. But as the boy grew older he began to want more from the tree, and the tree gave and gave and gave.This is a tender story, touched with sadness, aglow with consolation. Shel Silverstein has created a moving parable for readers of all ages that offers an affecting interpretation of the gift of giving and a serene acceptance of anothers capacity to love in return.', '26.jpg', 50, 1, 0);
+(26, NULL, 14, 1, '9780060256654', 'The Giving Tree', '300.00', 1964, '&quot;Once there was a tree...and she loved a little boy.&quot;So begins a story of unforgettable perception, beautifully written and illustrated by the gifted and versatile Shel Silverstein.Every day the boy would come to the tree to eat her apples, swing from her branches, or slide down her trunk...and the tree was happy. But as the boy grew older he began to want more from the tree, and the tree gave and gave and gave.This is a tender story, touched with sadness, aglow with consolation. Shel Silverstein has created a moving parable for readers of all ages that offers an affecting interpretation of the gift of giving and a serene acceptance of anothers capacity to love in return.', '26.jpg', 50, 1, 0),
+(27, NULL, 16, 2, '9780393978896', 'Wuthering Heights', '300.00', 2002, 'You can find the redesigned cover of this edition HERE.This best-selling Norton Critical Edition is based on the 1847 first edition of the novel. For the Fourth Edition, the editor has collated the 1847 text with several modern editions and has corrected a number of variants, including accidentals. The text is accompanied by entirely new explanatory annotations.New to the fourth Edition are twelve of Emily Brontes letters regarding the publication of the 1847 edition of Wuthering Heights as well as the evolution of the 1850 edition, prose and poetry selections by the author, four reviews of the novel, and poetry selections by the author, four reviews of the novel, and Edward Chithams insightful and informative chronology of the creative process behind the beloved work.Five major critical interpretations of Wuthering Heights are included, three of them new to the Fourth Edition. A Stuart Daley considers the importance of chronology in the novel. J. Hillis Miller examines Wuthering He...', '27.jpg', 50, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -134,15 +140,20 @@ INSERT INTO `book_authors` (`book_author_ID`, `book_ID`, `author_ID`) VALUES
 (13, 17, 8),
 (14, 18, 9),
 (15, 19, 10),
-(16, 20, 11),
-(17, 20, 12),
-(18, 20, 13),
 (19, 21, 14),
 (20, 22, 16),
 (21, 23, 17),
 (22, 24, 18),
 (23, 25, 19),
-(24, 26, 20);
+(24, 26, 20),
+(73, 20, 11),
+(74, 20, 12),
+(75, 20, 13),
+(81, 27, 21),
+(82, 27, 22),
+(83, 27, 23),
+(84, 27, 24),
+(85, 27, 25);
 
 -- --------------------------------------------------------
 
@@ -221,16 +232,6 @@ INSERT INTO `book_genres` (`book_genres_ID`, `book_ID`, `genre_ID`) VALUES
 (119, 19, 66),
 (120, 19, 67),
 (121, 19, 45),
-(122, 20, 47),
-(123, 20, 34),
-(124, 20, 35),
-(125, 20, 36),
-(126, 20, 51),
-(127, 20, 68),
-(128, 20, 50),
-(129, 20, 37),
-(130, 20, 53),
-(131, 20, 54),
 (132, 21, 36),
 (133, 21, 47),
 (134, 21, 34),
@@ -292,7 +293,27 @@ INSERT INTO `book_genres` (`book_genres_ID`, `book_ID`, `genre_ID`) VALUES
 (190, 26, 84),
 (191, 26, 85),
 (192, 26, 86),
-(193, 26, 81);
+(193, 26, 81),
+(294, 20, 47),
+(295, 20, 34),
+(296, 20, 35),
+(297, 20, 36),
+(298, 20, 51),
+(299, 20, 68),
+(300, 20, 50),
+(301, 20, 37),
+(302, 20, 53),
+(303, 20, 54),
+(314, 27, 47),
+(315, 27, 34),
+(316, 27, 38),
+(317, 27, 87),
+(318, 27, 51),
+(319, 27, 49),
+(320, 27, 89),
+(321, 27, 53),
+(322, 27, 57),
+(323, 27, 52);
 
 -- --------------------------------------------------------
 
@@ -391,6 +412,8 @@ CREATE TABLE `genres` (
 
 INSERT INTO `genres` (`genre_ID`, `genre_name`) VALUES
 (81, ''),
+(89, '18th Century'),
+(88, '19th Century'),
 (42, 'Action'),
 (58, 'Adult'),
 (39, 'Adventure'),
@@ -410,6 +433,7 @@ INSERT INTO `genres` (`genre_ID`, `genre_name`) VALUES
 (71, 'Epic Fantasy'),
 (36, 'Fantasy'),
 (34, 'Fiction'),
+(87, 'Gothic'),
 (72, 'High Fantasy'),
 (55, 'High School'),
 (52, 'Historical'),
@@ -483,10 +507,12 @@ INSERT INTO `publishers` (`publisher_ID`, `publisher_name`) VALUES
 (14, 'HarperCollins Publishers'),
 (6, 'Little, Brown and Company'),
 (5, 'Modern Library'),
+(16, 'Norton'),
 (1, 'Penguin Random House'),
 (3, 'Scholastic Inc.'),
 (2, 'Scholastic Press'),
 (8, 'Signet Classics'),
+(15, 'Singet Classics'),
 (11, 'Warner Books');
 
 -- --------------------------------------------------------
@@ -684,22 +710,22 @@ ALTER TABLE `announcements`
 -- AUTO_INCREMENT for table `authors`
 --
 ALTER TABLE `authors`
-  MODIFY `author_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `author_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 --
 -- AUTO_INCREMENT for table `books`
 --
 ALTER TABLE `books`
-  MODIFY `book_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `book_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 --
 -- AUTO_INCREMENT for table `book_authors`
 --
 ALTER TABLE `book_authors`
-  MODIFY `book_author_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `book_author_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 --
 -- AUTO_INCREMENT for table `book_genres`
 --
 ALTER TABLE `book_genres`
-  MODIFY `book_genres_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=194;
+  MODIFY `book_genres_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=324;
 --
 -- AUTO_INCREMENT for table `cart_items`
 --
@@ -729,7 +755,7 @@ ALTER TABLE `formats`
 -- AUTO_INCREMENT for table `genres`
 --
 ALTER TABLE `genres`
-  MODIFY `genre_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
+  MODIFY `genre_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 --
 -- AUTO_INCREMENT for table `impressions`
 --
@@ -739,7 +765,7 @@ ALTER TABLE `impressions`
 -- AUTO_INCREMENT for table `publishers`
 --
 ALTER TABLE `publishers`
-  MODIFY `publisher_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `publisher_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT for table `transactions`
 --

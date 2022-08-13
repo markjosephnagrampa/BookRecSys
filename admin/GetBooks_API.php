@@ -26,7 +26,7 @@
         $i=0;
         while($row = $result->fetch_assoc()) {
             $myObj->books[$i] = new stdClass();
-            $myObj->books[$i]->cover_image_loc = "http://localhost/BookRecSys/img/books/".$row["cover_image_loc"];
+            $myObj->books[$i]->cover_image_loc = "http://localhost/BookRecSys/img/books/".$row["cover_image_loc"]."?=".filemtime("http://localhost/BookRecSys/img/books/".$row["cover_image_loc"]);
             $myObj->books[$i]->title = $row["title"];
             $myObj->books[$i]->publisher_name = $row["publisher_name"];
             $myObj->books[$i]->price = $row["price"];

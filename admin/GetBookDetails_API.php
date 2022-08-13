@@ -32,7 +32,7 @@
             $myObj->book->price = $row["price"];
             $myObj->book->publication_year = $row["publication_year"];
             $myObj->book->description = $row["description"];
-            $myObj->book->cover_image_loc = "http://localhost/BookRecSys/img/books/".$row["cover_image_loc"];
+            $myObj->book->cover_image_loc = "http://localhost/BookRecSys/img/books/".$row["cover_image_loc"]."?=".filemtime("http://localhost/BookRecSys/img/books/".$row["cover_image_loc"]);
             $myObj->book->stock_qty = $row["stock_qty"];
         }
         $sql = "select * from books join categories on books.category_ID = categories.category_ID where books.book_ID = '".$_POST["book_ID"]."'";
