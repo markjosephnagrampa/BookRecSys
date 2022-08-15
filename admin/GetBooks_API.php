@@ -20,7 +20,7 @@
 
     if(isset($_POST["GetBooks"])){
         $offset = 10 * (intval($_POST["Page"]) - 1);
-        $sql = "SELECT * FROM `books` join publishers on books.publisher_ID = publishers.publisher_ID order by books.title asc limit 10 offset ".$offset;
+        $sql = "SELECT * FROM `books` join publishers on books.publisher_ID = publishers.publisher_ID where books.is_deleted = '0' order by books.title asc limit 10 offset ".$offset;
         $result = $conn->query($sql);
         $myObj->books = array();
         $i=0;

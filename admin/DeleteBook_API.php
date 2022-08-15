@@ -18,13 +18,19 @@
 		$_POST[$a] = test_input($b);
 	}
 
-    if(isset($_POST["GetBooksCount"])){
+    if(isset($_POST["DeleteBook"])){
+        $myObj = new stdClass();
 
-    // Get item count for pagination
-        $sql = "SELECT count(*) as count from `books` where books.is_deleted = '0'";
+        $sql = "update books set is_deleted = '1' where book_ID = '".$_POST["book_ID"]."'";
         $result = $conn->query($sql);
-        while($row = $result->fetch_assoc()) {
-            $myObj->count = $row["count"];
+
+        if($result === TRUE){
+            $myObj->response = "Book deleted successfully.";
+            $myObj->error = 0;
+        }
+        else{
+            $myObj->response = "Error deleting book. Please try again.";
+            $myObj->error = 1;
         }
 
         $myJSON = json_encode($myObj);

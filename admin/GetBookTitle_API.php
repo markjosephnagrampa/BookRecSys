@@ -18,13 +18,14 @@
 		$_POST[$a] = test_input($b);
 	}
 
-    if(isset($_POST["GetBooksCount"])){
+    if(isset($_POST["GetBookTitle"])){
+        $myObj = new stdClass();
 
-    // Get item count for pagination
-        $sql = "SELECT count(*) as count from `books` where books.is_deleted = '0'";
+        $sql = "select title from books where book_ID = '".$_POST["book_ID"]."'";
         $result = $conn->query($sql);
+
         while($row = $result->fetch_assoc()) {
-            $myObj->count = $row["count"];
+            $myObj->title = $row["title"];
         }
 
         $myJSON = json_encode($myObj);
