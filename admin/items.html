@@ -137,7 +137,8 @@
                     <input type="text" id="input-text-search" class="form-control m-2">
                 </div>
                 <div class="col-sm-1 col-2">
-                    <button class="btn btn-primary m-2"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <button class="btn btn-primary m-2" id="btn-search"><i
+                            class="fa-solid fa-magnifying-glass"></i></button>
                 </div>
             </div>
             <div class="row">
@@ -791,6 +792,89 @@
             });
         });
 
+        $("#btn-search").click(function () {
+
+            // Load books
+            var searchText = $("#input-text-search").val();
+            var formData = new FormData();
+            formData.append("GetBooks", "set");
+            formData.append("Page", "1");
+            formData.append("searchText", searchText);
+            $.ajax({
+                type: "POST",
+                url: "GetBooks_API.php",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+
+                    $("#tbody-books").html("");
+
+                    for (var i = 0; i < obj["books"].length; i++) {
+                        var html_element = ' \
+                            <tr> \
+                                <td><img src="'+ obj["books"][i]["cover_image_loc"] + '" \
+                                        height="80" alt=""></td> \
+                                <td>'+ obj["books"][i]["title"] + '</td> \
+                                <td>'+ obj["books"][i]["publisher_name"] + '</td> \
+                                <td>Php '+ obj["books"][i]["price"] + '</td> \
+                                <td>'+ obj["books"][i]["stock_qty"] + '</td> \
+                                <td><button class="btn btn-primary" id="view-book-'+ obj["books"][i]["book_ID"] + '" data-bs-toggle="modal" data-bs-target="#view-book-modal"><i class="fa-solid fa-eye"></i></button></td> \
+                                <td><button class="btn btn-warning" id="edit-book-'+ obj["books"][i]["book_ID"] + '" data-bs-toggle="modal" \
+                                        data-bs-target="#edit-book-modal"><i class="fa-solid fa-pencil"></i></button> \
+                                </td> \
+                                <td><button class="btn btn-danger" id="delete-book-'+ obj["books"][i]["book_ID"] + '" data-bs-toggle="modal" data-bs-target="#delete-book-modal"><i class="fa-solid fa-trash"></i></button></td> \
+                            </tr> \
+                        ';
+                        $("#tbody-books").append(html_element);
+                    }
+                }
+            });
+
+            // Load page count
+            var searchText = $("#input-text-search").val();
+            var formData = new FormData();
+            formData.append("GetBooksCount", "set");
+            formData.append("searchText", searchText);
+
+            $.ajax({
+                type: "POST",
+                url: "GetBooksCount_API.php",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+
+                    var p = parseFloat(obj["count"]) / 10.0;
+                    total_pages = Math.ceil(p);
+                    first_pagination = 1;
+                    last_pagination = (total_pages > 5) ? 5 : total_pages;
+
+                    $("#pagination-ul").html("");
+
+                    if (total_pages > 1) {
+                        $("#pagination-ul").append('<li id="li-pagination-previous" class="page-item disabled"><a class="page-link" href="javascript:void(0)" id="pagination-previous">Previous</a></li>');
+
+                        for (var i = 1; i <= total_pages && i < 6; i++) {
+                            if (i == current_page) {
+                                $("#pagination-ul").append('<li id="li-pagination-' + i + '" class="page-item active"><a class="page-link " href="javascript:void(0)" id="pagination-' + i + '">' + i + '</a></li>');
+                            }
+                            else {
+                                $("#pagination-ul").append('<li id="li-pagination-' + i + '" class="page-item"><a class="page-link" href="javascript:void(0)" id="pagination-' + i + '">' + i + '</a></li>');
+                            }
+                        }
+
+                        $("#pagination-ul").append('<li id="li-pagination-next" class="page-item"><a class="page-link" href="javascript:void(0)" id="pagination-next">Next</a></li>');
+                    }
+
+                }
+            });
+        });
+
         $("#btn-delete-book-yes").click(function () {
             var formData = new FormData();
             formData.append("DeleteBook", "set");
@@ -973,9 +1057,11 @@
             $("#li-pagination-" + current_page).addClass("active");
 
             // Load books
+            var searchText = $("#input-text-search").val();
             var formData = new FormData();
             formData.append("GetBooks", "set");
             formData.append("Page", current_page);
+            formData.append("searchText", searchText);
             $.ajax({
                 type: "POST",
                 url: "GetBooks_API.php",
@@ -1048,9 +1134,11 @@
             $("#li-pagination-" + current_page).addClass("active");
 
             // Load books
+            var searchText = $("#input-text-search").val();
             var formData = new FormData();
             formData.append("GetBooks", "set");
             formData.append("Page", current_page);
+            formData.append("searchText", searchText);
             $.ajax({
                 type: "POST",
                 url: "GetBooks_API.php",
@@ -1370,9 +1458,11 @@
             current_page = id_index;
 
             // Load books
+            var searchText = $("#input-text-search").val();
             var formData = new FormData();
             formData.append("GetBooks", "set");
             formData.append("Page", current_page);
+            formData.append("searchText", searchText);
             $.ajax({
                 type: "POST",
                 url: "GetBooks_API.php",

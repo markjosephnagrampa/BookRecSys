@@ -20,7 +20,8 @@
 
     if(isset($_POST["GetBooks"])){
         $offset = 10 * (intval($_POST["Page"]) - 1);
-        $sql = "SELECT * FROM `books` join publishers on books.publisher_ID = publishers.publisher_ID where books.is_deleted = '0' order by books.title asc limit 10 offset ".$offset;
+        $searchText = (isset($_POST["searchText"])) ? $_POST["searchText"] : "";
+        $sql = "select distinct books.cover_image_loc, books.title, publishers.publisher_name, books.price, books.stock_qty, books.book_ID from books join publishers on books.publisher_ID = publishers.publisher_ID join formats on books.format_ID = formats.format_ID join book_authors on books.book_ID = book_authors.book_ID join `authors` on book_authors.author_ID = `authors`.author_ID join book_genres on books.book_ID = book_genres.book_ID join genres on book_genres.genre_ID = genres.genre_ID left join categories on books.category_ID = categories.category_ID where (LOWER(books.title) like '%".$searchText."%' or LOWER(books.ISBN) like '%".$searchText."%' or LOWER(books.price) like '%".$searchText."%' or LOWER(books.publication_year) like '%".$searchText."%' or LOWER(publishers.publisher_name) like '%".$searchText."%' or LOWER(formats.format_name) like '%".$searchText."%' or LOWER(`authors`.author_name) like '%".$searchText."%' or LOWER(genres.genre_name) like '%".$searchText."%' or LOWER(categories.category_name) like '%".$searchText."%') and books.is_deleted = '0' order by books.title asc limit 10 offset " . $offset;
         $result = $conn->query($sql);
         $myObj->books = array();
         $i=0;
