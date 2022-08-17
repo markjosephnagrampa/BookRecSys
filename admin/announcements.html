@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <style>
         .no-style-a,
         .no-style-a:hover,
@@ -85,7 +86,7 @@
             <div class="dropdown">
                 <a class="btn btn-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                     data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fa-solid fa-user-circle"></i> Admin John Doe
+                    <i class="fa-solid fa-user-circle"></i> <span id="div-admin-name"></span>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                     <li><a class="dropdown-item" href="profile.html"><i class="fa-solid fa-user"></i> My Profile</a>
@@ -98,13 +99,17 @@
     </div>
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 offset-lg-2 mt-5">
+            <div class="col-lg-8 offset-lg-2 my-2" id="div-alert">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 mt-2">
                 <div class="card">
                     <div class="card-header">
                         <h1 style="text-align: center;">Announcements</h1>
                     </div>
                     <div class="card-body">
-                        <form>
+                        <form action="javascript:void(0);">
                             <div class="row mb-3">
                                 <label for="expiry" class="col-sm-4 col-form-label"><b>Message Expiry:</b></label>
                                 <div class="col-sm-8">
@@ -118,8 +123,9 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="offset-sm-3 col-sm-6" style = "text-align: center;">
-                                    <button class="btn btn-primary btn-lg"><i class="fa-solid fa-exclamation-circle"></i> Post Announcement</button>
+                                <div class="offset-sm-3 col-sm-6" style="text-align: center;">
+                                    <button id="btn-post-announcement" class="btn btn-primary btn-lg"><i
+                                            class="fa-solid fa-exclamation-circle"></i> Post Announcement</button>
                                 </div>
                             </div>
                         </form>
@@ -131,6 +137,84 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
         crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            // Check if user is logged in
+            if (sessionStorage.getItem("user") === null) {
+                window.location.replace("../InvalidAccess.html");
+            }
+            // Load company data on the profile page
+            var user = JSON.parse(sessionStorage.getItem("user"));
+
+            // Check Account Type
+            if (user["is_admin"] == false) {
+                window.location.replace("../InvalidAccess.html");
+            }
+
+            // Load user name on header
+            $("#div-admin-name").html("Admin " + user["first_name"] + " " + user["last_name"]);
+
+            // Load account details on profile form
+            $("#first-name").val(user["first_name"]);
+            $("#last-name").val(user["last_name"]);
+            $("#email").val(user["email_address"]);
+
+        });
+
+        $("#btn-post-announcement").click(function () {
+            var expiry = $("#expiry").val();
+            var message = $("#message").val();
+            if (expiry && message) {
+                var formData = new FormData();
+                formData.append("InsertAnnouncement", "set");
+                formData.append("user_ID", JSON.parse(sessionStorage.getItem("user"))["user_ID"]);
+                formData.append("message", message);
+                formData.append("message_expiry", expiry);
+
+                $.ajax({
+                    type: "POST",
+                    url: "InsertAnnouncement_API.php",
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        var obj = JSON.parse(data);
+                        if(obj["error"] == 0){
+                            var html_element = ' \
+                            <div class="alert alert-success alert-dismissible fade show mt-4" role="alert"> \
+                                <p>Announcement posted successfully.</p> \
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                            </div> \
+                                ';
+                            $("#div-alert").html(html_element);
+
+                            $("#expiry").val("");
+                            $("#message").val("");
+                        }
+                        else if(obj["error"] == 1){
+                            var html_element = ' \
+                            <div class="alert alert-danger alert-dismissible fade show mt-4" role="alert"> \
+                                <p>An error was encountered upon attempting to post the announcement. Please try again.</p> \
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                            </div> \
+                                ';
+                            $("#div-alert").html(html_element);
+                        }
+                    }
+                });
+            }
+            else {
+                var html_element = ' \
+                <div class="alert alert-danger alert-dismissible fade show mt-4" role="alert"> \
+                    <p>Please fill out all required fields.</p> \
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                </div> \
+                    ';
+                $("#div-alert").html(html_element);
+            }
+        });
+    </script>
 </body>
 
 </html>
