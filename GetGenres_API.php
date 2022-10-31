@@ -27,6 +27,7 @@
         while($row = $result->fetch_assoc()) {
             $myObj->genres[$i] = new stdClass();
             $myObj->genres[$i]->genre_name = $row["genre_name"];
+            $myObj->genres[$i]->genre_ID = $row["genre_ID"];
             $sql2 = "select count(*) as count from books join book_genres on books.book_ID = book_genres.book_ID join genres on book_genres.genre_ID = genres.genre_ID where genres.genre_ID = '".$row["genre_ID"]."'";
             $result2 = $conn->query($sql2);
             while($row2 = $result2->fetch_assoc()) {

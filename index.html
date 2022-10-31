@@ -199,7 +199,7 @@
         </div>
         <div id="navbar-search" class="d-flex align-items-center m-2">
             <input type="text" id="input-search" class="form-control me-2">
-            <button class="btn btn-primary" onclick="location.href='search.html'"><i
+            <button class="btn btn-primary" id="btn-search"><i
                     class="fa-solid fa-magnifying-glass"></i></button>
         </div>
         <div id="navbar-register">
@@ -761,7 +761,7 @@
                     for (i = 0, len = obj["categories"].length; i < len; i++) {
                         var html_element = '  \
                             <li class="list-group-item"> \
-                                <a href="javascript:void(0)" class="underlined-a-only d-flex justify-content-between"> \
+                                <a href="javascript:void(0)" id="a-href-category-'+obj["categories"][i]["category_ID"]+'" class="underlined-a-only d-flex justify-content-between"> \
                                     <span class="text-secondary">'+obj["categories"][i]["category_name"]+'</span> \
                                     <span class="badge text-bg-secondary">'+obj["categories"][i]["category_count"]+'</span> \
                                 </a> \
@@ -788,7 +788,7 @@
                     for (i = 0, len = obj["genres"].length; i < len; i++) {
                         var html_element = '  \
                             <li class="list-group-item"> \
-                                <a href="javascript:void(0)" class="underlined-a-only d-flex justify-content-between"> \
+                                <a href="javascript:void(0)" id="a-href-genre-'+obj["genres"][i]["genre_ID"]+'" class="underlined-a-only d-flex justify-content-between"> \
                                     <span class="text-secondary">'+obj["genres"][i]["genre_name"]+'</span> \
                                     <span class="badge text-bg-secondary">'+obj["genres"][i]["genre_count"]+'</span> \
                                 </a> \
@@ -815,7 +815,7 @@
                     for (i = 0, len = obj["authors"].length; i < len; i++) {
                         var html_element = '  \
                             <li class="list-group-item"> \
-                                <a href="javascript:void(0)" class="underlined-a-only d-flex justify-content-between"> \
+                                <a href="javascript:void(0)" id="a-href-author-'+obj["authors"][i]["author_ID"]+'" class="underlined-a-only d-flex justify-content-between"> \
                                     <span class="text-secondary">'+obj["authors"][i]["author_name"]+'</span> \
                                     <span class="badge text-bg-secondary">'+obj["authors"][i]["author_count"]+'</span> \
                                 </a> \
@@ -842,7 +842,7 @@
                     for (i = 0, len = obj["publishers"].length; i < len; i++) {
                         var html_element = '  \
                             <li class="list-group-item"> \
-                                <a href="javascript:void(0)" class="underlined-a-only d-flex justify-content-between"> \
+                                <a href="javascript:void(0)" id="a-href-publisher-'+obj["publishers"][i]["publisher_ID"]+'" class="underlined-a-only d-flex justify-content-between"> \
                                     <span class="text-secondary">'+obj["publishers"][i]["publisher_name"]+'</span> \
                                     <span class="badge text-bg-secondary">'+obj["publishers"][i]["publisher_count"]+'</span> \
                                 </a> \
@@ -852,6 +852,35 @@
                     }
                 }
             });
+        });
+
+        $(document).on("click", '[id^=a-href-category-]', function (event) {
+            var id = this.id.match(/[0-9]+/);
+            var id_index = parseInt(id[0]);
+            window.location.href="search.html?category_ID="+id_index;
+        });
+
+        $(document).on("click", '[id^=a-href-author-]', function (event) {
+            var id = this.id.match(/[0-9]+/);
+            var id_index = parseInt(id[0]);
+            window.location.href="search.html?author_ID="+id_index;
+        });
+
+        $(document).on("click", '[id^=a-href-genre-]', function (event) {
+            var id = this.id.match(/[0-9]+/);
+            var id_index = parseInt(id[0]);
+            window.location.href="search.html?genre_ID="+id_index;
+        });
+
+        $(document).on("click", '[id^=a-href-publisher-]', function (event) {
+            var id = this.id.match(/[0-9]+/);
+            var id_index = parseInt(id[0]);
+            window.location.href="search.html?publisher_ID="+id_index;
+        });
+
+        $("#btn-search").click(function () {
+            var query = $("#input-search").val();
+            window.location.href="search.html?query="+query;
         });
 
         $("#register").click(function () {

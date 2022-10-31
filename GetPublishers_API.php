@@ -27,6 +27,7 @@
         while($row = $result->fetch_assoc()) {
             $myObj->publishers[$i] = new stdClass();
             $myObj->publishers[$i]->publisher_name = $row["publisher_name"];
+            $myObj->publishers[$i]->publisher_ID = $row["publisher_ID"];
             $sql2 = "select count(*) as count from books where books.publisher_ID = '".$row["publisher_ID"]."'";
             $result2 = $conn->query($sql2);
             while($row2 = $result2->fetch_assoc()) {
