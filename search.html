@@ -522,12 +522,7 @@
             </div>
             <div class="my-4">
                 <nav aria-label="Page navigation example">
-                    <ul class="pagination">
-                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Next</a> <br><br></li>
+                    <ul class="pagination" id="pagination-ul">
                     </ul>
                 </nav>
             </div>
@@ -608,6 +603,12 @@
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
         crossorigin="anonymous"></script>
     <script>
+
+        var total_pages = 0;
+        var first_pagination = -1;
+        var last_pagination = -1;
+        var current_page = 1;
+
         $(document).ready(function () {
 
             // load category accordion info
@@ -724,6 +725,7 @@
             const urlParams = new URLSearchParams(queryString);
 
             if (urlParams.has('category_ID')) {
+
                 var category_ID = urlParams.get('category_ID');
                 var formData = new FormData();
                 formData.append("SearchBook", "set");
@@ -756,6 +758,44 @@
                         }
                     }
 
+                });
+
+                // Load page count
+                var formData = new FormData();
+                var category_ID = urlParams.get('category_ID');
+                formData.append("SearchBooksCount", "set");
+                formData.append("category_ID", category_ID);
+                $.ajax({
+                    type: "POST",
+                    url: "SearchBooksCount_API.php",
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        var obj = JSON.parse(data);
+
+                        var p = parseFloat(obj["count"]) / 16.0;
+                        total_pages = Math.ceil(p);
+                        first_pagination = 1;
+                        last_pagination = (total_pages > 5) ? 5 : total_pages;
+
+                        if (total_pages > 1) {
+                            $("#pagination-ul").append('<li id="li-pagination-previous" class="page-item disabled"><a class="page-link" href="javascript:void(0)" id="pagination-previous">Previous</a></li>');
+
+                            for (var i = 1; i <= total_pages && i < 6; i++) {
+                                if (i == current_page) {
+                                    $("#pagination-ul").append('<li id="li-pagination-' + i + '" class="page-item active"><a class="page-link " href="javascript:void(0)" id="pagination-' + i + '">' + i + '</a></li>');
+                                }
+                                else {
+                                    $("#pagination-ul").append('<li id="li-pagination-' + i + '" class="page-item"><a class="page-link" href="javascript:void(0)" id="pagination-' + i + '">' + i + '</a></li>');
+                                }
+                            }
+
+                            $("#pagination-ul").append('<li id="li-pagination-next" class="page-item"><a class="page-link" href="javascript:void(0)" id="pagination-next">Next</a></li>');
+                        }
+
+                    }
                 });
             }
 
@@ -793,6 +833,45 @@
                     }
 
                 });
+
+                // Load page count
+                var formData = new FormData();
+                var genre_ID = urlParams.get('genre_ID');
+                formData.append("SearchBooksCount", "set");
+                formData.append("genre_ID", genre_ID);
+                $.ajax({
+                    type: "POST",
+                    url: "SearchBooksCount_API.php",
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        var obj = JSON.parse(data);
+
+                        var p = parseFloat(obj["count"]) / 16.0;
+                        total_pages = Math.ceil(p);
+                        first_pagination = 1;
+                        last_pagination = (total_pages > 5) ? 5 : total_pages;
+
+
+                        if (total_pages > 1) {
+                            $("#pagination-ul").append('<li id="li-pagination-previous" class="page-item disabled"><a class="page-link" href="javascript:void(0)" id="pagination-previous">Previous</a></li>');
+
+                            for (var i = 1; i <= total_pages && i < 6; i++) {
+                                if (i == current_page) {
+                                    $("#pagination-ul").append('<li id="li-pagination-' + i + '" class="page-item active"><a class="page-link " href="javascript:void(0)" id="pagination-' + i + '">' + i + '</a></li>');
+                                }
+                                else {
+                                    $("#pagination-ul").append('<li id="li-pagination-' + i + '" class="page-item"><a class="page-link" href="javascript:void(0)" id="pagination-' + i + '">' + i + '</a></li>');
+                                }
+                            }
+
+                            $("#pagination-ul").append('<li id="li-pagination-next" class="page-item"><a class="page-link" href="javascript:void(0)" id="pagination-next">Next</a></li>');
+                        }
+
+                    }
+                });
             }
 
             else if (urlParams.has('author_ID')) {
@@ -829,6 +908,45 @@
                     }
 
                 });
+
+                // Load page count
+                var formData = new FormData();
+                var author_ID = urlParams.get('author_ID');
+                formData.append("SearchBooksCount", "set");
+                formData.append("author_ID", author_ID);
+                $.ajax({
+                    type: "POST",
+                    url: "SearchBooksCount_API.php",
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        var obj = JSON.parse(data);
+
+                        var p = parseFloat(obj["count"]) / 16.0;
+                        total_pages = Math.ceil(p);
+                        first_pagination = 1;
+                        last_pagination = (total_pages > 5) ? 5 : total_pages;
+
+                        if (total_pages > 1) {
+                            $("#pagination-ul").append('<li id="li-pagination-previous" class="page-item disabled"><a class="page-link" href="javascript:void(0)" id="pagination-previous">Previous</a></li>');
+
+                            for (var i = 1; i <= total_pages && i < 6; i++) {
+                                if (i == current_page) {
+                                    $("#pagination-ul").append('<li id="li-pagination-' + i + '" class="page-item active"><a class="page-link " href="javascript:void(0)" id="pagination-' + i + '">' + i + '</a></li>');
+                                }
+                                else {
+                                    $("#pagination-ul").append('<li id="li-pagination-' + i + '" class="page-item"><a class="page-link" href="javascript:void(0)" id="pagination-' + i + '">' + i + '</a></li>');
+                                }
+                            }
+
+                            $("#pagination-ul").append('<li id="li-pagination-next" class="page-item"><a class="page-link" href="javascript:void(0)" id="pagination-next">Next</a></li>');
+                        }
+
+                    }
+                });
+
             }
 
             else if (urlParams.has('publisher_ID')) {
@@ -865,10 +983,48 @@
                     }
 
                 });
+                // Load page count
+                var formData = new FormData();
+                var publisher_ID = urlParams.get('publisher_ID');
+                formData.append("SearchBooksCount", "set");
+                formData.append("publisher_ID", publisher_ID);
+                $.ajax({
+                    type: "POST",
+                    url: "SearchBooksCount_API.php",
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        var obj = JSON.parse(data);
+
+                        var p = parseFloat(obj["count"]) / 16.0;
+                        total_pages = Math.ceil(p);
+                        first_pagination = 1;
+                        last_pagination = (total_pages > 5) ? 5 : total_pages;
+
+                        if (total_pages > 1) {
+                            $("#pagination-ul").append('<li id="li-pagination-previous" class="page-item disabled"><a class="page-link" href="javascript:void(0)" id="pagination-previous">Previous</a></li>');
+
+                            for (var i = 1; i <= total_pages && i < 6; i++) {
+                                if (i == current_page) {
+                                    $("#pagination-ul").append('<li id="li-pagination-' + i + '" class="page-item active"><a class="page-link " href="javascript:void(0)" id="pagination-' + i + '">' + i + '</a></li>');
+                                }
+                                else {
+                                    $("#pagination-ul").append('<li id="li-pagination-' + i + '" class="page-item"><a class="page-link" href="javascript:void(0)" id="pagination-' + i + '">' + i + '</a></li>');
+                                }
+                            }
+
+                            $("#pagination-ul").append('<li id="li-pagination-next" class="page-item"><a class="page-link" href="javascript:void(0)" id="pagination-next">Next</a></li>');
+                        }
+
+                    }
+                });
             }
 
             else if (urlParams.has('query')) {
                 var query = urlParams.get('query');
+                $("#input-search").val(query);
                 var formData = new FormData();
                 formData.append("SearchBook", "set");
                 formData.append("searchText", query);
@@ -901,6 +1057,43 @@
                     }
 
                 });
+                // Load page count
+                var formData = new FormData();
+                var query = urlParams.get('query');
+                formData.append("SearchBooksCount", "set");
+                formData.append("searchText", query);
+                $.ajax({
+                    type: "POST",
+                    url: "SearchBooksCount_API.php",
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        var obj = JSON.parse(data);
+
+                        var p = parseFloat(obj["count"]) / 16.0;
+                        total_pages = Math.ceil(p);
+                        first_pagination = 1;
+                        last_pagination = (total_pages > 5) ? 5 : total_pages;
+
+                        if (total_pages > 1) {
+                            $("#pagination-ul").append('<li id="li-pagination-previous" class="page-item disabled"><a class="page-link" href="javascript:void(0)" id="pagination-previous">Previous</a></li>');
+
+                            for (var i = 1; i <= total_pages && i < 6; i++) {
+                                if (i == current_page) {
+                                    $("#pagination-ul").append('<li id="li-pagination-' + i + '" class="page-item active"><a class="page-link " href="javascript:void(0)" id="pagination-' + i + '">' + i + '</a></li>');
+                                }
+                                else {
+                                    $("#pagination-ul").append('<li id="li-pagination-' + i + '" class="page-item"><a class="page-link" href="javascript:void(0)" id="pagination-' + i + '">' + i + '</a></li>');
+                                }
+                            }
+
+                            $("#pagination-ul").append('<li id="li-pagination-next" class="page-item"><a class="page-link" href="javascript:void(0)" id="pagination-next">Next</a></li>');
+                        }
+
+                    }
+                });
             }
 
         });
@@ -928,6 +1121,309 @@
             var id_index = parseInt(id[0]);
             window.location.href = "search.html?publisher_ID=" + id_index;
         });
+
+        $("#btn-search").click(function () {
+            var query = $("#input-search").val();
+            window.location.href = "search.html?query=" + query;
+        });
+
+        $(document).on("click", '[id^=pagination-previous]', function (event) {
+            current_page--;
+
+            // Disable previous button if 1st page
+            if (current_page == 1) {
+                $("#li-pagination-previous").addClass("disabled");
+            }
+            else {
+                $("#li-pagination-previous").removeClass("disabled");
+            }
+
+            // Disable next button if on last page
+            if (current_page == total_pages) {
+                $("#li-pagination-next").addClass("disabled");
+            }
+            else {
+                $("#li-pagination-next").removeClass("disabled");
+            }
+
+            // Decrement pagination if first pagination is clicked and more previous items can be shown
+            if (current_page == first_pagination && first_pagination > 1) {
+                for (var i = 0; i < 5; i++) {
+                    var j = i + first_pagination;
+                    $("#li-pagination-" + j).attr("id", "li-pagination-" + (j - 1));
+                    $("#pagination-" + j).attr("id", "pagination-" + (j - 1));
+                    $("#pagination-" + (j - 1)).html(j - 1);
+                }
+                first_pagination--;
+                last_pagination--;
+            }
+
+            // Remove active state from all pagination buttons
+            for (var i = 1; i <= total_pages; i++) {
+                $("#li-pagination-" + i).removeClass("active");
+            }
+
+            // Place active state on selected pagination item
+            $("#li-pagination-" + current_page).addClass("active");
+
+            // Load books
+           const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            var formData = new FormData();
+            formData.append("SearchBook", "set");
+            formData.append("Page", current_page);
+            if (urlParams.has('query')) {
+                var query = urlParams.get('query');
+                formData.append("searchText", query);
+            }
+            else if (urlParams.has('publisher_ID')) {
+                var publisher_ID = urlParams.get('publisher_ID');
+                formData.append("publisher_ID", publisher_ID);
+            }
+            else if (urlParams.has('author_ID')) {
+                var author_ID = urlParams.get('author_ID');
+                formData.append("author_ID", author_ID);
+            }
+            else if (urlParams.has("genre_ID")) {
+                var genre_ID = urlParams.get('genre_ID');
+                formData.append("genre_ID", genre_ID);
+            }
+            else if (urlParams.has("category_ID")) {
+                var category_ID = urlParams.get('category_ID');
+                formData.append("category_ID", category_ID);
+            }
+            $.ajax({
+                type: "POST",
+                url: "SearchBook_API.php",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    $("#items").html("");
+                    for (i = 0, len = obj["books"].length; i < len; i++) {
+                        var html_element = ' \
+                            <a href="javascript:void(0)" id = "a-href-book-'+ obj["books"][i]["book_ID"] + '"class="no-style-a"> \
+                                <div class="card"> \
+                                    <div class="card-body d-flex flex-column justify-content-center"> \
+                                        <img src="'+ obj["books"][i]["cover_image_loc"] + '" alt="..." class="mb-3"> \
+                                        <span style="font-weight: bold; font-size: 12px; text-align: center;">'+ obj["books"][i]["title"] + '</span> \
+                                        <span style="font-size: 10px; text-align: center;">'+ obj["books"][i]["author_name"] + '</span> \
+                                        <span style="font-size: 12px; text-align: center;">Php '+ obj["books"][i]["price"] + '</span> \
+                                    </div> \
+                                </div> \
+                            </a> \
+                            ';
+                        $("#items").append(html_element);
+                    }
+                }
+            });
+        });
+
+        $(document).on("click", '[id^=pagination-next]', function (event) {
+            current_page++;
+
+            // Disable previous button if 1st page
+            if (current_page == 1) {
+                $("#li-pagination-previous").addClass("disabled");
+            }
+            else {
+                $("#li-pagination-previous").removeClass("disabled");
+            }
+
+            // Disable next button if on last page
+            if (current_page == total_pages) {
+                $("#li-pagination-next").addClass("disabled");
+            }
+            else {
+                $("#li-pagination-next").removeClass("disabled");
+            }
+
+            // Increment pagination if last pagination is clicked and more pages can be shown
+            if (current_page == last_pagination && last_pagination < total_pages) {
+                for (var i = 5; i > 0; i--) {
+                    var j = i + first_pagination;
+                    $("#li-pagination-" + (j - 1)).attr("id", "li-pagination-" + j);
+                    $("#pagination-" + (j - 1)).attr("id", "pagination-" + j);
+                    $("#pagination-" + (j)).html(j);
+                }
+                first_pagination++;
+                last_pagination++;
+            }
+
+            // Remove active state from all pagination buttons
+            for (var i = 1; i <= total_pages; i++) {
+                $("#li-pagination-" + i).removeClass("active");
+            }
+
+            // Place active state on selected pagination item
+            $("#li-pagination-" + current_page).addClass("active");
+
+           // Load books
+           const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            var formData = new FormData();
+            formData.append("SearchBook", "set");
+            formData.append("Page", current_page);
+            if (urlParams.has('query')) {
+                var query = urlParams.get('query');
+                formData.append("searchText", query);
+            }
+            else if (urlParams.has('publisher_ID')) {
+                var publisher_ID = urlParams.get('publisher_ID');
+                formData.append("publisher_ID", publisher_ID);
+            }
+            else if (urlParams.has('author_ID')) {
+                var author_ID = urlParams.get('author_ID');
+                formData.append("author_ID", author_ID);
+            }
+            else if (urlParams.has("genre_ID")) {
+                var genre_ID = urlParams.get('genre_ID');
+                formData.append("genre_ID", genre_ID);
+            }
+            else if (urlParams.has("category_ID")) {
+                var category_ID = urlParams.get('category_ID');
+                formData.append("category_ID", category_ID);
+            }
+            $.ajax({
+                type: "POST",
+                url: "SearchBook_API.php",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    $("#items").html("");
+                    for (i = 0, len = obj["books"].length; i < len; i++) {
+                        var html_element = ' \
+                            <a href="javascript:void(0)" id = "a-href-book-'+ obj["books"][i]["book_ID"] + '"class="no-style-a"> \
+                                <div class="card"> \
+                                    <div class="card-body d-flex flex-column justify-content-center"> \
+                                        <img src="'+ obj["books"][i]["cover_image_loc"] + '" alt="..." class="mb-3"> \
+                                        <span style="font-weight: bold; font-size: 12px; text-align: center;">'+ obj["books"][i]["title"] + '</span> \
+                                        <span style="font-size: 10px; text-align: center;">'+ obj["books"][i]["author_name"] + '</span> \
+                                        <span style="font-size: 12px; text-align: center;">Php '+ obj["books"][i]["price"] + '</span> \
+                                    </div> \
+                                </div> \
+                            </a> \
+                            ';
+                        $("#items").append(html_element);
+                    }
+                }
+            });
+
+        });
+
+        $(document).on("click", '[id^=pagination]', function (event) {
+            var id = this.id.match(/[0-9]+/);
+            var id_index = parseInt(id[0]);
+
+            // Disable previous button if 1st page
+            if (id_index == 1) {
+                $("#li-pagination-previous").addClass("disabled");
+            }
+            else {
+                $("#li-pagination-previous").removeClass("disabled");
+            }
+
+            // Disable next button if on last page
+            if (id_index == total_pages) {
+                $("#li-pagination-next").addClass("disabled");
+            }
+            else {
+                $("#li-pagination-next").removeClass("disabled");
+            }
+
+            // Increment pagination if last pagination is clicked and more pages can be shown
+            if (id_index == last_pagination && last_pagination < total_pages) {
+                for (var i = 5; i > 0; i--) {
+                    var j = i + first_pagination;
+                    $("#li-pagination-" + (j - 1)).attr("id", "li-pagination-" + j);
+                    $("#pagination-" + (j - 1)).attr("id", "pagination-" + j);
+                    $("#pagination-" + (j)).html(j);
+                }
+                first_pagination++;
+                last_pagination++;
+            }
+
+            // Decrement pagination if first pagination is clicked and more previous items can be shown
+            if (id_index == first_pagination && first_pagination > 1) {
+                for (var i = 0; i < 5; i++) {
+                    var j = i + first_pagination;
+                    $("#li-pagination-" + j).attr("id", "li-pagination-" + (j - 1));
+                    $("#pagination-" + j).attr("id", "pagination-" + (j - 1));
+                    $("#pagination-" + (j - 1)).html(j - 1);
+                }
+                first_pagination--;
+                last_pagination--;
+            }
+
+            // Remove active state from all pagination buttons
+            for (var i = 1; i <= total_pages; i++) {
+                $("#li-pagination-" + i).removeClass("active");
+            }
+
+            // Place active state on selected pagination item
+            $("#li-pagination-" + id_index).addClass("active");
+            current_page = id_index;
+
+            // Load books
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            var formData = new FormData();
+            formData.append("SearchBook", "set");
+            formData.append("Page", current_page);
+            if (urlParams.has('query')) {
+                var query = urlParams.get('query');
+                formData.append("searchText", query);
+            }
+            else if (urlParams.has('publisher_ID')) {
+                var publisher_ID = urlParams.get('publisher_ID');
+                formData.append("publisher_ID", publisher_ID);
+            }
+            else if (urlParams.has('author_ID')) {
+                var author_ID = urlParams.get('author_ID');
+                formData.append("author_ID", author_ID);
+            }
+            else if (urlParams.has("genre_ID")) {
+                var genre_ID = urlParams.get('genre_ID');
+                formData.append("genre_ID", genre_ID);
+            }
+            else if (urlParams.has("category_ID")) {
+                var category_ID = urlParams.get('category_ID');
+                formData.append("category_ID", category_ID);
+            }
+            $.ajax({
+                type: "POST",
+                url: "SearchBook_API.php",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    $("#items").html("");
+                    for (i = 0, len = obj["books"].length; i < len; i++) {
+                        var html_element = ' \
+                            <a href="javascript:void(0)" id = "a-href-book-'+ obj["books"][i]["book_ID"] + '"class="no-style-a"> \
+                                <div class="card"> \
+                                    <div class="card-body d-flex flex-column justify-content-center"> \
+                                        <img src="'+ obj["books"][i]["cover_image_loc"] + '" alt="..." class="mb-3"> \
+                                        <span style="font-weight: bold; font-size: 12px; text-align: center;">'+ obj["books"][i]["title"] + '</span> \
+                                        <span style="font-size: 10px; text-align: center;">'+ obj["books"][i]["author_name"] + '</span> \
+                                        <span style="font-size: 12px; text-align: center;">Php '+ obj["books"][i]["price"] + '</span> \
+                                    </div> \
+                                </div> \
+                            </a> \
+                            ';
+                        $("#items").append(html_element);
+                    }
+                }
+            });
+        });
+
     </script>
 </body>
 
