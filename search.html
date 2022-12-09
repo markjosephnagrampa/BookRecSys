@@ -1127,6 +1127,12 @@
             window.location.href = "search.html?query=" + query;
         });
 
+        $(document).on("click", '[id^=a-href-book-]', function (event) {
+            var id = this.id.match(/[0-9]+/);
+            var id_index = parseInt(id[0]);
+            window.location.href = "item.html?book_ID=" + id_index;
+        });
+
         $(document).on("click", '[id^=pagination-previous]', function (event) {
             current_page--;
 
