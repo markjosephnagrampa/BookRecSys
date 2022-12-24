@@ -23,17 +23,24 @@
         }
 
         #navbar-search {
-            width: 60%;
+            width: 50%;
         }
 
-        #navbar-register {
+        #div-dashboard {
             width: 10%;
             display: flex;
             align-items: center;
-            justify-content: end;
+            justify-content: center;
         }
 
-        #navbar-login {
+        #div-cart {
+            width: 10%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #div-customer-dropdown {
             width: 10%;
             display: flex;
             align-items: center;
@@ -59,12 +66,16 @@
         .card {
             width: 160px;
             height: 300px;
-            overflow: auto;
             border-radius: 4px;
             background: #fff;
             box-shadow: 0 6px 10px rgba(0, 0, 0, .08), 0 0 6px rgba(0, 0, 0, .05);
             transition: .3s transform cubic-bezier(.155, 1.105, .295, 1.12), .3s box-shadow, .3s -webkit-transform cubic-bezier(.155, 1.105, .295, 1.12);
             cursor: pointer;
+        }
+
+        .card-body {
+            overflow: auto;
+            height: 250px;
         }
 
         #items>a>div {
@@ -107,15 +118,19 @@
             }
 
             #navbar-search {
-                width: 50%;
+                width: 35%;
             }
 
-            #navbar-register {
+            #div-dashboard {
                 width: 15%;
                 justify-content: end;
             }
 
-            #navbar-login {
+            #div-cart {
+                width: 15%;
+            }
+
+            #div-customer-dropdown {
                 width: 15%;
             }
 
@@ -140,7 +155,7 @@
             #navbar {
                 display: flex;
                 flex-direction: column;
-                height: 215px;
+                height: 230px;
             }
 
             #navbar-logo {
@@ -153,12 +168,16 @@
                 width: 100%;
             }
 
-            #navbar-register {
+            #div-dashboard {
                 width: 100%;
                 justify-content: center;
             }
 
-            #navbar-login {
+            #div-cart {
+                width: 100%;
+            }
+
+            #div-customer-dropdown {
                 width: 100%;
             }
 
@@ -192,21 +211,37 @@
 <body>
     <div id="navbar" class="d-flex bg-dark text-white">
         <div id="navbar-logo" class="d-flex align-items-center">
-            <a href="index.html"><img src="img/logo.ico" alt="logo" height="40" class="m-2"></a>
-            <span style="font-size:24px; font-weight: bold;"><a href="index.html"
+            <a href="dashboard.html"><img src="../img/logo.ico" alt="logo" height="40" class="m-2"></a>
+            <span style="font-size:24px; font-weight: bold;"><a href="dashboard.html"
                     class="no-style-a">BookRecSys</a></span>
         </div>
         <div id="navbar-search" class="d-flex align-items-center m-2">
             <input type="text" id="input-search" class="form-control me-2">
-            <button class="btn btn-primary" id="btn-search"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <button class="btn btn-primary" id="btn-search"><i
+                    class="fa-solid fa-magnifying-glass"></i></button>
         </div>
-        <div id="navbar-register">
-            <button class="btn btn-dark m-2" data-bs-toggle="modal" data-bs-target="#registerModal"><i
-                    class="fa-solid fa-key"></i> Register</button>
+        <div id="div-dashboard" class="d-flex align-items-center">
+            <button class="btn btn-dark" onclick="location.href='dashboard.html'"><i
+                    class="fa-solid fa-clipboard-list"></i> Dashboard</button>
         </div>
-        <div id="navbar-login">
-            <button class="btn btn-dark m-2" data-bs-toggle="modal" data-bs-target="#loginModal"><i
-                    class="fa-solid fa-unlock"></i> Log In</button>
+        <div id="div-cart" class="d-flex align-items-center">
+            <button class="btn btn-dark" onclick="location.href='cart.html'"><i class="fa-solid fa-shopping-cart"></i>
+                Cart <span id = "cart-count" class="badge bg-secondary"></span></button>
+        </div>
+        <div id="div-customer-dropdown" class="d-flex align-items-center">
+            <div class="dropdown">
+                <a class="btn btn-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-user-circle"></i> <span id = "user-name"></span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <li><a class="dropdown-item" href="profile.html"><i class="fa-solid fa-user"></i> My Profile</a>
+                    </li>
+                    <li><a class="dropdown-item" href="transactions.html"><i class="fa-solid fa-wallet"></i> My Transactions</a></li>
+                    <li><a class="dropdown-item" href="javascript:void(0)" id = "sign-out"><i class="fa-solid fa-power-off"></i> Sign Out</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
     <div id="main-container" class="d-flex">
@@ -536,8 +571,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body d-flex flex-column">
-                    <div class="m-2" id="div-register-alert">
-                    </div>
                     <div class="m-2">
                         <label for="first-name" class="form-label">First Name</label>
                         <input type="text" class="form-control" id="first-name">
@@ -548,25 +581,25 @@
                     </div>
                     <div class="m-2">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="register-email">
+                        <input type="email" class="form-control" id="email">
                     </div>
                     <div class="m-2">
                         <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="register-password">
+                        <input type="password" class="form-control" id="password">
                     </div>
                     <div class="m-2">
                         <label for="confirm-password" class="form-label">Confirm Password</label>
                         <input type="password" class="form-control" id="confirm-password">
                     </div>
                     <div class="form-check m-2">
-                        <input class="form-check-input" type="checkbox" value="checked" id="terms-check" checked>
+                        <input class="form-check-input" type="checkbox" value="" id="terms-check" checked>
                         <label class="form-check-label" for="terms-check">
                             I agree with the website's Terms of Service and Privacy Policy.
                         </label>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="register">Register</button>
+                    <button type="button" class="btn btn-primary">Register</button>
                 </div>
             </div>
         </div>
@@ -579,19 +612,17 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body d-flex flex-column">
-                    <div class="m-2" id="div-login-alert">
-                    </div>
                     <div class="m-2">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="login-email">
+                        <input type="email" class="form-control" id="email">
                     </div>
                     <div class="m-2">
                         <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="login-password">
+                        <input type="password" class="form-control" id="password">
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="login">Log
+                    <button type="button" class="btn btn-primary" onclick="location.href='customer/dashboard.html'">Log
                         In</button>
                 </div>
             </div>
@@ -614,6 +645,15 @@
         var current_page = 1;
 
         $(document).ready(function () {
+
+            var user = sessionStorage.getItem("user");
+            if(user == null){
+                window.location.replace("../index.html");
+            }
+            var user_JSON = JSON.parse(user);
+            if(user_JSON["is_admin"] == 1){
+                window.location.replace("../InvalidAccess.html");
+            }
 
             // load category accordion info
             var formData = new FormData();
@@ -723,6 +763,29 @@
                 }
             });
 
+            // load cart count
+            var formData = new FormData();
+            var user = JSON.parse(sessionStorage.getItem("user"));
+            var user_ID = user["user_ID"];
+            formData.append("GetCartCount", "set");
+            formData.append("user_ID",user_ID);
+            $.ajax({
+                type: "POST",
+                url: "GetCartCount_API.php",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    $("#cart-count").html(obj["cartCount"]);
+                }
+            });
+
+            // load username in header
+            var username = user["first_name"] + ' ' + user["last_name"];
+            $("#user-name").html(username);
+
             //check category url parameters
 
             const queryString = window.location.search;
@@ -747,17 +810,21 @@
                         $("#items").html("");
                         for (i = 0, len = obj["books"].length; i < len; i++) {
                             var html_element = ' \
-                            <a href="javascript:void(0)" id = "a-href-book-'+ obj["books"][i]["book_ID"] + '"class="no-style-a"> \
-                                <div class="card"> \
-                                    <div class="card-body d-flex flex-column justify-content-center"> \
-                                        <img src="'+ obj["books"][i]["cover_image_loc"] + '" alt="..." class="mb-3"> \
-                                        <span style="font-weight: bold; font-size: 12px; text-align: center;">'+ obj["books"][i]["title"] + '</span> \
-                                        <span style="font-size: 10px; text-align: center;">'+ obj["books"][i]["author_name"] + '</span> \
-                                        <span style="font-size: 12px; text-align: center;">Php '+ obj["books"][i]["price"] + '</span> \
-                                    </div> \
-                                </div> \
-                            </a> \
-                            ';
+                        <a href="javascript:void(0)" id = "a-href-book-' +obj["books"][i]["book_ID"] + '" class="no-style-a"> \
+                    <div class="card"> \
+                        <div class="card-body d-flex flex-column justify-content-center"> \
+                            <img src="'+obj["books"][i]["cover_image_loc"]+'" \
+                                alt="..." class="mb-3"> \
+                            <span style="font-weight: bold; font-size: 12px; text-align: center;">'+ obj["books"][i]["title"] + '</span> \
+                            <span style="font-size: 10px; text-align: center;">'+ obj["books"][i]["author_name"] + '</span> \
+                            <span style="font-size: 12px; text-align: center;" class="mb-2">Php '+ obj["books"][i]["price"] + '</span> \
+                        </div> \
+                        <div class="d-flex justify-content-center mb-2"> \
+                            <button class="btn btn-primary" style="font-size: 12px;"><i class="fa-solid fa-shopping-cart"></i> Add to Cart</button> \
+                        </div> \
+                    </div> \
+                </a> \
+                        ';
                             $("#items").append(html_element);
                         }
                     }
@@ -821,17 +888,21 @@
                         $("#items").html("");
                         for (i = 0, len = obj["books"].length; i < len; i++) {
                             var html_element = ' \
-                            <a href="javascript:void(0)" id = "a-href-book-'+ obj["books"][i]["book_ID"] + '"class="no-style-a"> \
-                                <div class="card"> \
-                                    <div class="card-body d-flex flex-column justify-content-center"> \
-                                        <img src="'+ obj["books"][i]["cover_image_loc"] + '" alt="..." class="mb-3"> \
-                                        <span style="font-weight: bold; font-size: 12px; text-align: center;">'+ obj["books"][i]["title"] + '</span> \
-                                        <span style="font-size: 10px; text-align: center;">'+ obj["books"][i]["author_name"] + '</span> \
-                                        <span style="font-size: 12px; text-align: center;">Php '+ obj["books"][i]["price"] + '</span> \
-                                    </div> \
-                                </div> \
-                            </a> \
-                            ';
+                        <a href="javascript:void(0)" id = "a-href-book-' +obj["books"][i]["book_ID"] + '" class="no-style-a"> \
+                    <div class="card"> \
+                        <div class="card-body d-flex flex-column justify-content-center"> \
+                            <img src="'+obj["books"][i]["cover_image_loc"]+'" \
+                                alt="..." class="mb-3"> \
+                            <span style="font-weight: bold; font-size: 12px; text-align: center;">'+ obj["books"][i]["title"] + '</span> \
+                            <span style="font-size: 10px; text-align: center;">'+ obj["books"][i]["author_name"] + '</span> \
+                            <span style="font-size: 12px; text-align: center;" class="mb-2">Php '+ obj["books"][i]["price"] + '</span> \
+                        </div> \
+                        <div class="d-flex justify-content-center mb-2"> \
+                            <button class="btn btn-primary" style="font-size: 12px;"><i class="fa-solid fa-shopping-cart"></i> Add to Cart</button> \
+                        </div> \
+                    </div> \
+                </a> \
+                        ';
                             $("#items").append(html_element);
                         }
                     }
@@ -896,17 +967,21 @@
                         $("#items").html("");
                         for (i = 0, len = obj["books"].length; i < len; i++) {
                             var html_element = ' \
-                            <a href="javascript:void(0)" id = "a-href-book-'+ obj["books"][i]["book_ID"] + '"class="no-style-a"> \
-                                <div class="card"> \
-                                    <div class="card-body d-flex flex-column justify-content-center"> \
-                                        <img src="'+ obj["books"][i]["cover_image_loc"] + '" alt="..." class="mb-3"> \
-                                        <span style="font-weight: bold; font-size: 12px; text-align: center;">'+ obj["books"][i]["title"] + '</span> \
-                                        <span style="font-size: 10px; text-align: center;">'+ obj["books"][i]["author_name"] + '</span> \
-                                        <span style="font-size: 12px; text-align: center;">Php '+ obj["books"][i]["price"] + '</span> \
-                                    </div> \
-                                </div> \
-                            </a> \
-                            ';
+                        <a href="javascript:void(0)" id = "a-href-book-' +obj["books"][i]["book_ID"] + '" class="no-style-a"> \
+                    <div class="card"> \
+                        <div class="card-body d-flex flex-column justify-content-center"> \
+                            <img src="'+obj["books"][i]["cover_image_loc"]+'" \
+                                alt="..." class="mb-3"> \
+                            <span style="font-weight: bold; font-size: 12px; text-align: center;">'+ obj["books"][i]["title"] + '</span> \
+                            <span style="font-size: 10px; text-align: center;">'+ obj["books"][i]["author_name"] + '</span> \
+                            <span style="font-size: 12px; text-align: center;" class="mb-2">Php '+ obj["books"][i]["price"] + '</span> \
+                        </div> \
+                        <div class="d-flex justify-content-center mb-2"> \
+                            <button class="btn btn-primary" style="font-size: 12px;"><i class="fa-solid fa-shopping-cart"></i> Add to Cart</button> \
+                        </div> \
+                    </div> \
+                </a> \
+                        ';
                             $("#items").append(html_element);
                         }
                     }
@@ -971,17 +1046,21 @@
                         $("#items").html("");
                         for (i = 0, len = obj["books"].length; i < len; i++) {
                             var html_element = ' \
-                            <a href="javascript:void(0)" id = "a-href-book-'+ obj["books"][i]["book_ID"] + '"class="no-style-a"> \
-                                <div class="card"> \
-                                    <div class="card-body d-flex flex-column justify-content-center"> \
-                                        <img src="'+ obj["books"][i]["cover_image_loc"] + '" alt="..." class="mb-3"> \
-                                        <span style="font-weight: bold; font-size: 12px; text-align: center;">'+ obj["books"][i]["title"] + '</span> \
-                                        <span style="font-size: 10px; text-align: center;">'+ obj["books"][i]["author_name"] + '</span> \
-                                        <span style="font-size: 12px; text-align: center;">Php '+ obj["books"][i]["price"] + '</span> \
-                                    </div> \
-                                </div> \
-                            </a> \
-                            ';
+                        <a href="javascript:void(0)" id = "a-href-book-' +obj["books"][i]["book_ID"] + '" class="no-style-a"> \
+                    <div class="card"> \
+                        <div class="card-body d-flex flex-column justify-content-center"> \
+                            <img src="'+obj["books"][i]["cover_image_loc"]+'" \
+                                alt="..." class="mb-3"> \
+                            <span style="font-weight: bold; font-size: 12px; text-align: center;">'+ obj["books"][i]["title"] + '</span> \
+                            <span style="font-size: 10px; text-align: center;">'+ obj["books"][i]["author_name"] + '</span> \
+                            <span style="font-size: 12px; text-align: center;" class="mb-2">Php '+ obj["books"][i]["price"] + '</span> \
+                        </div> \
+                        <div class="d-flex justify-content-center mb-2"> \
+                            <button class="btn btn-primary" style="font-size: 12px;"><i class="fa-solid fa-shopping-cart"></i> Add to Cart</button> \
+                        </div> \
+                    </div> \
+                </a> \
+                        ';
                             $("#items").append(html_element);
                         }
                     }
@@ -1045,17 +1124,21 @@
                         $("#items").html("");
                         for (i = 0, len = obj["books"].length; i < len; i++) {
                             var html_element = ' \
-                            <a href="javascript:void(0)" id = "a-href-book-'+ obj["books"][i]["book_ID"] + '"class="no-style-a"> \
-                                <div class="card"> \
-                                    <div class="card-body d-flex flex-column justify-content-center"> \
-                                        <img src="'+ obj["books"][i]["cover_image_loc"] + '" alt="..." class="mb-3"> \
-                                        <span style="font-weight: bold; font-size: 12px; text-align: center;">'+ obj["books"][i]["title"] + '</span> \
-                                        <span style="font-size: 10px; text-align: center;">'+ obj["books"][i]["author_name"] + '</span> \
-                                        <span style="font-size: 12px; text-align: center;">Php '+ obj["books"][i]["price"] + '</span> \
-                                    </div> \
-                                </div> \
-                            </a> \
-                            ';
+                        <a href="javascript:void(0)" id = "a-href-book-' +obj["books"][i]["book_ID"] + '" class="no-style-a"> \
+                    <div class="card"> \
+                        <div class="card-body d-flex flex-column justify-content-center"> \
+                            <img src="'+obj["books"][i]["cover_image_loc"]+'" \
+                                alt="..." class="mb-3"> \
+                            <span style="font-weight: bold; font-size: 12px; text-align: center;">'+ obj["books"][i]["title"] + '</span> \
+                            <span style="font-size: 10px; text-align: center;">'+ obj["books"][i]["author_name"] + '</span> \
+                            <span style="font-size: 12px; text-align: center;" class="mb-2">Php '+ obj["books"][i]["price"] + '</span> \
+                        </div> \
+                        <div class="d-flex justify-content-center mb-2"> \
+                            <button class="btn btn-primary" style="font-size: 12px;"><i class="fa-solid fa-shopping-cart"></i> Add to Cart</button> \
+                        </div> \
+                    </div> \
+                </a> \
+                        ';
                             $("#items").append(html_element);
                         }
                     }
@@ -1102,173 +1185,12 @@
 
         });
 
-        $("#register").click(function () {
-            var firstName = $("#first-name").val();
-            var lastName = $("#last-name").val();
-            var email = $("#register-email").val();
-            var password = $("#register-password").val();
-            var c_password = $("#confirm-password").val();
-            var termsCheck = $("#terms-check");
-
-            if (firstName && lastName && email && password && c_password && termsCheck.is(':checked')) {
-
-                if (password != c_password) {
-                    var html_element = ' \
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert"> \
-                        Password fields don\'t match. \
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
-                        </div > \
-                        ';
-                    $("#div-register-alert").html(html_element);
-                }
-
-                else {
-                    $.getJSON('https://api.ipgeolocation.io/ipgeo?apiKey=4acd5b1aaed6452c9338757d75f88de7', function (data) {
-                        var obj = data;
-                        var city = obj["city"];
-                        var state = obj["state_prov"];
-                        var country = obj["country_name"];
-
-                        var formData = new FormData();
-                        formData.append("Register", "set");
-                        formData.append("first_name", firstName);
-                        formData.append("last_name", lastName);
-                        formData.append("email_address", email);
-                        formData.append("password", password);
-                        formData.append("city", city);
-                        formData.append("state", state);
-                        formData.append("country", country);
-
-                        $.ajax({
-                            type: "POST",
-                            url: "Register_API.php",
-                            data: formData,
-                            cache: false,
-                            contentType: false,
-                            processData: false,
-                            success: function (data) {
-                                var obj = JSON.parse(data);
-                                if (obj["response"] == "register success") {
-                                    var html_element = ' \
-                                        <div class="alert alert-success alert-dismissible fade show" role="alert"> \
-                                        You have successfully registered a new account. \
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
-                                        </div > \
-                                        ';
-                                    $("#div-register-alert").html(html_element);
-                                    $("#first-name").val("");
-                                    $("#last-name").val("");
-                                    $("#register-email").val("");
-                                    $("#register-password").val("");
-                                    $("#confirm-password").val("");
-                                }
-                                else if (obj["response"] == "email taken") {
-                                    var html_element = ' \
-                                        <div class="alert alert-danger alert-dismissible fade show" role="alert"> \
-                                        That email address is already taken. \
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
-                                        </div > \
-                                        ';
-                                    $("#div-register-alert").html(html_element);
-                                }
-                                else if (obj["response"] == "db error") {
-                                    var html_element = ' \
-                                        <div class="alert alert-danger alert-dismissible fade show" role="alert"> \
-                                        There was an error registering your account. Please try again. \
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
-                                        </div > \
-                                        ';
-                                    $("#div-register-alert").html(html_element);
-                                }
-                            }
-                        });
-                    });
-                }
-            }
-
-            else {
-                var html_element = ' \
-                    <div class="alert alert-warning alert-dismissible fade show" role="alert"> \
-                    Please fill out all required fields. \
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
-                    </div > \
-                    ';
-                $("#div-register-alert").html(html_element);
-            }
-        });
-        $("#login").click(function () {
-            var email = $("#login-email").val();
-            var password = $("#login-password").val();
-
-            if (email && password) {
-                var formData = new FormData();
-                formData.append("Login", "set");
-                formData.append("email", email);
-                formData.append("password", password);
-
-                $.ajax({
-                    type: "POST",
-                    url: "Login_API.php",
-                    data: formData,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    success: function (data) {
-                        var obj = JSON.parse(data);
-                        if (obj["response"] == "invalid credentials") {
-                            var html_element = ' \
-                                <div class="alert alert-danger alert-dismissible fade show" role="alert"> \
-                                Invalid email or password. \
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
-                                </div > \
-                                ';
-                            $("#div-login-alert").html(html_element);
-                        }
-                        else if (obj["response"] == "inactive account") {
-                            var html_element = ' \
-                                <div class="alert alert-danger alert-dismissible fade show" role="alert"> \
-                                Your account has not yet been activated. Please contact administration. \
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
-                                </div > \
-                                ';
-                            $("#div-login-alert").html(html_element);
-                        }
-
-                        else if (obj["response"] == "deleted account") {
-                            var html_element = ' \
-                                <div class="alert alert-danger alert-dismissible fade show" role="alert"> \
-                                Your account has been deleted. \
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
-                                </div > \
-                                ';
-                            $("#div-login-alert").html(html_element);
-                        }
-
-                        else if (obj["response"] == "login success") {
-                            if (obj["user"]["is_admin"] == 0) {
-                                sessionStorage.clear();
-                                sessionStorage.setItem("user", JSON.stringify(obj["user"]));
-                                window.location.replace("customer/dashboard.html");
-                            }
-                            else {
-                                sessionStorage.clear();
-                                sessionStorage.setItem("user", JSON.stringify(obj["user"]));
-                                window.location.replace("admin/dashboard.html");
-                            }
-                        }
-                    }
-                });
-            }
-            else {
-                var html_element = ' \
-                    <div class="alert alert-warning alert-dismissible fade show" role="alert"> \
-                    Please fill out all required fields. \
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
-                    </div > \
-                    ';
-                $("#div-login-alert").html(html_element);
-            }
-        });
+        $("#sign-out").click(function()
+		{
+			// Clear Session storage and redirect to home page
+			sessionStorage.clear();
+			window.location.replace("../index.html");
+		});
 
         $(document).on("click", '[id^=a-href-category-]', function (event) {
             var id = this.id.match(/[0-9]+/);
@@ -1302,7 +1224,25 @@
         $(document).on("click", '[id^=a-href-book-]', function (event) {
             var id = this.id.match(/[0-9]+/);
             var id_index = parseInt(id[0]);
-            window.location.href = "item.html?book_ID=" + id_index;
+
+            // register click event
+            var user = JSON.parse(sessionStorage.getItem("user"));
+            var formData = new FormData();
+            formData.append("RecordClick", "set");
+            formData.append("book_ID", id_index);
+            formData.append("user_ID",user["user_ID"]);
+            $.ajax({
+                type: "POST",
+                url: "RecordClick_API.php",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    window.location.href = "item.html?book_ID=" + id_index;
+                }
+            });
         });
 
         $(document).on("click", '[id^=pagination-previous]', function (event) {
@@ -1382,17 +1322,21 @@
                     $("#items").html("");
                     for (i = 0, len = obj["books"].length; i < len; i++) {
                         var html_element = ' \
-                            <a href="javascript:void(0)" id = "a-href-book-'+ obj["books"][i]["book_ID"] + '"class="no-style-a"> \
-                                <div class="card"> \
-                                    <div class="card-body d-flex flex-column justify-content-center"> \
-                                        <img src="'+ obj["books"][i]["cover_image_loc"] + '" alt="..." class="mb-3"> \
-                                        <span style="font-weight: bold; font-size: 12px; text-align: center;">'+ obj["books"][i]["title"] + '</span> \
-                                        <span style="font-size: 10px; text-align: center;">'+ obj["books"][i]["author_name"] + '</span> \
-                                        <span style="font-size: 12px; text-align: center;">Php '+ obj["books"][i]["price"] + '</span> \
-                                    </div> \
-                                </div> \
-                            </a> \
-                            ';
+                        <a href="javascript:void(0)" id = "a-href-book-' +obj["books"][i]["book_ID"] + '" class="no-style-a"> \
+                    <div class="card"> \
+                        <div class="card-body d-flex flex-column justify-content-center"> \
+                            <img src="'+obj["books"][i]["cover_image_loc"]+'" \
+                                alt="..." class="mb-3"> \
+                            <span style="font-weight: bold; font-size: 12px; text-align: center;">'+ obj["books"][i]["title"] + '</span> \
+                            <span style="font-size: 10px; text-align: center;">'+ obj["books"][i]["author_name"] + '</span> \
+                            <span style="font-size: 12px; text-align: center;" class="mb-2">Php '+ obj["books"][i]["price"] + '</span> \
+                        </div> \
+                        <div class="d-flex justify-content-center mb-2"> \
+                            <button class="btn btn-primary" style="font-size: 12px;"><i class="fa-solid fa-shopping-cart"></i> Add to Cart</button> \
+                        </div> \
+                    </div> \
+                </a> \
+                        ';
                         $("#items").append(html_element);
                     }
                 }
@@ -1476,17 +1420,21 @@
                     $("#items").html("");
                     for (i = 0, len = obj["books"].length; i < len; i++) {
                         var html_element = ' \
-                            <a href="javascript:void(0)" id = "a-href-book-'+ obj["books"][i]["book_ID"] + '"class="no-style-a"> \
-                                <div class="card"> \
-                                    <div class="card-body d-flex flex-column justify-content-center"> \
-                                        <img src="'+ obj["books"][i]["cover_image_loc"] + '" alt="..." class="mb-3"> \
-                                        <span style="font-weight: bold; font-size: 12px; text-align: center;">'+ obj["books"][i]["title"] + '</span> \
-                                        <span style="font-size: 10px; text-align: center;">'+ obj["books"][i]["author_name"] + '</span> \
-                                        <span style="font-size: 12px; text-align: center;">Php '+ obj["books"][i]["price"] + '</span> \
-                                    </div> \
-                                </div> \
-                            </a> \
-                            ';
+                        <a href="javascript:void(0)" id = "a-href-book-' +obj["books"][i]["book_ID"] + '" class="no-style-a"> \
+                    <div class="card"> \
+                        <div class="card-body d-flex flex-column justify-content-center"> \
+                            <img src="'+obj["books"][i]["cover_image_loc"]+'" \
+                                alt="..." class="mb-3"> \
+                            <span style="font-weight: bold; font-size: 12px; text-align: center;">'+ obj["books"][i]["title"] + '</span> \
+                            <span style="font-size: 10px; text-align: center;">'+ obj["books"][i]["author_name"] + '</span> \
+                            <span style="font-size: 12px; text-align: center;" class="mb-2">Php '+ obj["books"][i]["price"] + '</span> \
+                        </div> \
+                        <div class="d-flex justify-content-center mb-2"> \
+                            <button class="btn btn-primary" style="font-size: 12px;"><i class="fa-solid fa-shopping-cart"></i> Add to Cart</button> \
+                        </div> \
+                    </div> \
+                </a> \
+                        ';
                         $("#items").append(html_element);
                     }
                 }
@@ -1584,18 +1532,23 @@
                     var obj = JSON.parse(data);
                     $("#items").html("");
                     for (i = 0, len = obj["books"].length; i < len; i++) {
+                        
                         var html_element = ' \
-                            <a href="javascript:void(0)" id = "a-href-book-'+ obj["books"][i]["book_ID"] + '"class="no-style-a"> \
-                                <div class="card"> \
-                                    <div class="card-body d-flex flex-column justify-content-center"> \
-                                        <img src="'+ obj["books"][i]["cover_image_loc"] + '" alt="..." class="mb-3"> \
-                                        <span style="font-weight: bold; font-size: 12px; text-align: center;">'+ obj["books"][i]["title"] + '</span> \
-                                        <span style="font-size: 10px; text-align: center;">'+ obj["books"][i]["author_name"] + '</span> \
-                                        <span style="font-size: 12px; text-align: center;">Php '+ obj["books"][i]["price"] + '</span> \
-                                    </div> \
-                                </div> \
-                            </a> \
-                            ';
+                        <a href="javascript:void(0)" id = "a-href-book-' +obj["books"][i]["book_ID"] + '" class="no-style-a"> \
+                    <div class="card"> \
+                        <div class="card-body d-flex flex-column justify-content-center"> \
+                            <img src="'+obj["books"][i]["cover_image_loc"]+'" \
+                                alt="..." class="mb-3"> \
+                            <span style="font-weight: bold; font-size: 12px; text-align: center;">'+ obj["books"][i]["title"] + '</span> \
+                            <span style="font-size: 10px; text-align: center;">'+ obj["books"][i]["author_name"] + '</span> \
+                            <span style="font-size: 12px; text-align: center;" class="mb-2">Php '+ obj["books"][i]["price"] + '</span> \
+                        </div> \
+                        <div class="d-flex justify-content-center mb-2"> \
+                            <button class="btn btn-primary" style="font-size: 12px;"><i class="fa-solid fa-shopping-cart"></i> Add to Cart</button> \
+                        </div> \
+                    </div> \
+                </a> \
+                        ';
                         $("#items").append(html_element);
                     }
                 }

@@ -129,7 +129,7 @@
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                     <li><a class="dropdown-item" href="profile.html"><i class="fa-solid fa-user"></i> My Profile</a>
                     </li>
-                    <li><a class="dropdown-item" href="../index.html"><i class="fa-solid fa-power-off"></i> Sign Out</a>
+                    <li><a class="dropdown-item" href="javascript:void(0)" id="sign-out"><i class="fa-solid fa-power-off"></i> Sign Out</a>
                     </li>
                 </ul>
             </div>
@@ -240,20 +240,24 @@
     </div>
     <script>
         $(document).ready(function () {
-            // Check if user is logged in
-            if (sessionStorage.getItem("user") === null) {
+            var user = sessionStorage.getItem("user");
+            if(user == null){
+                window.location.replace("../index.html");
+            }
+            var user_JSON = JSON.parse(user);
+            if(user_JSON["is_admin"] == 0){
                 window.location.replace("../InvalidAccess.html");
             }
-            // Load company data on the profile page
-            var user = JSON.parse(sessionStorage.getItem("user"));
 
-            // Check Account Type
-            if (user["is_admin"] == false) {
-                window.location.replace("../InvalidAccess.html");
-            }
             // Load user name on header
-            $("#div-admin-name").html("Admin " + user["first_name"] + " " + user["last_name"]);
+            $("#div-admin-name").html("Admin " + user_JSON["first_name"] + " " + user_JSON["last_name"]);
 
+        });
+
+        $("#sign-out").click(function () {
+            // Clear Session storage and redirect to home page
+            sessionStorage.clear();
+            window.location.replace("../index.html");
         });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"

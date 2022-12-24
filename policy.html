@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <style>
         #navbar {
             height: 64px;
@@ -114,7 +115,7 @@
         </div>
         <div id="navbar-search" class="d-flex align-items-center m-2">
             <input type="text" id="input-search" class="form-control me-2">
-            <button class="btn btn-primary" onclick="location.href='search.html'"><i
+            <button class="btn btn-primary" id="btn-search"><i
                     class="fa-solid fa-magnifying-glass"></i></button>
         </div>
         <div id="navbar-register">
@@ -164,6 +165,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body d-flex flex-column">
+                    <div class="m-2" id="div-register-alert">
+                    </div>
                     <div class="m-2">
                         <label for="first-name" class="form-label">First Name</label>
                         <input type="text" class="form-control" id="first-name">
@@ -174,25 +177,25 @@
                     </div>
                     <div class="m-2">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email">
+                        <input type="email" class="form-control" id="register-email">
                     </div>
                     <div class="m-2">
                         <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password">
+                        <input type="password" class="form-control" id="register-password">
                     </div>
                     <div class="m-2">
                         <label for="confirm-password" class="form-label">Confirm Password</label>
                         <input type="password" class="form-control" id="confirm-password">
                     </div>
                     <div class="form-check m-2">
-                        <input class="form-check-input" type="checkbox" value="" id="terms-check" checked>
+                        <input class="form-check-input" type="checkbox" value="checked" id="terms-check" checked>
                         <label class="form-check-label" for="terms-check">
                             I agree with the website's Terms of Service and Privacy Policy.
                         </label>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Register</button>
+                    <button type="button" class="btn btn-primary" id="register">Register</button>
                 </div>
             </div>
         </div>
@@ -205,17 +208,19 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body d-flex flex-column">
+                    <div class="m-2" id="div-login-alert">
+                    </div>
                     <div class="m-2">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email">
+                        <input type="email" class="form-control" id="login-email">
                     </div>
                     <div class="m-2">
                         <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password">
+                        <input type="password" class="form-control" id="login-password">
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="location.href='customer/dashboard.html'">Log
+                    <button type="button" class="btn btn-primary" id="login">Log
                         In</button>
                 </div>
             </div>
@@ -227,6 +232,179 @@
             <div><a href="policy.html" class="text-secondary">Privacy Policy</a></div>
         </div>
     </nav>
+    <script>
+        $("#register").click(function () {
+            var firstName = $("#first-name").val();
+            var lastName = $("#last-name").val();
+            var email = $("#register-email").val();
+            var password = $("#register-password").val();
+            var c_password = $("#confirm-password").val();
+            var termsCheck = $("#terms-check");
+
+            if (firstName && lastName && email && password && c_password && termsCheck.is(':checked')) {
+
+                if (password != c_password) {
+                    var html_element = ' \
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert"> \
+                        Password fields don\'t match. \
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                        </div > \
+                        ';
+                    $("#div-register-alert").html(html_element);
+                }
+
+                else {
+                    $.getJSON('https://api.ipgeolocation.io/ipgeo?apiKey=4acd5b1aaed6452c9338757d75f88de7', function (data) {
+                        var obj = data;
+                        var city = obj["city"];
+                        var state = obj["state_prov"];
+                        var country = obj["country_name"];
+
+                        var formData = new FormData();
+                        formData.append("Register", "set");
+                        formData.append("first_name", firstName);
+                        formData.append("last_name", lastName);
+                        formData.append("email_address", email);
+                        formData.append("password", password);
+                        formData.append("city", city);
+                        formData.append("state", state);
+                        formData.append("country", country);
+
+                        $.ajax({
+                            type: "POST",
+                            url: "Register_API.php",
+                            data: formData,
+                            cache: false,
+                            contentType: false,
+                            processData: false,
+                            success: function (data) {
+                                var obj = JSON.parse(data);
+                                if (obj["response"] == "register success") {
+                                    var html_element = ' \
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert"> \
+                                        You have successfully registered a new account. \
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                                        </div > \
+                                        ';
+                                    $("#div-register-alert").html(html_element);
+                                    $("#first-name").val("");
+                                    $("#last-name").val("");
+                                    $("#register-email").val("");
+                                    $("#register-password").val("");
+                                    $("#confirm-password").val("");
+                                }
+                                else if (obj["response"] == "email taken") {
+                                    var html_element = ' \
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert"> \
+                                        That email address is already taken. \
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                                        </div > \
+                                        ';
+                                    $("#div-register-alert").html(html_element);
+                                }
+                                else if (obj["response"] == "db error") {
+                                    var html_element = ' \
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert"> \
+                                        There was an error registering your account. Please try again. \
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                                        </div > \
+                                        ';
+                                    $("#div-register-alert").html(html_element);
+                                }
+                            }
+                        });
+                    });
+                }
+            }
+
+            else {
+                var html_element = ' \
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert"> \
+                    Please fill out all required fields. \
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                    </div > \
+                    ';
+                $("#div-register-alert").html(html_element);
+            }
+        });
+        $("#login").click(function () {
+            var email = $("#login-email").val();
+            var password = $("#login-password").val();
+
+            if (email && password) {
+                var formData = new FormData();
+                formData.append("Login", "set");
+                formData.append("email", email);
+                formData.append("password", password);
+
+                $.ajax({
+                    type: "POST",
+                    url: "Login_API.php",
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        var obj = JSON.parse(data);
+                        if (obj["response"] == "invalid credentials") {
+                            var html_element = ' \
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert"> \
+                                Invalid email or password. \
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                                </div > \
+                                ';
+                            $("#div-login-alert").html(html_element);
+                        }
+                        else if (obj["response"] == "inactive account") {
+                            var html_element = ' \
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert"> \
+                                Your account has not yet been activated. Please contact administration. \
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                                </div > \
+                                ';
+                            $("#div-login-alert").html(html_element);
+                        }
+
+                        else if (obj["response"] == "deleted account") {
+                            var html_element = ' \
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert"> \
+                                Your account has been deleted. \
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                                </div > \
+                                ';
+                            $("#div-login-alert").html(html_element);
+                        }
+
+                        else if (obj["response"] == "login success") {
+                            if (obj["user"]["is_admin"] == 0) {
+                                sessionStorage.clear();
+                                sessionStorage.setItem("user", JSON.stringify(obj["user"]));
+                                window.location.replace("customer/dashboard.html");
+                            }
+                            else {
+                                sessionStorage.clear();
+                                sessionStorage.setItem("user", JSON.stringify(obj["user"]));
+                                window.location.replace("admin/dashboard.html");
+                            }
+                        }
+                    }
+                });
+            }
+            else {
+                var html_element = ' \
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert"> \
+                    Please fill out all required fields. \
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                    </div > \
+                    ';
+                $("#div-login-alert").html(html_element);
+            }
+        });
+        $("#btn-search").click(function () {
+            var query = $("#input-search").val();
+            window.location.href = "search.html?query=" + query;
+        });
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
         crossorigin="anonymous"></script>

@@ -18,8 +18,8 @@ $username = "root";
 $password = "password";
 $dbname = "bookrecsys";
 
-require_once 'recommend.php';
-require_once 'content_based.php';
+require_once '../recommend.php';
+require_once '../content_based.php';
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -34,6 +34,7 @@ foreach ($_POST as $a => $b) {
 }
 
 if(isset($_POST["GetSimilarItems"])){
+	
 	$sql = "select books.title from books where books.is_deleted = '0' and books.book_ID = '".$_POST["book_ID"]."'";
 	$result = $conn->query($sql);
 	while($row = $result->fetch_assoc()) {
@@ -48,13 +49,7 @@ if(isset($_POST["GetSimilarItems"])){
 		if(strcmp($row["title"],$_POST["title"]) == 0){
 		}
 		else{
-			if(is_numeric($row["title"])){
-				$objects[strval($row["title"])] = array();
-			}
-			else{
-				$objects[$row["title"]] = array();
-			}
-			
+			$objects[$row["title"]] = array();
 		}
 		$sql2 = "select genres.genre_name from genres join book_genres on genres.genre_ID = book_genres.genre_ID join books on books.book_ID = book_genres.book_ID where books.title = '".$row["title"]."'";
 		$result2 = $conn->query($sql2);
@@ -69,10 +64,11 @@ if(isset($_POST["GetSimilarItems"])){
 	}
 	$engine = new ContentBasedRecommend($user, $objects);
 	$top5 = array_slice($engine->getRecommendation(),0,5,true);
+	//var_dump($engine->getRecommendation());
 	//var_dump($top5);
 	//var_dump($user);
 	//var_dump($objects);
-
+	
 	$myObj->books = array();
 	$i=0;
 	foreach($top5 as $x => $val) {

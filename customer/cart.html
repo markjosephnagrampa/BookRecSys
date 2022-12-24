@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <style>
         #navbar {
             height: 64px;
@@ -196,7 +197,7 @@
         </div>
         <div id="navbar-search" class="d-flex align-items-center m-2">
             <input type="text" id="input-search" class="form-control me-2">
-            <button class="btn btn-primary" onclick="location.href='search.html'"><i
+            <button class="btn btn-primary" id="btn-search"><i
                     class="fa-solid fa-magnifying-glass"></i></button>
         </div>
         <div id="div-dashboard" class="d-flex align-items-center">
@@ -211,14 +212,15 @@
             <div class="dropdown">
                 <a class="btn btn-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                     data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fa-solid fa-user-circle"></i> John Doe
+                    <i class="fa-solid fa-user-circle"></i> <span id="user-name"></span>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                     <li><a class="dropdown-item" href="profile.html"><i class="fa-solid fa-user"></i> My Profile</a>
                     </li>
                     <li><a class="dropdown-item" href="transactions.html"><i class="fa-solid fa-wallet"></i> My
                             Transactions</a></li>
-                    <li><a class="dropdown-item" href="../index.html"><i class="fa-solid fa-power-off"></i> Sign Out</a>
+                    <li><a class="dropdown-item" href="javascript:void(0)" id="sign-out"><i
+                                class="fa-solid fa-power-off"></i> Sign Out</a>
                     </li>
                 </ul>
             </div>
@@ -317,6 +319,30 @@
             <div><a href="../policy.html" class="text-secondary">Privacy Policy</a></div>
         </div>
     </nav>
+    <script>
+        $(document).ready(function () {
+            var user = sessionStorage.getItem("user");
+            if (user == null) {
+                window.location.replace("../index.html");
+            }
+            var user_JSON = JSON.parse(user);
+            if (user_JSON["is_admin"] == 1) {
+                window.location.replace("../InvalidAccess.html");
+            }
+            // load username in header
+            var username = user_JSON["first_name"] + ' ' + user_JSON["last_name"];
+            $("#user-name").html(username);
+        });
+        $("#sign-out").click(function () {
+            // Clear Session storage and redirect to home page
+            sessionStorage.clear();
+            window.location.replace("../index.html");
+        });
+        $("#btn-search").click(function () {
+            var query = $("#input-search").val();
+            window.location.href = "search.html?query=" + query;
+        });
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
         crossorigin="anonymous"></script>

@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Dec 09, 2022 at 03:46 AM
+-- Generation Time: Dec 23, 2022 at 09:14 PM
 -- Server version: 5.7.40-0ubuntu0.18.04.1
--- PHP Version: 7.2.24-0ubuntu0.18.04.13
+-- PHP Version: 7.2.24-0ubuntu0.18.04.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -204,7 +204,11 @@ INSERT INTO `authors` (`author_ID`, `author_name`) VALUES
 (147, 'Ernest H. Shepard'),
 (148, 'Edgar Allan Poe'),
 (149, 'Anne Rice'),
-(150, 'John Irving');
+(150, 'John Irving'),
+(151, 'Herman Melville'),
+(152, 'Andrew Delbanco'),
+(153, 'Tom Quirk'),
+(154, 'Rockwell Kent');
 
 -- --------------------------------------------------------
 
@@ -315,16 +319,16 @@ INSERT INTO `books` (`book_ID`, `category_ID`, `publisher_ID`, `format_ID`, `ISB
 (91, NULL, 10, 3, '9780345015339', 'The Fellowship of the Ring', '22.00', 1973, 0, 'One Ring to rule them all, One Ring to find them, One Ring to bring them all and in the darkeness bind themIn ancient times the Rings of Power were crafted by the Elven-smiths, and Sauron, The Dark Lord, forged the One Ring, filling it with his own power so that he could rule all others. But the One Ring was taken from him, and though he sought it throughout Middle-earth, it remained lost to him. After many ages it fell into the hands of Bilbo Baggins, as told in The Hobbit.In a sleepy village in the Shire, young Frodo Baggins finds himself faced with an immense task, as his elderly cousin Bilbo entrusts the Ring to his care. Frodo must leave his home and make a perilous journey across Middle-earth to the Cracks of Doom, there to destroy the Ring and foil the Dark Lord in his evil purpose.', '91.jpg', 22, 1, 0),
 (92, NULL, 65, 1, '9999999999999', 'The Girl with the Dragon Tattoo', '22.00', 2008, 0, 'Harriet Vanger, a scion of one of Swedenâ€™s wealthiest families disappeared over forty years ago. All these years later, her aged uncle continues to seek the truth. He hires Mikael Blomkvist, a crusading journalist recently trapped by a libel conviction, to investigate. He is aided by the pierced and tattooed punk prodigy Lisbeth Salander. Together they tap into a vein of unfathomable iniquity and astonishing corruption.An international publishing sensation, Stieg Larssonâ€™s The Girl with the Dragon Tattoo combines murder mystery, family saga, love story, and financial intrigue into one satisfyingly complex and entertainingly atmospheric novel.Alternate Cover Edition ISBN 0307269752 (ISBN13: 9780307269751)', '92.jpg', 22, 1, 0),
 (93, NULL, 6, 6, '9780316323703', 'Rebecca', '22.00', 2013, 0, 'Last night I dreamt I went to Manderley again . . .The novel begins in Monte Carlo, where our heroine is swept off her feet by the dashing widower Maxim de Winter and his sudden proposal of marriage. Orphaned and working as a ladys maid, she can barely believe her luck. It is only when they arrive at his massive country estate that she realizes how large a shadow his late wife will cast over their lives--presenting her with a lingering evil that threatens to destroy their marriage from beyond the grave.', '93.jpg', 22, 1, 0),
-(94, NULL, 66, 4, '9999999999999', '1984', '22.00', 2013, 0, 'Among the seminal texts of the 20th century, Nineteen Eighty-Four is a rare work that grows more haunting as its futuristic purgatory becomes more real. Published in 1949, the book offers political satirist George Orwells nightmarish vision of a totalitarian, bureaucratic world and one poor stiffs attempt to find individuality. The brilliance of the novel is Orwells prescience of modern lifeâ€”the ubiquity of television, the distortion of the languageâ€”and his ability to construct such a thorough version of hell. Required reading for students since it was published, it ranks among the most terrifying novels ever written.', '94.jpg', 22, 1, 0),
+(94, NULL, 66, 4, '9999999999999', '1984', '22.00', 2013, 0, 'Among the seminal texts of the 20th century, Nineteen Eighty-Four is a rare work that grows more haunting as its futuristic purgatory becomes more real. Published in 1949, the book offers political satirist George Orwells nightmarish vision of a totalitarian, bureaucratic world and one poor stiffs attempt to find individuality. The brilliance of the novel is Orwells prescience of modern lifeâ€”the ubiquity of television, the distortion of the languageâ€”and his ability to construct such a thorough version of hell. Required reading for students since it was published, it ranks among the most terrifying novels ever written.', '94.jpg', 22, 1, 1),
 (95, NULL, 24, 2, '9780143135692', 'The Color Purple', '22.00', 2019, 0, 'Winner of the Pulitzer Prize and the National Book Award. Alice Walkers iconic modern classic is now a Penguin Book.A powerful cultural touchstone of modern American literature, The Color Purple depicts the lives of African American women in early twentieth-century rural Georgia. Separated as girls, sisters Celie and Nettie sustain their loyalty to and hope in each other across time, distance and silence. Through a series of letters spanning twenty years, first from Celie to God, then the sisters to each other despite the unknown, the novel draws readers into its rich and memorable portrayals of Celie, Nettie, Shug Avery and Sofia and their experience. The Color Purple broke the silence around domestic and sexual abuse, narrating the lives of women through their pain and struggle, companionship and growth, resilience and bravery. Deeply compassionate and beautifully imagined, Alice Walkers epic carries readers on a spirit-affirming journey towards redemption and love.', '95.jpg', 22, 1, 0),
 (96, NULL, 14, 2, '9780061120077', 'A Tree Grows in Brooklyn', '22.00', 2006, 0, 'The beloved American classic about a young girls coming-of-age at the turn of the century, Betty Smiths A Tree Grows in Brooklyn is a poignant and moving tale filled with compassion and cruelty, laughter and heartache, crowded with life and people and incident. The story of young, sensitive, and idealistic Francie Nolan and her bittersweet formative years in the slums of Williamsburg has enchanted and inspired millions of readers for more than sixty years. By turns overwhelming, sublime, heartbreaking, and uplifting, the daily experiences of the unforgettable Nolans are raw with honesty and tenderly threaded with family connectedness -- in a work of literary art that brilliantly captures a unique time and place as well as incredibly rich moments of universal experience.', '96.jpg', 22, 1, 0),
-(97, NULL, 67, 2, '9780393341768', 'A Clockwork Orange', '22.00', 2019, 0, 'In Anthony Burgesss influential nightmare vision of the future, criminals take over after dark. Teen gang leader Alex narrates in fantastically inventive slang that echoes the violent intensity of youth rebelling against society. Dazzling and transgressive, A Clockwork Orange is a frightening fable about good and evil and the meaning of human freedom. This edition includes the controversial last chapter not published in the first edition, and Burgessâ€™s introduction, â€œA Clockwork Orange Resucked.â€', '97.jpg', 22, 1, 0),
+(97, NULL, 67, 2, '9780393341768', 'A Clockwork Orange', '22.00', 2019, 1, 'In Anthony Burgesss influential nightmare vision of the future, criminals take over after dark. Teen gang leader Alex narrates in fantastically inventive slang that echoes the violent intensity of youth rebelling against society. Dazzling and transgressive, A Clockwork Orange is a frightening fable about good and evil and the meaning of human freedom. This edition includes the controversial last chapter not published in the first edition, and Burgessâ€™s introduction, â€œA Clockwork Orange Resucked.â€', '97.jpg', 22, 1, 0),
 (98, NULL, 7, 1, '9780307265432', 'The Road', '22.00', 2006, 0, 'A searing, postapocalyptic novel destined to become Cormac McCarthyâ€™s masterpiece.A father and his son walk alone through burned America. Nothing moves in the ravaged landscape save the ash on the wind. It is cold enough to crack stones, and when the snow falls it is gray. The sky is dark. Their destination is the coast, although they donâ€™t know what, if anything, awaits them there. They have nothing; just a pistol to defend themselves against the lawless bands that stalk the road, the clothes they are wearing, a cart of scavenged foodâ€”and each other.The Road is the profoundly moving story of a journey. It boldly imagines a future in which no hope remains, but in which the father and his son, â€œeach the otherâ€™s world entire,â€ are sustained by love. Awesome in the totality of its vision, it is an unflinching meditation on the worst and the best that we are capable of: ultimate destructiveness, desperate tenacity, and the tenderness that keeps two people alive in the face o...', '98.jpg', 22, 1, 0),
 (99, NULL, 68, 2, '9780374528379', 'The Brothers Karamazov', '22.00', 2002, 0, 'The Brothers Karamazov is a murder mystery, a courtroom drama, and an exploration of erotic rivalry in a series of triangular love affairs involving the â€œwicked and sentimentalâ€ Fyodor Pavlovich Karamazov and his three sonsâ€•the impulsive and sensual Dmitri; the coldly rational Ivan; and the healthy, red-cheeked young novice Alyosha. Through the gripping events of their story, Dostoevsky portrays the whole of Russian life, is social and spiritual striving, in what was both the golden age and a tragic turning point in Russian culture.This award-winning translation by Richard Pevear and Larissa Volokhonsky remains true to the verbalinventiveness of Dostoevskyâ€™s prose, preserving the multiple voices, the humor, and the surprising modernity of the original. It is an achievement worthy of Dostoevskyâ€™s last and greatest novel.', '99.jpg', 22, 1, 0),
 (100, NULL, 69, 2, '9780007205233', 'Angelas Ashes', '22.00', 2005, 0, 'Imbued on every page with Frank McCourts astounding humor and compassion. This is a glorious book that bears all the marks of a classic.&quot;When I look back on my childhood I wonder how I managed to survive at all. It was, of course, a miserable childhood: the happy childhood is hardly worth your while. Worse than the ordinary miserable childhood is the miserable Irish childhood, and worse yet is the miserable Irish Catholic childhood.&quot; So begins the Pulitzer Prize winning memoir of Frank McCourt, born in Depression-era Brooklyn to recent Irish immigrants and raised in the slums of Limerick, Ireland. Franks mother, Angela, has no money to feed the children since Franks father, Malachy, rarely works, and when he does he drinks his wages. Yet Malachy-- exasperating, irresponsible and beguiling-- does nurture in Frank an appetite for the one thing he can provide: a story. Frank lives for his fathers tales of Cuchulain, who saved Ireland, and of the Angel on the Seventh Step, who...', '100.jpg', 22, 1, 0),
 (101, NULL, 70, 2, '9781595141743', 'Vampire Academy', '22.00', 2007, 0, 'ONLY A TRUE BEST FRIEND CAN PROTECT YOU FROM YOUR IMMORTAL ENEMIES...Lissa Dragomir is a Moroi princess: a mortal vampire with a rare gift for harnessing the earths magic. She must be protected at all times from Strigoi; the fiercest vampires - the ones who never die. The powerful blend of human and vampire blood that flows through Rose Hathaway, Lissas best friend, makes her a dhampir. Rose is dedicated to a dangerous life of protecting Lissa from the Strigoi, who are hell-bent on making Lissa one of them.After two years of freedom, Rose and Lissa are caught and dragged back to St. Vladimirs Academy, a school for vampire royalty and their guardians-to-be, hidden in the deep forests of Montana. But inside the iron gates, life is even more fraught with danger... and the Strigoi are always close by.Rose and Lissa must navigate their dangerous world, confront the temptations of forbidden love, and never once let their guard down, lest the evil undead make Lissa one of them forever...', '101.jpg', 22, 1, 0),
 (102, NULL, 71, 3, '9999999999999', 'Siddhartha', '22.00', 1981, 0, 'Herman Hesses classic novel has delighted, inspired, and influenced generations of readers, writers, and thinkers. In this story of a wealthy Indian Brahmin who casts off a life of privilege to seek spiritual fulfillment. Hesse synthesizes disparate philosophies--Eastern religions, Jungian archetypes, Western individualism--into a unique vision of life as expressed through one mans search for true meaning.', '102.jpg', 22, 1, 0),
-(103, NULL, 4, 1, '9780060786502', 'The Poisonwood Bible', '22.00', 2005, 0, 'The Poisonwood Bible is a story told by the wife and four daughters of Nathan Price, a fierce, evangelical Baptist who takes his family and mission to the Belgian Congo in 1959. They carry with them everything they believe they will need from home, but soon find that all of it -- from garden seeds to Scripture -- is calamitously transformed on African soil. What follows is a suspenseful epic of one familys tragic undoing and remarkable reconstruction over the course of three decades in postcolonial Africa.', '103.jpg', 22, 1, 0),
+(103, NULL, 4, 1, '9780060786502', 'The Poisonwood Bible', '22.00', 2005, 1, 'The Poisonwood Bible is a story told by the wife and four daughters of Nathan Price, a fierce, evangelical Baptist who takes his family and mission to the Belgian Congo in 1959. They carry with them everything they believe they will need from home, but soon find that all of it -- from garden seeds to Scripture -- is calamitously transformed on African soil. What follows is a suspenseful epic of one familys tragic undoing and remarkable reconstruction over the course of three decades in postcolonial Africa.', '103.jpg', 22, 1, 0),
 (104, NULL, 72, 1, '9780679879244', 'The Golden Compass', '22.00', 1996, 0, 'Lyra is rushing to the cold, far North, where witch clans and armored bears rule. North, where the Gobblers take the children they steal--including her friend Roger. North, where her fearsome uncle Asriel is trying to build a bridge to a parallel world.Can one small girl make a difference in such great and terrible endeavors? This is Lyra: a savage, a schemer, a liar, and as fierce and true a champion as Roger or Asriel could want--but what Lyra doesnt know is that to help one of them will be to betray the other.', '104.jpg', 22, 1, 0),
 (105, NULL, 24, 2, '9780142437230', 'Don Quixote', '22.00', 2003, 0, 'Don Quixote has become so entranced by reading chivalric romances that he determines to become a knight-errant himself. In the company of his faithful squire, Sancho Panza, his exploits blossom in all sorts of wonderful ways. While Quixotes fancy often leads him astrayâ€”he tilts at windmills, imagining them to be giantsâ€”Sancho acquires cunning and a certain sagacity. Sane madman and wise fool, they roam the world together, and together they have haunted readers imaginations for nearly four hundred years.With its experimental form and literary playfulness, Don Quixote has been generally recognized as the first modern novel. The book has been enormously influential on a host of writers, from Fielding and Sterne to Flaubert, Dickens, Melville, and Faulkner, who reread it once a year, &quot;just as some people read the Bible.&quot;', '105.jpg', 22, 1, 0),
 (106, NULL, 73, 2, '9780452011878', 'Atlas Shrugged', '22.00', 1999, 0, 'This is the story of a man who said that he would stop the motor of the world and did. Was he a destroyer or the greatest of liberators?Why did he have to fight his battle, not against his enemies, but against those who needed him most, and his hardest battle against the woman he loved? What is the worldâ€™s motor â€” and the motive power of every man? You will know the answer to these questions when you discover the reason behind the baffling events that play havoc with the lives of the characters in this story. Tremendous in its scope, this novel presents an astounding panorama of human life â€” from the productive genius who becomes a worthless playboy â€” to the great steel industrialist who does not know that he is working for his own destruction â€” to the philosopher who becomes a pirate â€” to the composer who gives up his career on the night of his triumph â€” to the woman who runs a transcontinental railroad â€” to the lowest track worker in her Terminal tunnels. You must ...', '106.jpg', 22, 1, 0),
@@ -334,7 +338,8 @@ INSERT INTO `books` (`book_ID`, `category_ID`, `publisher_ID`, `format_ID`, `ISB
 (110, NULL, 75, 1, '9780525467564', 'Winnie-the-Pooh', '22.00', 2001, 0, 'The adventures of Christopher Robin and his friends in which Pooh Bear uses a balloon to get honey, Piglet meets a Heffalump, and Eeyore has a birthday.', '110.jpg', 22, 1, 0),
 (111, NULL, 76, 1, '9780385074070', 'The Complete Stories and Poems', '22.00', 1984, 0, 'This single volume brings together all of Poes stories and poems, and illuminates the diverse and multifaceted genius of one of the greatest and most influential figures in American literary history.', '111.jpg', 22, 1, 0),
 (112, NULL, 10, 2, '9780345476876', 'Interview with the Vampire', '22.00', 2004, 0, 'This is the story of Louis, as told in his own words, of his journey through mortal and immortal life. Louis recounts how he became a vampire at the hands of the radiant and sinister Lestat and how he became indoctrinated, unwillingly, into the vampire way of life. His story ebbs and flows through the streets of New Orleans, defining crucial moments such as his discovery of the exquisite lost young child Claudia, wanting not to hurt but to comfort her with the last breaths of humanity he has inside. Yet, he makes Claudia a vampire, trapping her womanly passion, will, and intelligence inside the body of a small child. Louis and Claudia form a seemingly unbreakable alliance and even &quot;settle down&quot; for a while in the opulent French Quarter. Louis remembers Claudias struggle to understand herself and the hatred they both have for Lestat that sends them halfway across the world to seek others of their kind. Louis and Claudia are desperate to find somewhere they belong, to find o...', '112.jpg', 22, 1, 0),
-(113, NULL, 77, 2, '9780552135399', 'A Prayer for Owen Meany', '22.00', 1990, 0, 'Eleven-year-old Owen Meany, playing in a Little League baseball game in Gravesend, New Hampshire, hits a foul ball and kills his best friends mother. Owen doesnt believe in accidents; he believes he is Gods instrument. What happens to Owen after that 1953 foul is both extraordinary and terrifying. At moments a comic, self-deluded victim, but in the end the principal, tragic actor in a divine plan, Owen Meany is the most heartbreaking hero John Irving has yet created.', '113.jpg', 22, 1, 0);
+(113, NULL, 77, 2, '9780552135399', 'A Prayer for Owen Meany', '22.00', 1990, 1, 'Eleven-year-old Owen Meany, playing in a Little League baseball game in Gravesend, New Hampshire, hits a foul ball and kills his best friends mother. Owen doesnt believe in accidents; he believes he is Gods instrument. What happens to Owen after that 1953 foul is both extraordinary and terrifying. At moments a comic, self-deluded victim, but in the end the principal, tragic actor in a divine plan, Owen Meany is the most heartbreaking hero John Irving has yet created.', '113.jpg', 22, 1, 0),
+(114, 2, 21, 2, '9780142437247', 'Moby-Dick or, the Whale', '22.00', 2003, 0, '&quot;It is the horrible texture of a fabric that should be woven of ships cables and hawsers. A Polar wind blows through it, and birds of prey hover over it.&quot; So Melville wrote of his masterpiece, one of the greatest works of imagination in literary history. In part, Moby-Dick is the story of an eerily compelling madman pursuing an unholy war against a creature as vast and dangerous and unknowable as the sea itself. But more than just a novel of adventure, more than an encyclopaedia of whaling lore and legend, the book can be seen as part of its authors lifelong meditation on America. Written with wonderfully redemptive humour, Moby-Dick is also a profound inquiry into character, faith, and the nature of perception.This edition of Moby-Dick, which reproduces the definitive text of the novel, includes invaluable explanatory notes, along with maps, illustrations, and a glossary of nautical terms.', '114.jpg', 22, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -510,7 +515,11 @@ INSERT INTO `book_authors` (`book_author_ID`, `book_ID`, `author_ID`) VALUES
 (229, 110, 147),
 (230, 111, 148),
 (231, 112, 149),
-(232, 113, 150);
+(232, 113, 150),
+(233, 114, 151),
+(234, 114, 152),
+(235, 114, 153),
+(236, 114, 154);
 
 -- --------------------------------------------------------
 
@@ -1530,7 +1539,17 @@ INSERT INTO `book_genres` (`book_genres_ID`, `book_ID`, `genre_ID`) VALUES
 (1250, 113, 49),
 (1251, 113, 97),
 (1252, 113, 76),
-(1253, 113, 111);
+(1253, 113, 111),
+(1254, 114, 47),
+(1255, 114, 34),
+(1256, 114, 51),
+(1257, 114, 39),
+(1258, 114, 53),
+(1259, 114, 49),
+(1260, 114, 111),
+(1261, 114, 57),
+(1262, 114, 88),
+(1263, 114, 134);
 
 -- --------------------------------------------------------
 
@@ -1581,6 +1600,21 @@ CREATE TABLE `events` (
   `is_deleted` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `events`
+--
+
+INSERT INTO `events` (`event_ID`, `user_ID`, `book_ID`, `event_type_ID`, `datetime_occurred`, `is_deleted`) VALUES
+(1, 14, 97, 1, '2022-12-23 00:00:00', 0),
+(2, 14, 60, 1, '2022-12-23 18:29:13', 0),
+(3, 14, 97, 1, '2022-12-24 12:11:17', 0),
+(4, 14, 97, 1, '2022-12-24 12:53:35', 0),
+(5, 14, 60, 1, '2022-12-24 12:54:59', 0),
+(6, 14, 60, 1, '2022-12-24 12:55:03', 0),
+(7, 14, 97, 1, '2022-12-24 12:56:22', 0),
+(8, 14, 113, 1, '2022-12-24 13:08:42', 0),
+(9, 14, 103, 1, '2022-12-24 13:08:49', 0);
+
 -- --------------------------------------------------------
 
 --
@@ -1592,6 +1626,16 @@ CREATE TABLE `event_types` (
   `name` varchar(50) NOT NULL,
   `weight` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `event_types`
+--
+
+INSERT INTO `event_types` (`event_type_ID`, `name`, `weight`) VALUES
+(1, 'Click', 1),
+(2, 'RecommendationClick', 1),
+(3, 'AddToCart', 2),
+(4, 'Purchase', 3);
 
 -- --------------------------------------------------------
 
@@ -1928,7 +1972,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`user_ID`, `first_name`, `last_name`, `email_address`, `password`, `city`, `state`, `country`, `is_active`, `is_deleted`, `is_admin`, `date_inserted`) VALUES
 (1, 'Mark', 'Nagrampa', 'marknagrampa489@gmail.com', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Las Pinas City', 'Metro Manila', 'Philippines', 1, 0, 1, '2022-07-19'),
-(13, 'John', 'Doe', 'johndoe@gmail.com', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Makati', 'National Capital Region', 'Philippines', 1, 0, 0, '2022-07-19');
+(13, 'John', 'Doe', 'johndoe@gmail.com', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Makati', 'National Capital Region', 'Philippines', 1, 0, 0, '2022-07-19'),
+(14, 'Jane', 'Doe', 'janedoe@gmail.com', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Makati', 'National Capital Region', 'Philippines', 1, 0, 0, '2022-12-09');
 
 --
 -- Indexes for dumped tables
@@ -2066,22 +2111,22 @@ ALTER TABLE `announcements`
 -- AUTO_INCREMENT for table `authors`
 --
 ALTER TABLE `authors`
-  MODIFY `author_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=151;
+  MODIFY `author_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=155;
 --
 -- AUTO_INCREMENT for table `books`
 --
 ALTER TABLE `books`
-  MODIFY `book_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
+  MODIFY `book_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
 --
 -- AUTO_INCREMENT for table `book_authors`
 --
 ALTER TABLE `book_authors`
-  MODIFY `book_author_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=233;
+  MODIFY `book_author_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=237;
 --
 -- AUTO_INCREMENT for table `book_genres`
 --
 ALTER TABLE `book_genres`
-  MODIFY `book_genres_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1254;
+  MODIFY `book_genres_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1264;
 --
 -- AUTO_INCREMENT for table `cart_items`
 --
@@ -2096,12 +2141,12 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-  MODIFY `event_ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `event_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `event_types`
 --
 ALTER TABLE `event_types`
-  MODIFY `event_type_ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `event_type_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `formats`
 --
@@ -2136,7 +2181,7 @@ ALTER TABLE `transaction_items`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `user_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- Constraints for dumped tables
 --
