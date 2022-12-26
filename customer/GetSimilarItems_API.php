@@ -72,7 +72,7 @@ if(isset($_POST["GetSimilarItems"])){
 	$myObj->books = array();
 	$i=0;
 	foreach($top5 as $x => $val) {
-		$sql = "select books.book_ID, books.cover_image_loc, books.title, `authors`.`author_name`, books.price from books left join `authors` on `authors`.author_ID = (select MIN(book_authors.author_ID) from book_authors where book_authors.book_ID = books.book_ID) where books.title = '".$x."'";
+		$sql = "select books.book_ID, books.cover_image_loc, books.title, `authors`.`author_name`, books.price, books.stock_qty from books left join `authors` on `authors`.author_ID = (select MIN(book_authors.author_ID) from book_authors where book_authors.book_ID = books.book_ID) where books.title = '".$x."'";
 		$result = $conn->query($sql);
 		while($row = $result->fetch_assoc()) {
 			$myObj->books[$i] = new stdClass();
@@ -81,6 +81,7 @@ if(isset($_POST["GetSimilarItems"])){
             $myObj->books[$i]->author_name = $row["author_name"];
             $myObj->books[$i]->price = $row["price"];
             $myObj->books[$i]->book_ID = $row["book_ID"];
+			$myObj->books[$i]->stock_qty = $row["stock_qty"];
 		}
 		$i++;
 	}

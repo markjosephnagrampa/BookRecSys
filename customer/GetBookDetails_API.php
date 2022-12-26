@@ -19,11 +19,12 @@
 	}
 
     if(isset($_POST["GetBookDetails"])){
-        $sql = "select books.cover_image_loc, books.title, books.description, books.ISBN, publishers.publisher_name, books.publication_year, formats.format_name, books.stock_qty, books.price from books join publishers on books.publisher_ID = publishers.publisher_ID join formats on books.format_ID = formats.format_ID where books.book_ID = '".$_POST["book_ID"]."'";
+        $sql = "select books.book_ID, books.cover_image_loc, books.title, books.description, books.ISBN, publishers.publisher_name, books.publication_year, formats.format_name, books.stock_qty, books.price from books join publishers on books.publisher_ID = publishers.publisher_ID join formats on books.format_ID = formats.format_ID where books.book_ID = '".$_POST["book_ID"]."'";
 
         $result = $conn->query($sql);
         $myObj->book = new stdClass();
         while($row = $result->fetch_assoc()) {
+            $myObj->book->book_ID = $row["book_ID"];
             $myObj->book->cover_image_loc = "http://localhost/BookRecSys/img/books/".$row["cover_image_loc"]."?=".filemtime("http://localhost/BookRecSys/img/books/".$row["cover_image_loc"]);
             $myObj->book->title = $row["title"];
             $myObj->book->description = $row["description"];

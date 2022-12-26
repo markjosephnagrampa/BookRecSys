@@ -221,6 +221,7 @@
         </div>
     </div>
     <div class="d-flex flex-column align-items-center p-2">
+        <div id="div-alert"></div>
         <div id="item-container" class="d-flex justify-content-center align-items-center p-2">
             <!--<div id="item-img-card" class="card">
                 <div class="card-body d-flex flex-column justify-content-center">
@@ -415,6 +416,9 @@
         </div>
     </nav>
     <script>
+
+        var isAddToCart = false;
+
         $(document).ready(function () {
 
             var user = sessionStorage.getItem("user");
@@ -464,28 +468,166 @@
             window.location.href = "search.html?query=" + query;
         });
 
-        $(document).on("click", '[id^=a-href-book-]', function (event) {
+        $(document).on("click", '[id^=quantity-add-to-cart-]', function (event) {
+            
             var id = this.id.match(/[0-9]+/);
             var id_index = parseInt(id[0]);
 
-            // register click event
+            // decrease stock_qty, add cart_item, register add to cart event, increase cart count, display alert message
             var user = JSON.parse(sessionStorage.getItem("user"));
+            var qty = $("#quantity").val();
             var formData = new FormData();
-            formData.append("RecordClick", "set");
+            formData.append("AddToCart", "set");
             formData.append("book_ID", id_index);
-            formData.append("user_ID",user["user_ID"]);
+            formData.append("user_ID", user["user_ID"]);
+            formData.append("qty", qty);
             $.ajax({
                 type: "POST",
-                url: "RecordClick_API.php",
+                url: "AddToCart_API.php",
                 data: formData,
                 cache: false,
                 contentType: false,
                 processData: false,
                 success: function (data) {
                     var obj = JSON.parse(data);
-                    window.location.href = "item.html?book_ID=" + id_index;
+                    if(obj["response"] == "add to cart success"){
+                        
+                        // load cart count
+                        var formData = new FormData();
+                        var user = JSON.parse(sessionStorage.getItem("user"));
+                        var user_ID = user["user_ID"];
+                        formData.append("GetCartCount", "set");
+                        formData.append("user_ID", user_ID);
+                        $.ajax({
+                            type: "POST",
+                            url: "GetCartCount_API.php",
+                            data: formData,
+                            cache: false,
+                            contentType: false,
+                            processData: false,
+                            success: function (data) {
+                                var obj = JSON.parse(data);
+                                $("#cart-count").html(obj["cartCount"]);
+                            }
+                        });
+                        
+                        $("#div-alert").html("");
+                        var html_element = ' \
+                        <div class="alert alert-success alert-dismissible fade show" role="alert"> \
+                            Item added to cart successfully. \
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                        </div> \
+                        ';
+                        $("#div-alert").append(html_element);
+                    }
+                    else if(obj["response"] == "add to cart failure"){
+                        $("#div-alert").html("");
+                        var html_element = ' \
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert"> \
+                            Unable to add item to cart. \
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                        </div> \
+                        ';
+                        $("#div-alert").append(html_element);
+                    }
                 }
             });
+
+        });
+        
+        $(document).on("click", '[id^=add-to-cart-]', function (event) {
+            isAddToCart = true;
+            
+            var id = this.id.match(/[0-9]+/);
+            var id_index = parseInt(id[0]);
+
+            // decrease stock_qty, add cart_item, register add to cart event, increase cart count, display alert message
+            var user = JSON.parse(sessionStorage.getItem("user"));
+            var formData = new FormData();
+            formData.append("AddToCart", "set");
+            formData.append("book_ID", id_index);
+            formData.append("user_ID", user["user_ID"]);
+            formData.append("qty", 1);
+            $.ajax({
+                type: "POST",
+                url: "AddToCart_API.php",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    if(obj["response"] == "add to cart success"){
+                        
+                        // load cart count
+                        var formData = new FormData();
+                        var user = JSON.parse(sessionStorage.getItem("user"));
+                        var user_ID = user["user_ID"];
+                        formData.append("GetCartCount", "set");
+                        formData.append("user_ID", user_ID);
+                        $.ajax({
+                            type: "POST",
+                            url: "GetCartCount_API.php",
+                            data: formData,
+                            cache: false,
+                            contentType: false,
+                            processData: false,
+                            success: function (data) {
+                                var obj = JSON.parse(data);
+                                $("#cart-count").html(obj["cartCount"]);
+                            }
+                        });
+                        
+                        $("#div-alert").html("");
+                        var html_element = ' \
+                        <div class="alert alert-success alert-dismissible fade show" role="alert"> \
+                            Item added to cart successfully. \
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                        </div> \
+                        ';
+                        $("#div-alert").append(html_element);
+                    }
+                    else if(obj["response"] == "add to cart failure"){
+                        $("#div-alert").html("");
+                        var html_element = ' \
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert"> \
+                            Unable to add item to cart. \
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                        </div> \
+                        ';
+                        $("#div-alert").append(html_element);
+                    }
+                }
+            });
+
+        });
+
+
+        $(document).on("click", '[id^=a-href-book-]', function (event) {
+            if(!isAddToCart){
+                var id = this.id.match(/[0-9]+/);
+                var id_index = parseInt(id[0]);
+
+                // register click event
+                var user = JSON.parse(sessionStorage.getItem("user"));
+                var formData = new FormData();
+                formData.append("RecordClick", "set");
+                formData.append("book_ID", id_index);
+                formData.append("user_ID",user["user_ID"]);
+                $.ajax({
+                    type: "POST",
+                    url: "RecordClick_API.php",
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        var obj = JSON.parse(data);
+                        window.location.href = "item.html?book_ID=" + id_index;
+                    }
+                });
+            }
+                isAddToCart = false;
         });
 
         const queryString = window.location.search;
@@ -506,7 +648,7 @@
                     success: function (data) {
                         var obj = JSON.parse(data);
                         $("#item-container").html("");
-
+                        var disabled = (obj["book"]["stock_count"] <= 0) ? "disabled" : "";
                         var html_element = ' \
                         <div id="item-img-card" class="card"> \
                         <div class="card-body d-flex flex-column justify-content-center"> \
@@ -583,7 +725,7 @@
                                                 value="1"> \
                                         </div> \
                                     </div> \
-                                    <button class="btn btn-primary form-control"><i class="fa-solid fa-shopping-cart"></i> Add to Cart</button> \
+                                    <button id="quantity-add-to-cart-'+obj["book"]["book_ID"]+'" class="btn btn-primary form-control" '+disabled+'><i class="fa-solid fa-shopping-cart"></i> Add to Cart</button> \
                                 </div> \
                             </div> \
                         </div> \
@@ -612,7 +754,7 @@
                         var obj = JSON.parse(data);
                         $("#similar-items-list").html("");
                         for (i = 0, len = obj["books"].length; i < len; i++) {
-                            
+                            var disabled = (obj["books"][i]["stock_qty"] <= 0) ? "disabled" : "";
                             var html_element=' \
                             <a href="javascript:void(0)" id = "a-href-book-' +obj["books"][i]["book_ID"] + '" class="no-style-a"> \
                     <div class="card similar-item"> \
@@ -624,7 +766,7 @@
                             <span style="font-size: 12px; text-align: center;">Php '+obj["books"][i]["price"]+'</span> \
                         </div> \
                         <div class="d-flex justify-content-center mb-2"> \
-                            <button class="btn btn-primary" style="font-size: 12px;"><i \
+                            <button id="add-to-cart-'+obj["books"][i]["book_ID"]+'" class="btn btn-primary" style="font-size: 12px;"'+disabled+'><i \
                                     class="fa-solid fa-shopping-cart"></i> Add to Cart</button> \
                         </div> \
                     </div> \

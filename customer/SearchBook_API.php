@@ -25,19 +25,19 @@
 
         if(isset($_POST["searchText"])){
             $searchText = $_POST["searchText"];
-            $sql = "select distinct books.cover_image_loc, books.title, books.price, books.book_ID from books join publishers on books.publisher_ID = publishers.publisher_ID join formats on books.format_ID = formats.format_ID join book_authors on books.book_ID = book_authors.book_ID join `authors` on book_authors.author_ID = `authors`.author_ID join book_genres on books.book_ID = book_genres.book_ID join genres on book_genres.genre_ID = genres.genre_ID left join categories on books.category_ID = categories.category_ID where (LOWER(books.title) like '%".$searchText."%' or LOWER(books.ISBN) like '%".$searchText."%' or LOWER(books.price) like '%".$searchText."%' or LOWER(books.publication_year) like '%".$searchText."%' or LOWER(publishers.publisher_name) like '%".$searchText."%' or LOWER(formats.format_name) like '%".$searchText."%' or LOWER(`authors`.author_name) like '%".$searchText."%' or LOWER(genres.genre_name) like '%".$searchText."%' or LOWER(categories.category_name) like '%".$searchText."%') and books.is_deleted = '0' order by books.title asc limit 16 offset " . $offset;
+            $sql = "select distinct books.cover_image_loc, books.title, books.price, books.book_ID, books.stock_qty from books join publishers on books.publisher_ID = publishers.publisher_ID join formats on books.format_ID = formats.format_ID join book_authors on books.book_ID = book_authors.book_ID join `authors` on book_authors.author_ID = `authors`.author_ID join book_genres on books.book_ID = book_genres.book_ID join genres on book_genres.genre_ID = genres.genre_ID left join categories on books.category_ID = categories.category_ID where (LOWER(books.title) like '%".$searchText."%' or LOWER(books.ISBN) like '%".$searchText."%' or LOWER(books.price) like '%".$searchText."%' or LOWER(books.publication_year) like '%".$searchText."%' or LOWER(publishers.publisher_name) like '%".$searchText."%' or LOWER(formats.format_name) like '%".$searchText."%' or LOWER(`authors`.author_name) like '%".$searchText."%' or LOWER(genres.genre_name) like '%".$searchText."%' or LOWER(categories.category_name) like '%".$searchText."%') and books.is_deleted = '0' order by books.title asc limit 16 offset " . $offset;
         }
         else if(isset($_POST["category_ID"])){
-            $sql = "select books.book_ID, books.cover_image_loc, books.title, `authors`.`author_name`, books.price from books left join `authors` on `authors`.author_ID = (select MIN(book_authors.author_ID) from book_authors where book_authors.book_ID = books.book_ID) left join categories on books.category_ID = categories.category_ID where categories.category_ID = '".$_POST["category_ID"]."' and books.is_deleted = '0' order by books.title asc limit 16 offset " . $offset;
+            $sql = "select books.book_ID, books.cover_image_loc, books.title, `authors`.`author_name`, books.price, books.stock_qty from books left join `authors` on `authors`.author_ID = (select MIN(book_authors.author_ID) from book_authors where book_authors.book_ID = books.book_ID) left join categories on books.category_ID = categories.category_ID where categories.category_ID = '".$_POST["category_ID"]."' and books.is_deleted = '0' order by books.title asc limit 16 offset " . $offset;
         }
         else if(isset($_POST["author_ID"])){
-            $sql = "select books.book_ID, books.cover_image_loc, books.title, `authors`.author_name, books.price from books join book_authors on books.book_ID = book_authors.book_ID join `authors` on `authors`.`author_ID` = book_authors.author_ID where `authors`.author_ID = '".$_POST["author_ID"]."' and books.is_deleted = '0' order by books.title asc limit 16 offset " .$offset;
+            $sql = "select books.book_ID, books.cover_image_loc, books.title, `authors`.author_name, books.price, books.stock_qty from books join book_authors on books.book_ID = book_authors.book_ID join `authors` on `authors`.`author_ID` = book_authors.author_ID where `authors`.author_ID = '".$_POST["author_ID"]."' and books.is_deleted = '0' order by books.title asc limit 16 offset " .$offset;
         }
         else if(isset($_POST["genre_ID"])){
-            $sql = "select books.book_ID, books.cover_image_loc, books.title, `authors`.author_name, books.price from books left join `authors` on `authors`.author_ID = (select MIN(book_authors.author_ID) from book_authors where book_authors.book_ID = books.book_ID) join book_genres on books.book_ID = book_genres.book_ID join genres on book_genres.genre_ID = genres.genre_ID where genres.genre_ID = '".$_POST["genre_ID"]."' and books.is_deleted = '0' order by books.title asc limit 16 offset " . $offset;
+            $sql = "select books.book_ID, books.cover_image_loc, books.title, `authors`.author_name, books.price, books.stock_qty from books left join `authors` on `authors`.author_ID = (select MIN(book_authors.author_ID) from book_authors where book_authors.book_ID = books.book_ID) join book_genres on books.book_ID = book_genres.book_ID join genres on book_genres.genre_ID = genres.genre_ID where genres.genre_ID = '".$_POST["genre_ID"]."' and books.is_deleted = '0' order by books.title asc limit 16 offset " . $offset;
         }
         else if(isset($_POST["publisher_ID"])){
-            $sql = "select books.book_ID, books.cover_image_loc, books.title, `authors`.author_name, books.price from books left join `authors` on `authors`.author_ID = (select MIN(book_authors.author_ID) from book_authors where book_authors.book_ID = books.book_ID) where books.publisher_ID = '".$_POST["publisher_ID"]."' and books.is_deleted = '0' order by books.title asc limit 16 offset " . $offset;
+            $sql = "select books.book_ID, books.cover_image_loc, books.title, `authors`.author_name, books.price, books.stock_qty from books left join `authors` on `authors`.author_ID = (select MIN(book_authors.author_ID) from book_authors where book_authors.book_ID = books.book_ID) where books.publisher_ID = '".$_POST["publisher_ID"]."' and books.is_deleted = '0' order by books.title asc limit 16 offset " . $offset;
         }
         $result = $conn->query($sql);
         $myObj->books = array();
@@ -58,6 +58,7 @@
             }
             $myObj->books[$i]->price = $row["price"];
             $myObj->books[$i]->book_ID = $row["book_ID"];
+            $myObj->books[$i]->stock_qty = $row["stock_qty"];
             $i++;
         }
 
