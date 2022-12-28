@@ -206,7 +206,7 @@
         </div>
         <div id="div-cart" class="d-flex align-items-center">
             <button class="btn btn-dark" onclick="location.href='cart.html'"><i class="fa-solid fa-shopping-cart"></i>
-                Cart <span class="badge bg-secondary">3</span></button>
+                Cart <span id = "cart-count" class="badge bg-secondary"></span></button>
         </div>
         <div id="div-customer-dropdown" class="d-flex align-items-center">
             <div class="dropdown">
@@ -227,8 +227,9 @@
         </div>
     </div>
     <div class="d-flex flex-column align-items-center my-3">
+        <div id="div-alert"></div>
         <h2>My Cart</h2>
-        <span style="font-size: 24px;">There are <b>3</b> items.</span>
+        <span style="font-size: 24px;">There are <b><span id="cart-count-2"></span></b> item(s).</span>
     </div>
     <div class="container">
         <div class="row p-2">
@@ -245,7 +246,8 @@
                             <th>Remove</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id ="tbody-cart">
+                        <!--
                         <tr>
                             <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmThmHM0Gxuo1WqbT56KeJMBATFyEiOGGIodK1PBxOwOn_Xek0R3ZDBP04&s=5"
                                     alt="" height="100"></td>
@@ -276,6 +278,7 @@
                             <td><button class="btn btn-secondary"><i class="fa-solid fa-plus"></i></button></td>
                             <td><button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button></td>
                         </tr>
+                        -->
                     </tbody>
                 </table>
             </div>
@@ -287,7 +290,7 @@
                         <label for="cartTotal" class="col-sm-3 col-form-label" style="font-weight: bold;">Cart
                             Total (in Php):</label>
                         <div class="col-sm-9">
-                            <input type="number" class="form-control" id="cartTotal" value="710.00" step=".01" disabled>
+                            <input type="number" class="form-control" id="cartTotal" step=".01" disabled>
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -301,15 +304,14 @@
                         <label for="shippingAddress" class="col-sm-3 col-form-label" style="font-weight: bold;">Shipping
                             Address:</label>
                         <div class="col-sm-9">
-                            <textarea class="form-control" id="shippingAddress">
-                            </textarea>
+                            <textarea class="form-control" id="shippingAddress"></textarea>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
         <div class="d-flex justify-content-center p-2">
-            <button class="btn btn-success btn-lg"><i class="fa-solid fa-money-bill-wave"></i> Checkout</button>
+            <button id="checkout" class="btn btn-success btn-lg"><i class="fa-solid fa-money-bill-wave"></i> Checkout</button>
         </div>
         <br><br><br><br>
     </div>
@@ -332,6 +334,79 @@
             // load username in header
             var username = user_JSON["first_name"] + ' ' + user_JSON["last_name"];
             $("#user-name").html(username);
+
+            // load cart count
+            var formData = new FormData();
+            var user = JSON.parse(sessionStorage.getItem("user"));
+            var user_ID = user["user_ID"];
+            formData.append("GetCartCount", "set");
+            formData.append("user_ID",user_ID);
+            $.ajax({
+                type: "POST",
+                url: "GetCartCount_API.php",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    $("#cart-count").html(obj["cartCount"]);
+                    $("#cart-count-2").html(obj["cartCount"]);
+                }
+            });
+
+            // load cart total
+            var formData = new FormData();
+            var user = JSON.parse(sessionStorage.getItem("user"));
+            var user_ID = user["user_ID"];
+            formData.append("GetCartTotal", "set");
+            formData.append("user_ID",user_ID);
+            $.ajax({
+                type: "POST",
+                url: "GetCartTotal_API.php",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    $("#cartTotal").val(obj["total"].toFixed(2));
+                }
+            });
+
+            // load cart items
+            var formData = new FormData();
+            var user = JSON.parse(sessionStorage.getItem("user"));
+            var user_ID = user["user_ID"];
+            formData.append("GetCartItems", "set");
+            formData.append("user_ID",user_ID);
+            $.ajax({
+                type: "POST",
+                url: "GetCartItems_API.php",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    $("#tbody-cart").html("");
+                    for (var i = 0; i < obj["books"].length; i++) {
+                        var disable_decrease = (obj["books"][i]["qty"] == 1) ? "disabled" : "";
+                        var html_element = ' \
+                        <tr> \
+                            <td><img src="'+obj["books"][i]["cover_image_loc"]+'" alt="" height="100"></td> \
+                            <td>'+obj["books"][i]["title"]+'</td> \
+                            <td>'+obj["books"][i]["qty"]+'</td> \
+                            <td>Php '+obj["books"][i]["price"].toFixed(2)+'</td> \
+                            <td><button id="decrease-'+obj["books"][i]["cart_item_ID"]+'" class="btn btn-secondary" '+disable_decrease+'><i class="fa-solid fa-minus"></i></button></td> \
+                            <td><button id="increase-'+obj["books"][i]["cart_item_ID"]+'" class="btn btn-secondary"><i class="fa-solid fa-plus"></i></button></td> \
+                            <td><button id="remove-'+obj["books"][i]["cart_item_ID"]+'" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button></td> \
+                        </tr> \
+                        ';
+                        $("#tbody-cart").append(html_element);
+                    }
+                }
+            });
         });
         $("#sign-out").click(function () {
             // Clear Session storage and redirect to home page
@@ -341,6 +416,421 @@
         $("#btn-search").click(function () {
             var query = $("#input-search").val();
             window.location.href = "search.html?query=" + query;
+        });
+        $("#checkout").click(function () {
+            // Check if changeFor is less than cart total, check if shipping address is blank, if ok clear cart
+            if(Number($("#changeFor").val()).toFixed(2) < $("#cartTotal").val()){
+                var html_element = ' \
+                <div class="alert alert-danger alert-dismissible fade show" role="alert"> \
+                    Change For amount is less than Cart Total. \
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                </div> \
+                ';
+                $("#div-alert").html(html_element);
+            }
+            else if($("#cartTotal").val() == 0){
+                var html_element = ' \
+                <div class="alert alert-danger alert-dismissible fade show" role="alert"> \
+                    Please enter items in your shopping cart. \
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                </div> \
+                ';
+                $("#div-alert").html(html_element);
+            }
+            else if($("#shippingAddress").val().trim() == ""){
+                var html_element = ' \
+                <div class="alert alert-danger alert-dismissible fade show" role="alert"> \
+                    Please enter a shipping address. \
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                </div> \
+                ';
+                $("#div-alert").html(html_element);
+            }
+            
+            else{
+                var changeFor = Number($("#changeFor").val()).toFixed(2);
+                var shippingAddress = $("#shippingAddress").val();
+                var user = JSON.parse(sessionStorage.getItem("user"));
+                var user_ID = user["user_ID"];
+                var formData = new FormData();
+                formData.append("PurchaseBook", "set");
+                formData.append("user_ID", user_ID);
+                formData.append("changeFor", changeFor);
+                formData.append("shippingAddress", shippingAddress);
+                $.ajax({
+                    type: "POST",
+                    url: "PurchaseBook_API.php",
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        var obj = JSON.parse(data);
+                        if(obj["response"] == "purchase success"){
+                            // load cart count
+                            var formData = new FormData();
+                            var user = JSON.parse(sessionStorage.getItem("user"));
+                            var user_ID = user["user_ID"];
+                            formData.append("GetCartCount", "set");
+                            formData.append("user_ID",user_ID);
+                            $.ajax({
+                                type: "POST",
+                                url: "GetCartCount_API.php",
+                                data: formData,
+                                cache: false,
+                                contentType: false,
+                                processData: false,
+                                success: function (data) {
+                                    var obj = JSON.parse(data);
+                                    $("#cart-count").html(obj["cartCount"]);
+                                    $("#cart-count-2").html(obj["cartCount"]);
+                                }
+                            });
+
+                            // load cart total
+                            var formData = new FormData();
+                            var user = JSON.parse(sessionStorage.getItem("user"));
+                            var user_ID = user["user_ID"];
+                            formData.append("GetCartTotal", "set");
+                            formData.append("user_ID",user_ID);
+                            $.ajax({
+                                type: "POST",
+                                url: "GetCartTotal_API.php",
+                                data: formData,
+                                cache: false,
+                                contentType: false,
+                                processData: false,
+                                success: function (data) {
+                                    var obj = JSON.parse(data);
+                                    $("#cartTotal").val(obj["total"].toFixed(2));
+                                }
+                            });
+
+                            // load cart items
+                            var formData = new FormData();
+                            var user = JSON.parse(sessionStorage.getItem("user"));
+                            var user_ID = user["user_ID"];
+                            formData.append("GetCartItems", "set");
+                            formData.append("user_ID",user_ID);
+                            $.ajax({
+                                type: "POST",
+                                url: "GetCartItems_API.php",
+                                data: formData,
+                                cache: false,
+                                contentType: false,
+                                processData: false,
+                                success: function (data) {
+                                    var obj = JSON.parse(data);
+                                    $("#tbody-cart").html("");
+                                    for (var i = 0; i < obj["books"].length; i++) {
+                                        var disable_decrease = (obj["books"][i]["qty"] == 1) ? "disabled" : "";
+                                        var html_element = ' \
+                                        <tr> \
+                                            <td><img src="'+obj["books"][i]["cover_image_loc"]+'" alt="" height="100"></td> \
+                                            <td>'+obj["books"][i]["title"]+'</td> \
+                                            <td>'+obj["books"][i]["qty"]+'</td> \
+                                            <td>Php '+obj["books"][i]["price"].toFixed(2)+'</td> \
+                                            <td><button id="decrease-'+obj["books"][i]["cart_item_ID"]+'" class="btn btn-secondary" '+disable_decrease+'><i class="fa-solid fa-minus"></i></button></td> \
+                                            <td><button id="increase-'+obj["books"][i]["cart_item_ID"]+'" class="btn btn-secondary"><i class="fa-solid fa-plus"></i></button></td> \
+                                            <td><button id="remove-'+obj["books"][i]["cart_item_ID"]+'" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button></td> \
+                                        </tr> \
+                                        ';
+                                        $("#tbody-cart").append(html_element);
+                                    }
+                                }
+                            });
+
+                            var html_element = ' \
+                            <div class="alert alert-success alert-dismissible fade show" role="alert"> \
+                                Items purchased successfully. \
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                            </div> \
+                            ';
+                            $("#div-alert").html(html_element);
+                            $("#changeFor").val("");
+                            $("#shippingAddress").val("");
+                        }
+                        else{
+                            var html_element = ' \
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert"> \
+                                '+obj["response"]+' \
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                            </div> \
+                            ';
+                            $("#div-alert").html(html_element);
+                        }
+                    }
+                });   
+            }
+        });
+        $(document).on("click", '[id^=decrease-]', function (event) {
+            var id = this.id.match(/[0-9]+/);
+            var id_index = parseInt(id[0]);
+            var formData = new FormData();
+            formData.append("DecreaseCartItem", "set");
+            formData.append("cart_item_ID", id_index);
+            $.ajax({
+                type: "POST",
+                url: "DecreaseCartItem_API.php",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    // load cart count
+                    var formData = new FormData();
+                    var user = JSON.parse(sessionStorage.getItem("user"));
+                    var user_ID = user["user_ID"];
+                    formData.append("GetCartCount", "set");
+                    formData.append("user_ID",user_ID);
+                    $.ajax({
+                        type: "POST",
+                        url: "GetCartCount_API.php",
+                        data: formData,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: function (data) {
+                            var obj = JSON.parse(data);
+                            $("#cart-count").html(obj["cartCount"]);
+                            $("#cart-count-2").html(obj["cartCount"]);
+                        }
+                    });
+                    // load cart total
+                    var formData = new FormData();
+                    var user = JSON.parse(sessionStorage.getItem("user"));
+                    var user_ID = user["user_ID"];
+                    formData.append("GetCartTotal", "set");
+                    formData.append("user_ID",user_ID);
+                    $.ajax({
+                        type: "POST",
+                        url: "GetCartTotal_API.php",
+                        data: formData,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: function (data) {
+                            var obj = JSON.parse(data);
+                            $("#cartTotal").val(obj["total"].toFixed(2));
+                        }
+                    });
+
+                    // load cart items
+                    var formData = new FormData();
+                    var user = JSON.parse(sessionStorage.getItem("user"));
+                    var user_ID = user["user_ID"];
+                    formData.append("GetCartItems", "set");
+                    formData.append("user_ID",user_ID);
+                    $.ajax({
+                        type: "POST",
+                        url: "GetCartItems_API.php",
+                        data: formData,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: function (data) {
+                            var obj = JSON.parse(data);
+                            $("#tbody-cart").html("");
+                            for (var i = 0; i < obj["books"].length; i++) {
+                                var disable_decrease = (obj["books"][i]["qty"] == 1) ? "disabled" : "";
+                                var html_element = ' \
+                                <tr> \
+                                    <td><img src="'+obj["books"][i]["cover_image_loc"]+'" alt="" height="100"></td> \
+                                    <td>'+obj["books"][i]["title"]+'</td> \
+                                    <td>'+obj["books"][i]["qty"]+'</td> \
+                                    <td>Php '+obj["books"][i]["price"].toFixed(2)+'</td> \
+                                    <td><button id="decrease-'+obj["books"][i]["cart_item_ID"]+'" class="btn btn-secondary" '+disable_decrease+'><i class="fa-solid fa-minus"></i></button></td> \
+                                    <td><button id="increase-'+obj["books"][i]["cart_item_ID"]+'" class="btn btn-secondary"><i class="fa-solid fa-plus"></i></button></td> \
+                                    <td><button id="remove-'+obj["books"][i]["cart_item_ID"]+'" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button></td> \
+                                </tr> \
+                                ';
+                                $("#tbody-cart").append(html_element);
+                            }
+                        }
+                    });
+                }
+            });
+        });
+        $(document).on("click", '[id^=increase-]', function (event) {
+            var id = this.id.match(/[0-9]+/);
+            var id_index = parseInt(id[0]);
+            var formData = new FormData();
+            formData.append("IncreaseCartItem", "set");
+            formData.append("cart_item_ID", id_index);
+            $.ajax({
+                type: "POST",
+                url: "IncreaseCartItem_API.php",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    // load cart count
+                    var formData = new FormData();
+                    var user = JSON.parse(sessionStorage.getItem("user"));
+                    var user_ID = user["user_ID"];
+                    formData.append("GetCartCount", "set");
+                    formData.append("user_ID",user_ID);
+                    $.ajax({
+                        type: "POST",
+                        url: "GetCartCount_API.php",
+                        data: formData,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: function (data) {
+                            var obj = JSON.parse(data);
+                            $("#cart-count").html(obj["cartCount"]);
+                            $("#cart-count-2").html(obj["cartCount"]);
+                        }
+                    });
+                    // load cart total
+                    var formData = new FormData();
+                    var user = JSON.parse(sessionStorage.getItem("user"));
+                    var user_ID = user["user_ID"];
+                    formData.append("GetCartTotal", "set");
+                    formData.append("user_ID",user_ID);
+                    $.ajax({
+                        type: "POST",
+                        url: "GetCartTotal_API.php",
+                        data: formData,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: function (data) {
+                            var obj = JSON.parse(data);
+                            $("#cartTotal").val(obj["total"].toFixed(2));
+                        }
+                    });
+
+                    // load cart items
+                    var formData = new FormData();
+                    var user = JSON.parse(sessionStorage.getItem("user"));
+                    var user_ID = user["user_ID"];
+                    formData.append("GetCartItems", "set");
+                    formData.append("user_ID",user_ID);
+                    $.ajax({
+                        type: "POST",
+                        url: "GetCartItems_API.php",
+                        data: formData,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: function (data) {
+                            var obj = JSON.parse(data);
+                            $("#tbody-cart").html("");
+                            for (var i = 0; i < obj["books"].length; i++) {
+                                var disable_decrease = (obj["books"][i]["qty"] == 1) ? "disabled" : "";
+                                var html_element = ' \
+                                <tr> \
+                                    <td><img src="'+obj["books"][i]["cover_image_loc"]+'" alt="" height="100"></td> \
+                                    <td>'+obj["books"][i]["title"]+'</td> \
+                                    <td>'+obj["books"][i]["qty"]+'</td> \
+                                    <td>Php '+obj["books"][i]["price"].toFixed(2)+'</td> \
+                                    <td><button id="decrease-'+obj["books"][i]["cart_item_ID"]+'" class="btn btn-secondary" '+disable_decrease+'><i class="fa-solid fa-minus"></i></button></td> \
+                                    <td><button id="increase-'+obj["books"][i]["cart_item_ID"]+'" class="btn btn-secondary"><i class="fa-solid fa-plus"></i></button></td> \
+                                    <td><button id="remove-'+obj["books"][i]["cart_item_ID"]+'" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button></td> \
+                                </tr> \
+                                ';
+                                $("#tbody-cart").append(html_element);
+                            }
+                        }
+                    });
+                }
+            });
+        });
+        $(document).on("click", '[id^=remove-]', function (event) {
+            var id = this.id.match(/[0-9]+/);
+            var id_index = parseInt(id[0]);
+            
+            var formData = new FormData();
+            formData.append("RemoveCartItem", "set");
+            formData.append("cart_item_ID", id_index);
+            $.ajax({
+                type: "POST",
+                url: "RemoveCartItem_API.php",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+
+                    // load cart count
+                    var formData = new FormData();
+                    var user = JSON.parse(sessionStorage.getItem("user"));
+                    var user_ID = user["user_ID"];
+                    formData.append("GetCartCount", "set");
+                    formData.append("user_ID",user_ID);
+                    $.ajax({
+                        type: "POST",
+                        url: "GetCartCount_API.php",
+                        data: formData,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: function (data) {
+                            var obj = JSON.parse(data);
+                            $("#cart-count").html(obj["cartCount"]);
+                            $("#cart-count-2").html(obj["cartCount"]);
+                        }
+                    });
+                    // load cart total
+                    var formData = new FormData();
+                    var user = JSON.parse(sessionStorage.getItem("user"));
+                    var user_ID = user["user_ID"];
+                    formData.append("GetCartTotal", "set");
+                    formData.append("user_ID",user_ID);
+                    $.ajax({
+                        type: "POST",
+                        url: "GetCartTotal_API.php",
+                        data: formData,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: function (data) {
+                            var obj = JSON.parse(data);
+                            $("#cartTotal").val(obj["total"].toFixed(2));
+                        }
+                    });
+
+                    // load cart items
+                    var formData = new FormData();
+                    var user = JSON.parse(sessionStorage.getItem("user"));
+                    var user_ID = user["user_ID"];
+                    formData.append("GetCartItems", "set");
+                    formData.append("user_ID",user_ID);
+                    $.ajax({
+                        type: "POST",
+                        url: "GetCartItems_API.php",
+                        data: formData,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: function (data) {
+                            var obj = JSON.parse(data);
+                            $("#tbody-cart").html("");
+                            for (var i = 0; i < obj["books"].length; i++) {
+                                var disable_decrease = (obj["books"][i]["qty"] == 1) ? "disabled" : "";
+                                var html_element = ' \
+                                <tr> \
+                                    <td><img src="'+obj["books"][i]["cover_image_loc"]+'" alt="" height="100"></td> \
+                                    <td>'+obj["books"][i]["title"]+'</td> \
+                                    <td>'+obj["books"][i]["qty"]+'</td> \
+                                    <td>Php '+obj["books"][i]["price"]+'</td> \
+                                    <td><button id="decrease-'+obj["books"][i]["cart_item_ID"]+'" class="btn btn-secondary" '+disable_decrease+'><i class="fa-solid fa-minus"></i></button></td> \
+                                    <td><button id="increase-'+obj["books"][i]["cart_item_ID"]+'" class="btn btn-secondary"><i class="fa-solid fa-plus"></i></button></td> \
+                                    <td><button id="remove-'+obj["books"][i]["cart_item_ID"]+'" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button></td> \
+                                </tr> \
+                                ';
+                                $("#tbody-cart").append(html_element);
+                            }
+                        }
+                    });
+                }
+            });
         });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"

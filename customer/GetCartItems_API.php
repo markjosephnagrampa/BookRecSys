@@ -6,7 +6,7 @@
 	$password = "password";
 	$dbname = "bookrecsys";
 
-    // Create connection
+     // Create connection
 	$conn = new mysqli($servername, $username, $password, $dbname);
 	// Check connection
 	if ($conn->connect_error) {
@@ -18,15 +18,21 @@
 		$_POST[$a] = test_input($b);
 	}
 
-    if(isset($_POST["GetCartCount"])){
-        $myObj = new stdClass();
-        $count = 0;
-        $sql = "select qty from cart_items where user_ID = '".$_POST["user_ID"]."'";
+    if(isset($_POST["GetCartItems"])){
+        $sql = "select books.cover_image_loc, books.title, cart_items.qty, books.price, cart_items.cart_item_ID from cart_items join books on cart_items.book_ID = books.book_ID where cart_items.user_ID = '".$_POST["user_ID"]."'";
         $result = $conn->query($sql);
+        $myObj->books = array();
+        $i=0;
         while($row = $result->fetch_assoc()) {
-            $count += $row["qty"];
+            $myObj->books[$i] = new stdClass();
+            $myObj->books[$i]->cover_image_loc = "http://localhost/BookRecSys/img/books/".$row["cover_image_loc"]."?=".filemtime("http://localhost/BookRecSys/img/books/".$row["cover_image_loc"]);
+            $myObj->books[$i]->title = $row["title"];
+            $myObj->books[$i]->qty = $row["qty"];
+            $myObj->books[$i]->price = $row["price"] * $row["qty"];
+            $myObj->books[$i]->cart_item_ID = $row["cart_item_ID"];
+            $i++;
         }
-        $myObj->cartCount = $count;
+
         $myJSON = json_encode($myObj);
         echo $myJSON;	
         $conn->close();

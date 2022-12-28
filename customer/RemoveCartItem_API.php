@@ -18,15 +18,13 @@
 		$_POST[$a] = test_input($b);
 	}
 
-    if(isset($_POST["GetCartCount"])){
+    if(isset($_POST["RemoveCartItem"])){
         $myObj = new stdClass();
-        $count = 0;
-        $sql = "select qty from cart_items where user_ID = '".$_POST["user_ID"]."'";
-        $result = $conn->query($sql);
-        while($row = $result->fetch_assoc()) {
-            $count += $row["qty"];
+        $myObj->response = "delete failure";
+        $sql = "delete from cart_items where cart_item_ID = '".$_POST["cart_item_ID"]."'";
+        if ($conn->query($sql) === TRUE) {
+            $myObj->response = "delete success";
         }
-        $myObj->cartCount = $count;
         $myJSON = json_encode($myObj);
         echo $myJSON;	
         $conn->close();

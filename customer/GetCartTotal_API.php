@@ -18,15 +18,15 @@
 		$_POST[$a] = test_input($b);
 	}
 
-    if(isset($_POST["GetCartCount"])){
+    if(isset($_POST["GetCartTotal"])){
         $myObj = new stdClass();
-        $count = 0;
-        $sql = "select qty from cart_items where user_ID = '".$_POST["user_ID"]."'";
+        $total = 0.00;
+        $sql = "select books.price, cart_items.qty from cart_items join books on cart_items.book_ID = books.book_ID where cart_items.user_ID = '".$_POST["user_ID"]."'";
         $result = $conn->query($sql);
         while($row = $result->fetch_assoc()) {
-            $count += $row["qty"];
+            $total += $row["price"] * $row["qty"];
         }
-        $myObj->cartCount = $count;
+        $myObj->total = $total;
         $myJSON = json_encode($myObj);
         echo $myJSON;	
         $conn->close();
