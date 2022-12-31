@@ -207,7 +207,7 @@
         </div>
         <div id="div-cart" class="d-flex align-items-center">
             <button class="btn btn-dark" onclick="location.href='cart.html'"><i class="fa-solid fa-shopping-cart"></i>
-                Cart <span class="badge bg-secondary">3</span></button>
+                Cart <span id="cart-count" class="badge bg-secondary"></span></button>
         </div>
         <div id="div-customer-dropdown" class="d-flex align-items-center">
             <div class="dropdown">
@@ -239,15 +239,25 @@
                             <th>No. of Items</th>
                             <th>Total</th>
                             <th>Status</th>
-                            <th>View Receipt</th>
+                            <th>View Items</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id = "tbody-transactions">
+                        <!--
                         <tr>
                             <td>2022-06-25</td>
                             <td>4</td>
                             <td>Php 710.00</td>
                             <td>Pending Shipment</td>
+                            <td>
+                                <form action = "ItemList.php" method="post" target = "_blank">
+                                    <input type = "hidden" name = "ItemList" value = "set"></input>
+                                    <input type = "hidden" name = "first_name" value = ""></input>
+                                    <input type = "hidden" name = "last_name" value = ""></input>
+                                    <input type = "hidden" name = "transaction_ID" value = ""></input>
+                                    <button type = "submit" class = "btn btn-primary"><i class="fa-solid fa-eye"></i></button>
+                                </form>
+                            </td>
                             <td><button class="btn btn-primary" onclick="window.open('../brs-receipt.pdf','_blank')"><i
                                         class="fa-solid fa-eye"></i></button></td>
                         </tr>
@@ -275,11 +285,17 @@
                             <td><button class="btn btn-primary" onclick="window.open('../brs-receipt.pdf','_blank')"><i
                                         class="fa-solid fa-eye"></i></button></td>
                         </tr>
+                        -->
                     </tbody>
                 </table>
             </div>
         </div>
-        <br><br><br><br>
+    </div>
+    <div class = "d-flex justify-content-center p-2">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination" id="pagination-ul">
+            </ul>
+        </nav>
     </div>
     <nav class="navbar fixed-bottom bg-dark">
         <div class="container-fluid text-white d-flex justify-content-center align-items-center p-2">
@@ -288,6 +304,12 @@
         </div>
     </nav>
     <script>
+
+        var total_pages = 0;
+        var first_pagination = -1;
+        var last_pagination = -1;
+        var current_page = 1;
+
         $(document).ready(function () {
             var user = sessionStorage.getItem("user");
             if(user == null){
@@ -301,6 +323,108 @@
             // load username in header
             var username = user_JSON["first_name"] + ' ' + user_JSON["last_name"];
             $("#user-name").html(username);
+
+            // load cart count
+            var formData = new FormData();
+            var user = JSON.parse(sessionStorage.getItem("user"));
+            var user_ID = user["user_ID"];
+            formData.append("GetCartCount", "set");
+            formData.append("user_ID",user_ID);
+            $.ajax({
+                type: "POST",
+                url: "GetCartCount_API.php",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    $("#cart-count").html(obj["cartCount"]);
+                    $("#cart-count-2").html(obj["cartCount"]);
+                }
+            });
+
+            // Load page count
+            var formData = new FormData();
+            var user = JSON.parse(sessionStorage.getItem("user"));
+            var user_ID = user["user_ID"];
+            formData.append("TransactionsCount", "set");
+            formData.append("user_ID",user_ID);
+            $.ajax({
+                type: "POST",
+                url: "TransactionsCount_API.php",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+
+                    var p = parseFloat(obj["count"]) / 10.0;
+                    total_pages = Math.ceil(p);
+                    first_pagination = 1;
+                    last_pagination = (total_pages > 5) ? 5 : total_pages;
+
+                    if (total_pages > 1) {
+                        $("#pagination-ul").append('<li id="li-pagination-previous" class="page-item disabled"><a class="page-link" href="javascript:void(0)" id="pagination-previous">Previous</a></li>');
+
+                        for (var i = 1; i <= total_pages && i < 6; i++) {
+                            if (i == current_page) {
+                                $("#pagination-ul").append('<li id="li-pagination-' + i + '" class="page-item active"><a class="page-link " href="javascript:void(0)" id="pagination-' + i + '">' + i + '</a></li>');
+                            }
+                            else {
+                                $("#pagination-ul").append('<li id="li-pagination-' + i + '" class="page-item"><a class="page-link" href="javascript:void(0)" id="pagination-' + i + '">' + i + '</a></li>');
+                            }
+                        }
+
+                        $("#pagination-ul").append('<li id="li-pagination-next" class="page-item"><a class="page-link" href="javascript:void(0)" id="pagination-next">Next</a></li>');
+                    }
+
+                }
+            });
+
+            // Load first page of transactions
+            var formData = new FormData();
+            var user = JSON.parse(sessionStorage.getItem("user"));
+            var user_ID = user["user_ID"];
+            var first_name = user["first_name"];
+            var last_name = user["last_name"];
+            formData.append("GetTransactions", "set");
+            formData.append("user_ID", user_ID);
+            formData.append("Page", "1");
+            $.ajax({
+                type: "POST",
+                url: "GetTransactions_API.php",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    $("#tbody-transactions").html("");
+                    for (i = 0, len = obj["transactions"].length; i < len; i++) {
+                        var html_element = ' \
+                            <tr> \
+                                <td>'+obj["transactions"][i]["date"]+'</td> \
+                                <td>'+obj["transactions"][i]["no_of_items"]+'</td> \
+                                <td>Php '+obj["transactions"][i]["total"]+'</td> \
+                                <td>'+obj["transactions"][i]["status"]+'</td> \
+                                <td> \
+                                <form action = "ItemList.php" method="post" target = "_blank"> \
+                                    <input type = "hidden" name = "ItemList" value = "set"></input> \
+                                    <input type = "hidden" name = "total" value = "'+obj["transactions"][i]["total"]+'"></input> \
+                                    <input type = "hidden" name = "first_name" value = "'+first_name+'"></input> \
+                                    <input type = "hidden" name = "last_name" value = "'+last_name+'"></input> \
+                                    <input type = "hidden" name = "transaction_ID" value = "'+obj["transactions"][i]["transaction_ID"]+'"></input> \
+                                    <button type = "submit" class = "btn btn-primary"><i class="fa-solid fa-eye"></i></button> \
+                                </form> \
+                            </td> \
+                            </tr> \
+                        ';
+                        $("#tbody-transactions").append(html_element);
+                    }
+                }
+            });
         });
         $("#sign-out").click(function () {
             // Clear Session storage and redirect to home page
@@ -310,6 +434,268 @@
         $("#btn-search").click(function () {
             var query = $("#input-search").val();
             window.location.href = "search.html?query=" + query;
+        });
+        
+        $(document).on("click", '[id^=pagination-previous]', function (event) {
+            current_page--;
+
+            // Disable previous button if 1st page
+            if (current_page == 1) {
+                $("#li-pagination-previous").addClass("disabled");
+            }
+            else {
+                $("#li-pagination-previous").removeClass("disabled");
+            }
+
+            // Disable next button if on last page
+            if (current_page == total_pages) {
+                $("#li-pagination-next").addClass("disabled");
+            }
+            else {
+                $("#li-pagination-next").removeClass("disabled");
+            }
+
+            // Decrement pagination if first pagination is clicked and more previous items can be shown
+            if (current_page == first_pagination && first_pagination > 1) {
+                for (var i = 0; i < 5; i++) {
+                    var j = i + first_pagination;
+                    $("#li-pagination-" + j).attr("id", "li-pagination-" + (j - 1));
+                    $("#pagination-" + j).attr("id", "pagination-" + (j - 1));
+                    $("#pagination-" + (j - 1)).html(j - 1);
+                }
+                first_pagination--;
+                last_pagination--;
+            }
+
+            // Remove active state from all pagination buttons
+            for (var i = 1; i <= total_pages; i++) {
+                $("#li-pagination-" + i).removeClass("active");
+            }
+
+            // Place active state on selected pagination item
+            $("#li-pagination-" + current_page).addClass("active");
+
+            // Load transactions
+            var formData = new FormData();
+            var user = JSON.parse(sessionStorage.getItem("user"));
+            var user_ID = user["user_ID"];
+            var first_name = user["first_name"];
+            var last_name = user["last_name"];
+            formData.append("GetTransactions", "set");
+            formData.append("user_ID", user_ID);
+            formData.append("Page", current_page);
+            $.ajax({
+                type: "POST",
+                url: "GetTransactions_API.php",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    $("#tbody-transactions").html("");
+                    for (i = 0, len = obj["transactions"].length; i < len; i++) {
+                        var html_element = ' \
+                            <tr> \
+                                <td>'+obj["transactions"][i]["date"]+'</td> \
+                                <td>'+obj["transactions"][i]["no_of_items"]+'</td> \
+                                <td>Php '+obj["transactions"][i]["total"]+'</td> \
+                                <td>'+obj["transactions"][i]["status"]+'</td> \
+                                <td> \
+                                <form action = "ItemList.php" method="post" target = "_blank"> \
+                                    <input type = "hidden" name = "ItemList" value = "set"></input> \
+                                    <input type = "hidden" name = "total" value = "'+obj["transactions"][i]["total"]+'"></input> \
+                                    <input type = "hidden" name = "first_name" value = "'+first_name+'"></input> \
+                                    <input type = "hidden" name = "last_name" value = "'+last_name+'"></input> \
+                                    <input type = "hidden" name = "transaction_ID" value = "'+obj["transactions"][i]["transaction_ID"]+'"></input> \
+                                    <button type = "submit" class = "btn btn-primary"><i class="fa-solid fa-eye"></i></button> \
+                                </form> \
+                            </td> \
+                            </tr> \
+                        ';
+                        $("#tbody-transactions").append(html_element);
+                    }
+                }
+            });
+        });
+
+        $(document).on("click", '[id^=pagination-next]', function (event) {
+            current_page++;
+
+            // Disable previous button if 1st page
+            if (current_page == 1) {
+                $("#li-pagination-previous").addClass("disabled");
+            }
+            else {
+                $("#li-pagination-previous").removeClass("disabled");
+            }
+
+            // Disable next button if on last page
+            if (current_page == total_pages) {
+                $("#li-pagination-next").addClass("disabled");
+            }
+            else {
+                $("#li-pagination-next").removeClass("disabled");
+            }
+
+            // Increment pagination if last pagination is clicked and more pages can be shown
+            if (current_page == last_pagination && last_pagination < total_pages) {
+                for (var i = 5; i > 0; i--) {
+                    var j = i + first_pagination;
+                    $("#li-pagination-" + (j - 1)).attr("id", "li-pagination-" + j);
+                    $("#pagination-" + (j - 1)).attr("id", "pagination-" + j);
+                    $("#pagination-" + (j)).html(j);
+                }
+                first_pagination++;
+                last_pagination++;
+            }
+
+            // Remove active state from all pagination buttons
+            for (var i = 1; i <= total_pages; i++) {
+                $("#li-pagination-" + i).removeClass("active");
+            }
+
+            // Place active state on selected pagination item
+            $("#li-pagination-" + current_page).addClass("active");
+
+            // Load transactions
+            var formData = new FormData();
+            var user = JSON.parse(sessionStorage.getItem("user"));
+            var user_ID = user["user_ID"];
+            var first_name = user["first_name"];
+            var last_name = user["last_name"];
+            formData.append("GetTransactions", "set");
+            formData.append("user_ID", user_ID);
+            formData.append("Page", current_page);
+            $.ajax({
+                type: "POST",
+                url: "GetTransactions_API.php",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    $("#tbody-transactions").html("");
+                    for (i = 0, len = obj["transactions"].length; i < len; i++) {
+                        var html_element = ' \
+                            <tr> \
+                                <td>'+obj["transactions"][i]["date"]+'</td> \
+                                <td>'+obj["transactions"][i]["no_of_items"]+'</td> \
+                                <td>Php '+obj["transactions"][i]["total"]+'</td> \
+                                <td>'+obj["transactions"][i]["status"]+'</td> \
+                                <td> \
+                                <form action = "ItemList.php" method="post" target = "_blank"> \
+                                    <input type = "hidden" name = "ItemList" value = "set"></input> \
+                                    <input type = "hidden" name = "total" value = "'+obj["transactions"][i]["total"]+'"></input> \
+                                    <input type = "hidden" name = "first_name" value = "'+first_name+'"></input> \
+                                    <input type = "hidden" name = "last_name" value = "'+last_name+'"></input> \
+                                    <input type = "hidden" name = "transaction_ID" value = "'+obj["transactions"][i]["transaction_ID"]+'"></input> \
+                                    <button type = "submit" class = "btn btn-primary"><i class="fa-solid fa-eye"></i></button> \
+                                </form> \
+                            </td> \
+                            </tr> \
+                        ';
+                        $("#tbody-transactions").append(html_element);
+                    }
+                }
+            });
+        });
+        $(document).on("click", '[id^=pagination-]', function (event) {
+            var id = this.id.match(/[0-9]+/);
+            var id_index = parseInt(id[0]);
+
+            // Disable previous button if 1st page
+            if (id_index == 1) {
+                $("#li-pagination-previous").addClass("disabled");
+            }
+            else {
+                $("#li-pagination-previous").removeClass("disabled");
+            }
+
+            // Disable next button if on last page
+            if (id_index == total_pages) {
+                $("#li-pagination-next").addClass("disabled");
+            }
+            else {
+                $("#li-pagination-next").removeClass("disabled");
+            }
+
+            // Increment pagination if last pagination is clicked and more pages can be shown
+            if (id_index == last_pagination && last_pagination < total_pages) {
+                for (var i = 5; i > 0; i--) {
+                    var j = i + first_pagination;
+                    $("#li-pagination-" + (j - 1)).attr("id", "li-pagination-" + j);
+                    $("#pagination-" + (j - 1)).attr("id", "pagination-" + j);
+                    $("#pagination-" + (j)).html(j);
+                }
+                first_pagination++;
+                last_pagination++;
+            }
+
+            // Decrement pagination if first pagination is clicked and more previous items can be shown
+            if (id_index == first_pagination && first_pagination > 1) {
+                for (var i = 0; i < 5; i++) {
+                    var j = i + first_pagination;
+                    $("#li-pagination-" + j).attr("id", "li-pagination-" + (j - 1));
+                    $("#pagination-" + j).attr("id", "pagination-" + (j - 1));
+                    $("#pagination-" + (j - 1)).html(j - 1);
+                }
+                first_pagination--;
+                last_pagination--;
+            }
+
+            // Remove active state from all pagination buttons
+            for (var i = 1; i <= total_pages; i++) {
+                $("#li-pagination-" + i).removeClass("active");
+            }
+
+            // Place active state on selected pagination item
+            $("#li-pagination-" + id_index).addClass("active");
+            current_page = id_index;
+
+            // Load transactions
+            var formData = new FormData();
+            var user = JSON.parse(sessionStorage.getItem("user"));
+            var user_ID = user["user_ID"];
+            var first_name = user["first_name"];
+            var last_name = user["last_name"];
+            formData.append("GetTransactions", "set");
+            formData.append("user_ID", user_ID);
+            formData.append("Page", current_page);
+            $.ajax({
+                type: "POST",
+                url: "GetTransactions_API.php",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    $("#tbody-transactions").html("");
+                    for (i = 0, len = obj["transactions"].length; i < len; i++) {
+                        var html_element = ' \
+                            <tr> \
+                                <td>'+obj["transactions"][i]["date"]+'</td> \
+                                <td>'+obj["transactions"][i]["no_of_items"]+'</td> \
+                                <td>Php '+obj["transactions"][i]["total"]+'</td> \
+                                <td>'+obj["transactions"][i]["status"]+'</td> \
+                                <td> \
+                                <form action = "ItemList.php" method="post" target = "_blank"> \
+                                    <input type = "hidden" name = "ItemList" value = "set"></input> \
+                                    <input type = "hidden" name = "total" value = "'+obj["transactions"][i]["total"]+'"></input> \
+                                    <input type = "hidden" name = "first_name" value = "'+first_name+'"></input> \
+                                    <input type = "hidden" name = "last_name" value = "'+last_name+'"></input> \
+                                    <input type = "hidden" name = "transaction_ID" value = "'+obj["transactions"][i]["transaction_ID"]+'"></input> \
+                                    <button type = "submit" class = "btn btn-primary"><i class="fa-solid fa-eye"></i></button> \
+                                </form> \
+                            </td> \
+                            </tr> \
+                        ';
+                        $("#tbody-transactions").append(html_element);
+                    }
+                }
+            });
         });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
