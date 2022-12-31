@@ -25,8 +25,18 @@
         $result = $conn->query($sql);
 
         if($result === TRUE){
-            $myObj->response = "Book deleted successfully.";
-            $myObj->error = 0;
+
+            // Delete events pertaining the book
+            $sql2 = "update events set is_deleted = '1' where book_ID = '".$_POST["book_ID"]."'";
+            $result2 = $conn->query($sql2);
+            if($result2 === TRUE){
+                $myObj->response = "Book deleted successfully.";
+                $myObj->error = 0;
+            }
+            else{
+                $myObj->response = "Error deleting book. Please try again.";
+                $myObj->error = 1;    
+            }
         }
         else{
             $myObj->response = "Error deleting book. Please try again.";
