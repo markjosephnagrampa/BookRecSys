@@ -97,13 +97,17 @@
             </div>
         </div>
     </div>
+    <div class="container p-2">
+        <div id="div-alert">
+        </div>
+    </div>
     <div class="container">
         <div class="row" style="text-align: center;">
             <h1 class="mt-2 mb-4">Manage Transactions</h1>
         </div>
         <div class="row p-2">
-            <div class="col-sm-11 col-10"><input type="date" class="form-control my-2"></div>
-            <div class="col-sm-1 col-2" style="text-align: center;"><button class="btn btn-primary my-2"><i
+            <div class="col-sm-11 col-10"><input type="date" id="date" class="form-control my-2"></div>
+            <div class="col-sm-1 col-2" style="text-align: center;"><button id="btn-filter" class="btn btn-primary my-2"><i
                         class="fa-solid fa-magnifying-glass"></i></button></div>
         </div>
         <div class="row p-2">
@@ -120,7 +124,8 @@
                             <th>Mark Shipped</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tbody-transactions">
+                        <!--
                         <tr>
                             <td>2022-06-27</td>
                             <td>2</td>
@@ -171,12 +176,25 @@
                                         class="fa-solid fa-eye"></i></button></td>
                             <td><button class="btn btn-success"><i class="fa-solid fa-check"></i></button></td>
                         </tr>
+                        -->
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
+    <div class="d-flex justify-content-center my-4">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination" id="pagination-ul">
+            </ul>
+        </nav>
+    </div>
     <script>
+
+        var total_pages = 0;
+        var first_pagination = -1;
+        var last_pagination = -1;
+        var current_page = 1;
+
         $(document).ready(function () {
             var user = sessionStorage.getItem("user");
             if(user == null){
@@ -190,6 +208,470 @@
             // Load user name on header
             $("#div-admin-name").html("Admin " + user_JSON["first_name"] + " " + user_JSON["last_name"]);
 
+            // Load page count
+            var formData = new FormData();
+            formData.append("TransactionsCount", "set");
+            $.ajax({
+                type: "POST",
+                url: "TransactionsCount_API.php",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+
+                    var p = parseFloat(obj["count"]) / 10.0;
+                    total_pages = Math.ceil(p);
+                    first_pagination = 1;
+                    last_pagination = (total_pages > 5) ? 5 : total_pages;
+
+                    if (total_pages > 1) {
+                        $("#pagination-ul").append('<li id="li-pagination-previous" class="page-item disabled"><a class="page-link" href="javascript:void(0)" id="pagination-previous">Previous</a></li>');
+
+                        for (var i = 1; i <= total_pages && i < 6; i++) {
+                            if (i == current_page) {
+                                $("#pagination-ul").append('<li id="li-pagination-' + i + '" class="page-item active"><a class="page-link " href="javascript:void(0)" id="pagination-' + i + '">' + i + '</a></li>');
+                            }
+                            else {
+                                $("#pagination-ul").append('<li id="li-pagination-' + i + '" class="page-item"><a class="page-link" href="javascript:void(0)" id="pagination-' + i + '">' + i + '</a></li>');
+                            }
+                        }
+
+                        $("#pagination-ul").append('<li id="li-pagination-next" class="page-item"><a class="page-link" href="javascript:void(0)" id="pagination-next">Next</a></li>');
+                    }
+
+                }
+            });
+
+            // Load first page of transactions
+            var formData = new FormData();
+            formData.append("GetTransactions", "set");
+            formData.append("Page", "1");
+            $.ajax({
+                type: "POST",
+                url: "GetTransactions_API.php",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    $("#tbody-transactions").html("");
+                    for (i = 0, len = obj["transactions"].length; i < len; i++) {
+                        var disabled = (obj["transactions"][i]["is_shipped"]) ? "disabled" : "";
+                        var html_element = ' \
+                            <tr> \
+                                <td>'+obj["transactions"][i]["date"]+'</td> \
+                                <td>'+obj["transactions"][i]["customer_ID"]+'</td> \
+                                <td>'+obj["transactions"][i]["no_of_items"]+'</td> \
+                                <td>Php '+obj["transactions"][i]["total"]+'</td> \
+                                <td id = "status-'+obj["transactions"][i]["transaction_ID"]+'">'+obj["transactions"][i]["status"]+'</td> \
+                                <td> \
+                                <form action = "ItemList.php" method="post" target = "_blank"> \
+                                    <input type = "hidden" name = "ItemList" value = "set"></input> \
+                                    <input type = "hidden" name = "total" value = "'+obj["transactions"][i]["total"]+'"></input> \
+                                    <input type = "hidden" name = "transaction_ID" value = "'+obj["transactions"][i]["transaction_ID"]+'"></input> \
+                                    <button type = "submit" class = "btn btn-primary"><i class="fa-solid fa-eye"></i></button> \
+                                </form> \
+                                </td> \
+                                <td><button id="mark-shipped-'+obj["transactions"][i]["transaction_ID"]+'" class="btn btn-success" '+disabled+'><i class="fa-solid fa-check"></i></button></td> \
+                            </tr> \
+                        ';
+                        $("#tbody-transactions").append(html_element);
+                    }
+                }
+            });
+        });
+
+        $(document).on("click", '[id^=pagination-previous]', function (event) {
+            current_page--;
+
+            // Disable previous button if 1st page
+            if (current_page == 1) {
+                $("#li-pagination-previous").addClass("disabled");
+            }
+            else {
+                $("#li-pagination-previous").removeClass("disabled");
+            }
+
+            // Disable next button if on last page
+            if (current_page == total_pages) {
+                $("#li-pagination-next").addClass("disabled");
+            }
+            else {
+                $("#li-pagination-next").removeClass("disabled");
+            }
+
+            // Decrement pagination if first pagination is clicked and more previous items can be shown
+            if (current_page == first_pagination && first_pagination > 1) {
+                for (var i = 0; i < 5; i++) {
+                    var j = i + first_pagination;
+                    $("#li-pagination-" + j).attr("id", "li-pagination-" + (j - 1));
+                    $("#pagination-" + j).attr("id", "pagination-" + (j - 1));
+                    $("#pagination-" + (j - 1)).html(j - 1);
+                }
+                first_pagination--;
+                last_pagination--;
+            }
+
+            // Remove active state from all pagination buttons
+            for (var i = 1; i <= total_pages; i++) {
+                $("#li-pagination-" + i).removeClass("active");
+            }
+
+            // Place active state on selected pagination item
+            $("#li-pagination-" + current_page).addClass("active");
+
+            // Load transactions
+            var formData = new FormData();
+            var date = $("#date").val();
+            formData.append("GetTransactions", "set");
+            formData.append("Page", current_page);
+            if(date.length > 0){
+                formData.append("date", date);
+            }
+            $.ajax({
+                type: "POST",
+                url: "GetTransactions_API.php",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    $("#tbody-transactions").html("");
+                    for (i = 0, len = obj["transactions"].length; i < len; i++) {
+                        var disabled = (obj["transactions"][i]["is_shipped"]) ? "disabled" : "";
+                        var html_element = ' \
+                            <tr> \
+                                <td>'+obj["transactions"][i]["date"]+'</td> \
+                                <td>'+obj["transactions"][i]["customer_ID"]+'</td> \
+                                <td>'+obj["transactions"][i]["no_of_items"]+'</td> \
+                                <td>Php '+obj["transactions"][i]["total"]+'</td> \
+                                <td id = "status-'+obj["transactions"][i]["transaction_ID"]+'">'+obj["transactions"][i]["status"]+'</td> \
+                                <td> \
+                                <form action = "ItemList.php" method="post" target = "_blank"> \
+                                    <input type = "hidden" name = "ItemList" value = "set"></input> \
+                                    <input type = "hidden" name = "total" value = "'+obj["transactions"][i]["total"]+'"></input> \
+                                    <input type = "hidden" name = "transaction_ID" value = "'+obj["transactions"][i]["transaction_ID"]+'"></input> \
+                                    <button type = "submit" class = "btn btn-primary"><i class="fa-solid fa-eye"></i></button> \
+                                </form> \
+                                </td> \
+                                <td><button id="mark-shipped-'+obj["transactions"][i]["transaction_ID"]+'" class="btn btn-success" '+disabled+'><i class="fa-solid fa-check"></i></button></td> \
+                            </tr> \
+                        ';
+                        $("#tbody-transactions").append(html_element);
+                    }
+                }
+            });
+        });
+
+        $(document).on("click", '[id^=pagination-next]', function (event) {
+            current_page++;
+
+            // Disable previous button if 1st page
+            if (current_page == 1) {
+                $("#li-pagination-previous").addClass("disabled");
+            }
+            else {
+                $("#li-pagination-previous").removeClass("disabled");
+            }
+
+            // Disable next button if on last page
+            if (current_page == total_pages) {
+                $("#li-pagination-next").addClass("disabled");
+            }
+            else {
+                $("#li-pagination-next").removeClass("disabled");
+            }
+
+            // Increment pagination if last pagination is clicked and more pages can be shown
+            if (current_page == last_pagination && last_pagination < total_pages) {
+                for (var i = 5; i > 0; i--) {
+                    var j = i + first_pagination;
+                    $("#li-pagination-" + (j - 1)).attr("id", "li-pagination-" + j);
+                    $("#pagination-" + (j - 1)).attr("id", "pagination-" + j);
+                    $("#pagination-" + (j)).html(j);
+                }
+                first_pagination++;
+                last_pagination++;
+            }
+
+            // Remove active state from all pagination buttons
+            for (var i = 1; i <= total_pages; i++) {
+                $("#li-pagination-" + i).removeClass("active");
+            }
+
+            // Place active state on selected pagination item
+            $("#li-pagination-" + current_page).addClass("active");
+
+            // Load transactions
+            var formData = new FormData();
+            var date = $("#date").val();
+            formData.append("GetTransactions", "set");
+            formData.append("Page", current_page);
+            if(date.length > 0){
+                formData.append("date", date);
+            }
+            $.ajax({
+                type: "POST",
+                url: "GetTransactions_API.php",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    $("#tbody-transactions").html("");
+                    for (i = 0, len = obj["transactions"].length; i < len; i++) {
+                        var disabled = (obj["transactions"][i]["is_shipped"]) ? "disabled" : "";
+                        var html_element = ' \
+                            <tr> \
+                                <td>'+obj["transactions"][i]["date"]+'</td> \
+                                <td>'+obj["transactions"][i]["customer_ID"]+'</td> \
+                                <td>'+obj["transactions"][i]["no_of_items"]+'</td> \
+                                <td>Php '+obj["transactions"][i]["total"]+'</td> \
+                                <td id = "status-'+obj["transactions"][i]["transaction_ID"]+'">'+obj["transactions"][i]["status"]+'</td> \
+                                <td> \
+                                <form action = "ItemList.php" method="post" target = "_blank"> \
+                                    <input type = "hidden" name = "ItemList" value = "set"></input> \
+                                    <input type = "hidden" name = "total" value = "'+obj["transactions"][i]["total"]+'"></input> \
+                                    <input type = "hidden" name = "transaction_ID" value = "'+obj["transactions"][i]["transaction_ID"]+'"></input> \
+                                    <button type = "submit" class = "btn btn-primary"><i class="fa-solid fa-eye"></i></button> \
+                                </form> \
+                                </td> \
+                                <td><button id="mark-shipped-'+obj["transactions"][i]["transaction_ID"]+'" class="btn btn-success" '+disabled+'><i class="fa-solid fa-check"></i></button></td> \
+                            </tr> \
+                        ';
+                        $("#tbody-transactions").append(html_element);
+                    }
+                }
+            });
+        });
+        $(document).on("click", '[id^=pagination-]', function (event) {
+            var id = this.id.match(/[0-9]+/);
+            var id_index = parseInt(id[0]);
+
+            // Disable previous button if 1st page
+            if (id_index == 1) {
+                $("#li-pagination-previous").addClass("disabled");
+            }
+            else {
+                $("#li-pagination-previous").removeClass("disabled");
+            }
+
+            // Disable next button if on last page
+            if (id_index == total_pages) {
+                $("#li-pagination-next").addClass("disabled");
+            }
+            else {
+                $("#li-pagination-next").removeClass("disabled");
+            }
+
+            // Increment pagination if last pagination is clicked and more pages can be shown
+            if (id_index == last_pagination && last_pagination < total_pages) {
+                for (var i = 5; i > 0; i--) {
+                    var j = i + first_pagination;
+                    $("#li-pagination-" + (j - 1)).attr("id", "li-pagination-" + j);
+                    $("#pagination-" + (j - 1)).attr("id", "pagination-" + j);
+                    $("#pagination-" + (j)).html(j);
+                }
+                first_pagination++;
+                last_pagination++;
+            }
+
+            // Decrement pagination if first pagination is clicked and more previous items can be shown
+            if (id_index == first_pagination && first_pagination > 1) {
+                for (var i = 0; i < 5; i++) {
+                    var j = i + first_pagination;
+                    $("#li-pagination-" + j).attr("id", "li-pagination-" + (j - 1));
+                    $("#pagination-" + j).attr("id", "pagination-" + (j - 1));
+                    $("#pagination-" + (j - 1)).html(j - 1);
+                }
+                first_pagination--;
+                last_pagination--;
+            }
+
+            // Remove active state from all pagination buttons
+            for (var i = 1; i <= total_pages; i++) {
+                $("#li-pagination-" + i).removeClass("active");
+            }
+
+            // Place active state on selected pagination item
+            $("#li-pagination-" + id_index).addClass("active");
+            current_page = id_index;
+
+            // Load transactions
+            var formData = new FormData();
+            var date = $("#date").val();
+            formData.append("GetTransactions", "set");
+            formData.append("Page", current_page);
+            if(date.length > 0){
+                formData.append("date", date);
+            }
+            $.ajax({
+                type: "POST",
+                url: "GetTransactions_API.php",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    $("#tbody-transactions").html("");
+                    for (i = 0, len = obj["transactions"].length; i < len; i++) {
+                        var disabled = (obj["transactions"][i]["is_shipped"]) ? "disabled" : "";
+                        var html_element = ' \
+                            <tr> \
+                                <td>'+obj["transactions"][i]["date"]+'</td> \
+                                <td>'+obj["transactions"][i]["customer_ID"]+'</td> \
+                                <td>'+obj["transactions"][i]["no_of_items"]+'</td> \
+                                <td>Php '+obj["transactions"][i]["total"]+'</td> \
+                                <td id = "status-'+obj["transactions"][i]["transaction_ID"]+'">'+obj["transactions"][i]["status"]+'</td> \
+                                <td> \
+                                <form action = "ItemList.php" method="post" target = "_blank"> \
+                                    <input type = "hidden" name = "ItemList" value = "set"></input> \
+                                    <input type = "hidden" name = "total" value = "'+obj["transactions"][i]["total"]+'"></input> \
+                                    <input type = "hidden" name = "transaction_ID" value = "'+obj["transactions"][i]["transaction_ID"]+'"></input> \
+                                    <button type = "submit" class = "btn btn-primary"><i class="fa-solid fa-eye"></i></button> \
+                                </form> \
+                                </td> \
+                                <td><button id="mark-shipped-'+obj["transactions"][i]["transaction_ID"]+'" class="btn btn-success" '+disabled+'><i class="fa-solid fa-check"></i></button></td> \
+                            </tr> \
+                        ';
+                        $("#tbody-transactions").append(html_element);
+                    }
+                }
+            });
+        });
+
+        $("#btn-filter").click(function () {
+            var date = $("#date").val();
+            // Load page count
+            var formData = new FormData();
+            formData.append("TransactionsCount", "set");
+            if(date.length > 0){
+                formData.append("date", date);
+            }
+            $.ajax({
+                type: "POST",
+                url: "TransactionsCount_API.php",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    var p = parseFloat(obj["count"]) / 10.0;
+                    total_pages = Math.ceil(p);
+                    first_pagination = 1;
+                    last_pagination = (total_pages > 5) ? 5 : total_pages;
+
+                    if (total_pages > 1) {
+                        $("#pagination-ul").append('<li id="li-pagination-previous" class="page-item disabled"><a class="page-link" href="javascript:void(0)" id="pagination-previous">Previous</a></li>');
+
+                        for (var i = 1; i <= total_pages && i < 6; i++) {
+                            if (i == current_page) {
+                                $("#pagination-ul").append('<li id="li-pagination-' + i + '" class="page-item active"><a class="page-link " href="javascript:void(0)" id="pagination-' + i + '">' + i + '</a></li>');
+                            }
+                            else {
+                                $("#pagination-ul").append('<li id="li-pagination-' + i + '" class="page-item"><a class="page-link" href="javascript:void(0)" id="pagination-' + i + '">' + i + '</a></li>');
+                            }
+                        }
+
+                        $("#pagination-ul").append('<li id="li-pagination-next" class="page-item"><a class="page-link" href="javascript:void(0)" id="pagination-next">Next</a></li>');
+                    }
+
+                }
+            });
+
+            // Load first page of transactions
+            current_page = 1;
+            var date = $("#date").val();
+            var formData = new FormData();
+            formData.append("GetTransactions", "set");
+            formData.append("Page", "1");
+            if(date.length > 0){
+                formData.append("date", date);
+            }
+            $.ajax({
+                type: "POST",
+                url: "GetTransactions_API.php",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    $("#tbody-transactions").html("");
+                    for (i = 0, len = obj["transactions"].length; i < len; i++) {
+                        var disabled = (obj["transactions"][i]["is_shipped"]) ? "disabled" : "";
+                        var html_element = ' \
+                            <tr> \
+                                <td>'+obj["transactions"][i]["date"]+'</td> \
+                                <td>'+obj["transactions"][i]["customer_ID"]+'</td> \
+                                <td>'+obj["transactions"][i]["no_of_items"]+'</td> \
+                                <td>Php '+obj["transactions"][i]["total"]+'</td> \
+                                <td id = "status-'+obj["transactions"][i]["transaction_ID"]+'">'+obj["transactions"][i]["status"]+'</td> \
+                                <td> \
+                                <form action = "ItemList.php" method="post" target = "_blank"> \
+                                    <input type = "hidden" name = "ItemList" value = "set"></input> \
+                                    <input type = "hidden" name = "total" value = "'+obj["transactions"][i]["total"]+'"></input> \
+                                    <input type = "hidden" name = "transaction_ID" value = "'+obj["transactions"][i]["transaction_ID"]+'"></input> \
+                                    <button type = "submit" class = "btn btn-primary"><i class="fa-solid fa-eye"></i></button> \
+                                </form> \
+                                </td> \
+                                <td><button id="mark-shipped-'+obj["transactions"][i]["transaction_ID"]+'" class="btn btn-success" '+disabled+'><i class="fa-solid fa-check"></i></button></td> \
+                            </tr> \
+                        ';
+                        $("#tbody-transactions").append(html_element);
+                    }
+                }
+            });
+
+        });
+
+        $(document).on("click", '[id^=mark-shipped-]', function (event) {
+            var id = this.id.match(/[0-9]+/);
+            var id_index = parseInt(id[0]);
+
+            var formData = new FormData();
+            formData.append("MarkShipped", "set");
+            formData.append("transaction_ID", id_index);
+            $.ajax({
+                type: "POST",
+                url: "MarkShipped_API.php",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    if(obj["response"] == "edit success"){
+                        $("#div-alert").html("");
+                        var html_element = ' \
+                        <div class="alert alert-success alert-dismissible fade show" role="alert"> \
+                            Transaction marked shipped successfully. \
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                        </div> \
+                        ';
+                        $("#div-alert").append(html_element);
+                        $("#mark-shipped-"+id_index).prop("disabled",true);
+                        $("#status-"+id_index).html("Shipped");
+                    }
+                    else if(obj["response"] == "edit failure"){
+                        $("#div-alert").html("");
+                        var html_element = ' \
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert"> \
+                            There was an error marking the transaction shipped. Please try again later. \
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                        </div> \
+                        ';
+                        $("#div-alert").append(html_element);
+                    }
+                }
+            });
         });
 
         $("#sign-out").click(function () {

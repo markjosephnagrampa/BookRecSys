@@ -963,6 +963,7 @@
                 contentType: false,
                 processData: false,
                 success: function (data) {
+                    console.log(data);
                     var obj = JSON.parse(data);
                     $("#items").html("");
                     for (i = 0, len = obj["books"].length; i < len; i++) {
@@ -1100,12 +1101,13 @@
                 // register click event
                 var user = JSON.parse(sessionStorage.getItem("user"));
                 var formData = new FormData();
-                formData.append("RecordClick", "set");
+                formData.append("RecordRecommendationClick", "set");
                 formData.append("book_ID", id_index);
                 formData.append("user_ID", user["user_ID"]);
+                formData.append("isRecommended",$("#a-href-book-"+id_index).hasClass("isRecommended"));
                 $.ajax({
                     type: "POST",
-                    url: "RecordClick_API.php",
+                    url: "RecordRecommendationClick_API.php",
                     data: formData,
                     cache: false,
                     contentType: false,

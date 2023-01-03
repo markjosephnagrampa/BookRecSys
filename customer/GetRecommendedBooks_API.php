@@ -94,6 +94,21 @@
         $offset = 16 * (intval($_POST["Page"]) - 1);
         $myObj->books = array_slice($myObj->books,$offset,16);
 
+        // Count Recommended Items and Add Impressions to DB if > 0
+        $impressions = 0;
+        for($i=0; $i < count($myObj->books); $i++){
+            if($myObj->books[$i]->isRecommended){
+                $impressions++;
+            }
+        }
+
+        if($impressions > 0){
+            $sql = "insert into impressions (user_ID,count,date) values ('".$_POST["user_ID"]."','".$impressions."','".date("Y-m-d")."')";
+            if ($conn->query($sql) === TRUE) {
+
+            }
+        }
+
         $myJSON = json_encode($myObj);
         echo $myJSON;	
         $conn->close();
