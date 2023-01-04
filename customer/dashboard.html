@@ -963,7 +963,6 @@
                 contentType: false,
                 processData: false,
                 success: function (data) {
-                    console.log(data);
                     var obj = JSON.parse(data);
                     $("#items").html("");
                     for (i = 0, len = obj["books"].length; i < len; i++) {

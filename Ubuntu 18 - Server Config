@@ -1,11 +1,13 @@
 Step 1: LAMP Server
+https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-ubuntu-18-04
 Step 2: phpmyadmin
 	(before testing)
 	sudo vi /etc/apache2/apache2.conf
 	Include /etc/phpmyadmin/apache.conf
 	sudo systemctl restart apache2.service
-Step 3: Totara Dependencies
-Step 4: uwsgi-model-update requirements.txt
-Step 5: sudo chmod -R 777 /var/www/html
+Step 3: php file upload
+	go to php.ini
+	file_uploads = On
+Step 4: sudo chmod -R 777 /var/www/html
 	sudo chgrp www-data -R /var/www/html
 	
