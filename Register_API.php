@@ -35,10 +35,9 @@
         }
 
         else {
-            $sql = "INSERT INTO users (first_name,last_name,email_address,password,city,state,country,is_active,is_deleted,is_admin,date_inserted)
+            $sql = "INSERT INTO users (first_name,last_name,email_address,password,is_active,is_deleted,is_admin,date_inserted)
 								VALUES ('".$_POST["first_name"]."','".$_POST["last_name"]."','".$_POST["email_address"]."','"
-                                .hash('sha256',$_POST["password"])."','".$_POST["city"]."','".$_POST["state"]."','".$_POST["country"]
-                                ."','1','0','0','".date("Y-m-d")."')";
+                                .hash('sha256',$_POST["password"])."','1','0','0','".date("Y-m-d")."')";
 						
 			$last_id = -1;
 			if ($conn->query($sql) === TRUE) {

@@ -180,10 +180,10 @@
         $sql = "";
         
         if($category_ID == -1){
-            $sql = "update books set publisher_ID = '".$publisher_ID."', format_ID = '".$format_ID."', ISBN = '".$_POST["isbn"]."', title = '".$_POST["title"]."', price = '".$_POST["price"]."', publication_year = '".$_POST["publication_year"]."', description = '".$_POST["description"]."', stock_qty = '".$_POST["stock_qty"]."', is_for_training = '1' where book_ID = '".$_POST["book_ID"]."'";
+            $sql = "update books set publisher_ID = '".$publisher_ID."', format_ID = '".$format_ID."', ISBN = '".$_POST["isbn"]."', title = '".$_POST["title"]."', price = '".$_POST["price"]."', publication_year = '".$_POST["publication_year"]."', description = '".$_POST["description"]."', stock_qty = '".$_POST["stock_qty"]."' where book_ID = '".$_POST["book_ID"]."'";
         }
         else{
-            $sql = "update books set category_ID = '".$category_ID."', publisher_ID = '".$publisher_ID."', format_ID = '".$format_ID."', ISBN = '".$_POST["isbn"]."', title = '".$_POST["title"]."', price = '".$_POST["price"]."', publication_year = '".$_POST["publication_year"]."', description = '".$_POST["description"]."', stock_qty = '".$_POST["stock_qty"]."', is_for_training = '1' where book_ID = '".$_POST["book_ID"]."'";
+            $sql = "update books set category_ID = '".$category_ID."', publisher_ID = '".$publisher_ID."', format_ID = '".$format_ID."', ISBN = '".$_POST["isbn"]."', title = '".$_POST["title"]."', price = '".$_POST["price"]."', publication_year = '".$_POST["publication_year"]."', description = '".$_POST["description"]."', stock_qty = '".$_POST["stock_qty"]."' where book_ID = '".$_POST["book_ID"]."'";
         }
 
         $last_id = -1;

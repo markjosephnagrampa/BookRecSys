@@ -445,65 +445,56 @@
                 }
 
                 else {
-                    $.getJSON('https://api.ipgeolocation.io/ipgeo?apiKey=4acd5b1aaed6452c9338757d75f88de7', function (data) {
-                        var obj = data;
-                        var city = obj["city"];
-                        var state = obj["state_prov"];
-                        var country = obj["country_name"];
 
-                        var formData = new FormData();
-                        formData.append("Register", "set");
-                        formData.append("first_name", firstName);
-                        formData.append("last_name", lastName);
-                        formData.append("email_address", email);
-                        formData.append("password", password);
-                        formData.append("city", city);
-                        formData.append("state", state);
-                        formData.append("country", country);
+                    var formData = new FormData();
+                    formData.append("Register", "set");
+                    formData.append("first_name", firstName);
+                    formData.append("last_name", lastName);
+                    formData.append("email_address", email);
+                    formData.append("password", password);
 
-                        $.ajax({
-                            type: "POST",
-                            url: "Register_API.php",
-                            data: formData,
-                            cache: false,
-                            contentType: false,
-                            processData: false,
-                            success: function (data) {
-                                var obj = JSON.parse(data);
-                                if (obj["response"] == "register success") {
-                                    var html_element = ' \
-                                        <div class="alert alert-success alert-dismissible fade show" role="alert"> \
-                                        You have successfully registered a new account. \
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
-                                        </div > \
-                                        ';
-                                    $("#div-register-alert").html(html_element);
-                                    $("#first-name").val("");
-                                    $("#last-name").val("");
-                                    $("#register-email").val("");
-                                    $("#register-password").val("");
-                                    $("#confirm-password").val("");
-                                }
-                                else if (obj["response"] == "email taken") {
-                                    var html_element = ' \
-                                        <div class="alert alert-danger alert-dismissible fade show" role="alert"> \
-                                        That email address is already taken. \
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
-                                        </div > \
-                                        ';
-                                    $("#div-register-alert").html(html_element);
-                                }
-                                else if (obj["response"] == "db error") {
-                                    var html_element = ' \
-                                        <div class="alert alert-danger alert-dismissible fade show" role="alert"> \
-                                        There was an error registering your account. Please try again. \
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
-                                        </div > \
-                                        ';
-                                    $("#div-register-alert").html(html_element);
-                                }
+                    $.ajax({
+                        type: "POST",
+                        url: "Register_API.php",
+                        data: formData,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: function (data) {
+                            var obj = JSON.parse(data);
+                            if (obj["response"] == "register success") {
+                                var html_element = ' \
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert"> \
+                                    You have successfully registered a new account. \
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                                    </div > \
+                                    ';
+                                $("#div-register-alert").html(html_element);
+                                $("#first-name").val("");
+                                $("#last-name").val("");
+                                $("#register-email").val("");
+                                $("#register-password").val("");
+                                $("#confirm-password").val("");
                             }
-                        });
+                            else if (obj["response"] == "email taken") {
+                                var html_element = ' \
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert"> \
+                                    That email address is already taken. \
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                                    </div > \
+                                    ';
+                                $("#div-register-alert").html(html_element);
+                            }
+                            else if (obj["response"] == "db error") {
+                                var html_element = ' \
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert"> \
+                                    There was an error registering your account. Please try again. \
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> \
+                                    </div > \
+                                    ';
+                                $("#div-register-alert").html(html_element);
+                            }
+                        }
                     });
                 }
             }

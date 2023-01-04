@@ -179,13 +179,13 @@
         $sql = "";
         
         if($category_ID == -1){
-            $sql = "INSERT into books (publisher_ID,format_ID,ISBN,title,price,publication_year,description,cover_image_loc,stock_qty,is_for_training,is_deleted)
-                VALUES ('".$publisher_ID."','".$format_ID."','".$_POST["isbn"]."','".$_POST["title"]."','".$_POST["price"]."','".$_POST["publication_year"]."','".$_POST["description"]."',' ','".$_POST["stock_qty"]."','1','0')
+            $sql = "INSERT into books (publisher_ID,format_ID,ISBN,title,price,publication_year,description,cover_image_loc,stock_qty,is_deleted)
+                VALUES ('".$publisher_ID."','".$format_ID."','".$_POST["isbn"]."','".$_POST["title"]."','".$_POST["price"]."','".$_POST["publication_year"]."','".$_POST["description"]."',' ','".$_POST["stock_qty"]."','0')
             ";
         }
         else{
-            $sql = "INSERT into books (category_ID,publisher_ID,format_ID,ISBN,title,price,publication_year,description,cover_image_loc,stock_qty,is_for_training,is_deleted)
-                    VALUES ('".$category_ID."','".$publisher_ID."','".$format_ID."','".$_POST["isbn"]."','".$_POST["title"]."','".$_POST["price"]."','".$_POST["publication_year"]."','".$_POST["description"]."',' ','".$_POST["stock_qty"]."','1','0')
+            $sql = "INSERT into books (category_ID,publisher_ID,format_ID,ISBN,title,price,publication_year,description,cover_image_loc,stock_qty,is_deleted)
+                    VALUES ('".$category_ID."','".$publisher_ID."','".$format_ID."','".$_POST["isbn"]."','".$_POST["title"]."','".$_POST["price"]."','".$_POST["publication_year"]."','".$_POST["description"]."',' ','".$_POST["stock_qty"]."','0')
             ";
         }
 
