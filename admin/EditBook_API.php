@@ -1,37 +1,17 @@
 <?php
-	session_start();
-	date_default_timezone_set('Etc/GMT-8'); // Set time zone to Philippine time
-	$servername = "localhost";
-	$username = "root";
-	$password = "password";
-	$dbname = "bookrecsys";
-
-     // Create connection
-	$conn = new mysqli($servername, $username, $password, $dbname);
-	// Check connection
-	if ($conn->connect_error) {
-	  die("Connection failed: " . $conn->connect_error);
-	}
-    
-    // Clean POST inputs and remove all single quotes
-	foreach ($_POST as $a => $b) {
-        if(strcmp($a,"author") == 0 || strcmp($a,"genre") == 0){ 
-            foreach($_POST[$a] as $c => $d){
-                $_POST[$a][$c] = test_input($d);
-            }
-        }
-		else {
-            $_POST[$a] = test_input($b);
-        }
-	}
+	require("../DB_Connect.php");
 
     if(isset($_POST["EditBook"])){
         $myObj = new stdClass();
 
         // 1. Get Publisher ID if it exists or insert a new publisher if it doesn't.
         $publisher_ID = -1;
-        $sql = "SELECT * from publishers where publisher_name = '".$_POST["publisher"]."'";
-        $result = $conn->query($sql);
+        $sql = "SELECT * from publishers where publisher_name = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $_POST["publisher"]);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
         if ($result->num_rows == 1) {
             while($row = $result->fetch_assoc()) {
                 $publisher_ID = $row["publisher_ID"];
@@ -39,10 +19,13 @@
             }
         }
         else{
-            $sql = "INSERT into publishers (publisher_name) VALUES ('".$_POST["publisher"]."')";
+            $sql = "INSERT into publishers (publisher_name) VALUES (?)";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("s", $_POST["publisher"]);
             $last_id = -1;
-			if ($conn->query($sql) === TRUE) {
-                $last_id = $conn->insert_id;
+
+			if ($stmt->execute() === TRUE) {
+                $last_id = $stmt->insert_id;
                 $publisher_ID = $last_id;
             }
             else{
@@ -57,8 +40,12 @@
         }
         // 2. Get Format ID if it exists or insert a new format if it doesn't.
         $format_ID = -1;
-        $sql = "SELECT * from formats where format_name = '".$_POST["format"]."'";
-        $result = $conn->query($sql);
+        $sql = "SELECT * from formats where format_name = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $_POST["format"]);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
         if ($result->num_rows == 1) {
             while($row = $result->fetch_assoc()) {
                 $format_ID = $row["format_ID"];
@@ -66,10 +53,12 @@
             }
         }
         else{
-            $sql = "INSERT into formats (format_name) VALUES ('".$_POST["format"]."')";
+            $sql = "INSERT into formats (format_name) VALUES (?)";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("s", $_POST["format"]);
             $last_id = -1;
-			if ($conn->query($sql) === TRUE) {
-                $last_id = $conn->insert_id;
+			if ($stmt->execute() === TRUE) {
+                $last_id = $stmt->insert_id;
                 $format_ID = $last_id;
             }
             else{
@@ -86,8 +75,12 @@
         // 3. Get Author IDs if they exist or insert new authors if they don't.
         $author_IDs = array();
         foreach($_POST["author"] as $author){
-            $sql = "SELECT * from authors where author_name = '".$author."'";
-            $result = $conn->query($sql);
+            $sql = "SELECT * from authors where author_name = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("s", $author);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
             if ($result->num_rows == 1) {
                 while($row = $result->fetch_assoc()) {
                     array_push($author_IDs, $row["author_ID"]);
@@ -95,10 +88,12 @@
                 }
             }
             else{
-                $sql = "INSERT into authors (author_name) VALUES ('".$author."')";
+                $sql = "INSERT into authors (author_name) VALUES (?)";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("s", $author);
                 $last_id = -1;
-                if ($conn->query($sql) === TRUE) {
-                    $last_id = $conn->insert_id;
+                if ($stmt->execute() === TRUE) {
+                    $last_id = $stmt->insert_id;
                     array_push($author_IDs, $last_id);
                 }
                 else{
@@ -115,8 +110,12 @@
         // 3. Get Genre IDs if they exist or insert new genres if they don't.
         $genre_IDs = array();
         foreach($_POST["genre"] as $genre){
-            $sql = "SELECT * from genres where genre_name = '".$genre."'";
-            $result = $conn->query($sql);
+            $sql = "SELECT * from genres where genre_name = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("s", $genre);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
             if ($result->num_rows == 1) {
                 while($row = $result->fetch_assoc()) {
                     array_push($genre_IDs, $row["genre_ID"]);
@@ -124,10 +123,12 @@
                 }
             }
             else{
-                $sql = "INSERT into genres (genre_name) VALUES ('".$genre."')";
+                $sql = "INSERT into genres (genre_name) VALUES (?)";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("s", $genre);
                 $last_id = -1;
-                if ($conn->query($sql) === TRUE) {
-                    $last_id = $conn->insert_id;
+                if ($stmt->execute() === TRUE) {
+                    $last_id = $stmt->insert_id;
                     array_push($genre_IDs, $last_id);
                 }
                 else{
@@ -144,8 +145,12 @@
         // 4. If category is filled out, get either its corresponding ID or newly inserted ID.
         $category_ID = -1;
         if($_POST["category"] != ""){
-            $sql = "SELECT * from categories where category_name = '".$_POST["category"]."'";
-            $result = $conn->query($sql);
+            $sql = "SELECT * from categories where category_name = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("s", $_POST["category"]);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
             if ($result->num_rows == 1) {
                 while($row = $result->fetch_assoc()) {
                     $category_ID = $row["category_ID"];
@@ -153,10 +158,12 @@
                 }
             }
             else{
-                $sql = "INSERT into categories (category_name) VALUES ('".$_POST["category"]."')";
+                $sql = "INSERT into categories (category_name) VALUES (?)";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("s", $_POST["category"]);
                 $last_id = -1;
-                if ($conn->query($sql) === TRUE) {
-                    $last_id = $conn->insert_id;
+                if ($stmt->execute() === TRUE) {
+                    $last_id = $stmt->insert_id;
                     $category_ID = $last_id;
                 }
                 else{
@@ -178,16 +185,21 @@
         }
 
         $sql = "";
+        $stmt = new stdClass();
         
         if($category_ID == -1){
-            $sql = "update books set publisher_ID = '".$publisher_ID."', format_ID = '".$format_ID."', ISBN = '".$_POST["isbn"]."', title = '".$_POST["title"]."', price = '".$_POST["price"]."', publication_year = '".$_POST["publication_year"]."', description = '".$_POST["description"]."', stock_qty = '".$_POST["stock_qty"]."' where book_ID = '".$_POST["book_ID"]."'";
+            $sql = "update books set publisher_ID = ?, format_ID = ?, ISBN = ?, title = ?, price = ?, publication_year = ?, description = ?, stock_qty = ? where book_ID = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("iissdisii", $publisher_ID, $format_ID, $_POST["isbn"], $_POST["title"], $_POST["price"], $_POST["publication_year"], $_POST["description"], $_POST["stock_qty"], $_POST["book_ID"]);
         }
         else{
-            $sql = "update books set category_ID = '".$category_ID."', publisher_ID = '".$publisher_ID."', format_ID = '".$format_ID."', ISBN = '".$_POST["isbn"]."', title = '".$_POST["title"]."', price = '".$_POST["price"]."', publication_year = '".$_POST["publication_year"]."', description = '".$_POST["description"]."', stock_qty = '".$_POST["stock_qty"]."' where book_ID = '".$_POST["book_ID"]."'";
+            $sql = "update books set category_ID = ?, publisher_ID = ?, format_ID = ?, ISBN = ?, title = ?, price = ?, publication_year = ?, description = ?, stock_qty = ? where book_ID = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("iiissdisii", $category_ID, $publisher_ID, $format_ID, $_POST["isbn"], $_POST["title"], $_POST["price"], $_POST["publication_year"], $_POST["description"], $_POST["stock_qty"], $_POST["book_ID"]);
         }
 
         $last_id = -1;
-        if ($conn->query($sql) === TRUE) {
+        if ($stmt->execute() === TRUE) {
             $last_id = $_POST["book_ID"];
         }
         else{
@@ -269,8 +281,10 @@
 
         // 7. Edit book record to include image location.
         if(file_exists($destination)){
-            $sql = "UPDATE books SET cover_image_loc = '".$last_id.".".$imageFileType."' WHERE book_ID = '".$last_id."'";
-            if ($conn->query($sql) === TRUE) {
+            $sql = "UPDATE books SET cover_image_loc = CONCAT(?,'.',?) WHERE book_ID = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("ssi", $last_id, $imageFileType, $last_id);
+            if ($stmt->execute() === TRUE) {
             }
             else{
                 $myObj->response="Error setting image location of book record. Please try again.";
@@ -287,8 +301,11 @@
 
         // 8.1. Delete existing book_author records.
 
-        $sql = "delete from book_authors where book_ID = '".$_POST["book_ID"]."'";
-        if ($conn->query($sql) === TRUE) {
+        $sql = "delete from book_authors where book_ID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $_POST["book_ID"]);
+
+        if ($stmt->execute() === TRUE) {
 
         }
         else{
@@ -297,8 +314,11 @@
 
         foreach($author_IDs as $ID){
 
-            $sql = "INSERT into book_authors (book_ID,author_ID) VALUES ('".$last_id."','".$ID."')";
-            if ($conn->query($sql) === TRUE) {
+            $sql = "INSERT into book_authors (book_ID,author_ID) VALUES (?,?)";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("ii", $last_id, $ID);
+            
+            if ($stmt->execute() === TRUE) {
             }
             else{
                 $myObj->response="Error linking book-author records. Please try again.";
@@ -315,8 +335,11 @@
 
         // 9.1. Delete existing book_genre records.
 
-        $sql = "delete from book_genres where book_ID = '".$_POST["book_ID"]."'";
-        if ($conn->query($sql) === TRUE) {
+        $sql = "delete from book_genres where book_ID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $_POST["book_ID"]);
+
+        if ($stmt->execute() === TRUE) {
             
         }
         else{
@@ -324,8 +347,11 @@
         }
 
         foreach($genre_IDs as $ID){
-            $sql = "INSERT into book_genres (book_ID,genre_ID) VALUES ('".$last_id."','".$ID."')";
-            if ($conn->query($sql) === TRUE) {
+            $sql = "INSERT into book_genres (book_ID,genre_ID) VALUES (?,?)";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("ii", $last_id, $ID);
+
+            if ($stmt->execute() === TRUE) {
             }
             else{
                 $myObj->response="Error linking book-genre records. Please try again.";
@@ -347,14 +373,6 @@
         $conn->close();
         exit();
 
-    }
-
-    function test_input($data) {
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-        $data = preg_replace('/\'/',"",$data);
-        return $data;
     }
     
 ?>

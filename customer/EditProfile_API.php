@@ -1,28 +1,14 @@
 <?php
-	session_start();
-	date_default_timezone_set('Etc/GMT-8'); // Set time zone to Philippine time
-	$servername = "localhost";
-	$username = "root";
-	$password = "password";
-	$dbname = "bookrecsys";
-
-     // Create connection
-	$conn = new mysqli($servername, $username, $password, $dbname);
-	// Check connection
-	if ($conn->connect_error) {
-	  die("Connection failed: " . $conn->connect_error);
-	}
-	
-    // Clean POST inputs
-	foreach ($_POST as $a => $b) {
-		$_POST[$a] = test_input($b);
-	}
+	require("../DB_Connect.php");
 
     if(isset($_POST["EditProfile"])){
         $myObj = new stdClass();
 
-        $sql = "SELECT * from users where email_address='".$_POST["email_address"]."'";
-        $result = $conn->query($sql);
+        $sql = "SELECT * from users where email_address = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $_POST["email_address"]);
+        $stmt->execute();
+        $result = $stmt->get_result();
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
                 if($row["user_ID"] != $_POST["user_ID"]){
@@ -37,14 +23,18 @@
 
 
         // Update user record
-        $sql = "UPDATE users SET first_name='".$_POST["first_name"]."', last_name='".$_POST["last_name"]."'
-        , email_address ='".$_POST["email_address"]."', password = '".hash('sha256',$_POST["password"])."' WHERE user_ID = ".$_POST["user_ID"];
         $last_id = -1;
+        $sql = "UPDATE users SET first_name = ?, last_name = ?, email_address = ?, password = ? WHERE user_ID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssssi", $_POST["first_name"], $_POST["last_name"], $_POST["email_address"], hash('sha256',$_POST["password"]), $_POST["user_ID"]);
         
-        if ($conn->query($sql) === TRUE) {
+        if ($stmt->execute() === TRUE) {
             $last_id = $_POST["user_ID"];
-            $sql2 = "SELECT * from users WHERE user_ID = ".$last_id;
-            $result2 = $conn->query($sql2);
+            $sql2 = "SELECT * from users WHERE user_ID = ?";
+            $stmt = $conn->prepare($sql2);
+            $stmt->bind_param("i", $_POST["user_ID"]);
+            $stmt->execute();
+            $result2 = $stmt->get_result();
             if ($result2->num_rows == 1) {
                 while($row = $result2->fetch_assoc()) {
                     $myObj->user = new stdClass();
@@ -76,13 +66,5 @@
             $conn->close();
             exit();
         }
-    }
-    
-    function test_input($data) {
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-        $data = preg_replace('/\'/',"",$data);
-        return $data;
     }
 ?>

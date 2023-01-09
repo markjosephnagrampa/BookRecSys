@@ -1,25 +1,5 @@
 <?php
-	session_start();
-	date_default_timezone_set('Etc/GMT-8'); // Set time zone to Philippine time
-	$servername = "localhost";
-	$username = "root";
-	$password = "password";
-	$dbname = "bookrecsys";
-
-     // Create connection
-	$conn = new mysqli($servername, $username, $password, $dbname);
-	// Check connection
-	if ($conn->connect_error) {
-	  die("Connection failed: " . $conn->connect_error);
-	}
-	
-    //include library
-    include('../library/tcpdf.php');
-
-    // Clean POST inputs and remove all single quotes
-	foreach ($_POST as $a => $b) {
-		$_POST[$a] = test_input($b);
-	}
+	require("../DB_Connect.php");
 
     if(isset($_POST["ItemList"])){
 
@@ -41,8 +21,12 @@
             <h1>Proof of Purchase</h1>
         ";
 
-        $sql = "select users.first_name, users.last_name from transactions join users on transactions.user_ID = users.user_ID where transactions.transaction_ID = '".$_POST["transaction_ID"]."'";
-        $result = $conn->query($sql);
+        $sql = "select users.first_name, users.last_name from transactions join users on transactions.user_ID = users.user_ID where transactions.transaction_ID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $_POST["transaction_ID"]);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
         while($row = $result->fetch_assoc()) {
             $html.= "
                 <h3>Purchasee: ".$row["first_name"]." ".$row["last_name"]."</h3>
@@ -56,8 +40,12 @@
         }
         
         // Query Transaction Items
-        $sql = "select books.title, transaction_items.qty, transaction_items.subtotal from transaction_items join books on transaction_items.book_ID = books.book_ID where transaction_items.transaction_ID = '".$_POST["transaction_ID"]."'";
-        $result = $conn->query($sql);
+        $sql = "select books.title, transaction_items.qty, transaction_items.subtotal from transaction_items join books on transaction_items.book_ID = books.book_ID where transaction_items.transaction_ID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $_POST["transaction_ID"]);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
         while($row = $result->fetch_assoc()) {
             $html.= "
                 <tr>
@@ -94,13 +82,5 @@
 
         $conn->close();
         //exit();
-    }
-
-    function test_input($data) {
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-        $data = preg_replace('/\'/',"",$data);
-        return $data;
     }
 ?>

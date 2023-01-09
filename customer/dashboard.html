@@ -1099,11 +1099,12 @@
 
                 // register click event
                 var user = JSON.parse(sessionStorage.getItem("user"));
+                var isRecommended = ($("#a-href-book-"+id_index).hasClass("isRecommended")) ? "true" : "false";
                 var formData = new FormData();
                 formData.append("RecordRecommendationClick", "set");
                 formData.append("book_ID", id_index);
                 formData.append("user_ID", user["user_ID"]);
-                formData.append("isRecommended",$("#a-href-book-"+id_index).hasClass("isRecommended"));
+                formData.append("isRecommended",isRecommended);
                 $.ajax({
                     type: "POST",
                     url: "RecordRecommendationClick_API.php",
@@ -1112,8 +1113,9 @@
                     contentType: false,
                     processData: false,
                     success: function (data) {
-                        var obj = JSON.parse(data);
-                        window.location.href = "item.html?book_ID=" + id_index;
+                        console.log(data);
+                        //var obj = JSON.parse(data);
+                        //window.location.href = "item.html?book_ID=" + id_index;
                     }
                 });
             }
