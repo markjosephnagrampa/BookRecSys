@@ -11,37 +11,41 @@
         $books = array();
         while($row = $result->fetch_assoc()) {
             $books[$row["user_ID"]] = array();
-            $sql2 = "select distinct(events.book_ID), books.title from events join event_types on events.event_type_ID = event_types.event_type_ID join books on events.book_ID = books.book_ID where event_types.name = 'Click' and events.user_ID = ? and events.is_deleted = '0'";
+            $sql2 = "select distinct(events.book_ID) from events join event_types on events.event_type_ID = event_types.event_type_ID join books on events.book_ID = books.book_ID where event_types.name = 'Click' and events.user_ID = ? and events.is_deleted = '0'";
             $stmt = $conn->prepare($sql2);
             $stmt->bind_param("i", $row["user_ID"]);
             $stmt->execute();
             $result2 = $stmt->get_result();
             while($row2 = $result2->fetch_assoc()) {
-                $books[$row["user_ID"]][$row2["title"]] = 1;
+                $key = " " . $row2["book_ID"];
+                $books[$row["user_ID"]][$key] = 1;
             }
-            $sql2 = "select distinct(events.book_ID), books.title from events join event_types on events.event_type_ID = event_types.event_type_ID join books on events.book_ID = books.book_ID where event_types.name = 'RecommendationClick' and events.user_ID = ? and events.is_deleted = '0'";
+            $sql2 = "select distinct(events.book_ID) from events join event_types on events.event_type_ID = event_types.event_type_ID join books on events.book_ID = books.book_ID where event_types.name = 'RecommendationClick' and events.user_ID = ? and events.is_deleted = '0'";
             $stmt = $conn->prepare($sql2);
             $stmt->bind_param("i", $row["user_ID"]);
             $stmt->execute();
             $result2 = $stmt->get_result();
             while($row2 = $result2->fetch_assoc()) {
-                $books[$row["user_ID"]][$row2["title"]] = 1;
+                $key = " " . $row2["book_ID"];
+                $books[$row["user_ID"]][$key] = 1;
             }
-            $sql2 = "select distinct(events.book_ID), books.title from events join event_types on events.event_type_ID = event_types.event_type_ID join books on events.book_ID = books.book_ID where event_types.name = 'AddToCart' and events.user_ID = ? and events.is_deleted = '0'";
+            $sql2 = "select distinct(events.book_ID) from events join event_types on events.event_type_ID = event_types.event_type_ID join books on events.book_ID = books.book_ID where event_types.name = 'AddToCart' and events.user_ID = ? and events.is_deleted = '0'";
             $stmt = $conn->prepare($sql2);
             $stmt->bind_param("i", $row["user_ID"]);
             $stmt->execute();
             $result2 = $stmt->get_result();
             while($row2 = $result2->fetch_assoc()) {
-                $books[$row["user_ID"]][$row2["title"]] = 2;
+                $key = " " . $row2["book_ID"];
+                $books[$row["user_ID"]][$key] = 2;
             }
-            $sql2 = "select distinct(events.book_ID), books.title from events join event_types on events.event_type_ID = event_types.event_type_ID join books on events.book_ID = books.book_ID where event_types.name = 'Purchase' and events.user_ID = ? and events.is_deleted = '0'";
+            $sql2 = "select distinct(events.book_ID) from events join event_types on events.event_type_ID = event_types.event_type_ID join books on events.book_ID = books.book_ID where event_types.name = 'Purchase' and events.user_ID = ? and events.is_deleted = '0'";
             $stmt = $conn->prepare($sql2);
             $stmt->bind_param("i", $row["user_ID"]);
             $stmt->execute();
             $result2 = $stmt->get_result();
             while($row2 = $result2->fetch_assoc()) {
-                $books[$row["user_ID"]][$row2["title"]] = 3;
+                $key = " " . $row2["book_ID"];
+                $books[$row["user_ID"]][$key] = 3;
             }
         }
 
@@ -52,9 +56,10 @@
         $i=0;
         $restQuery = "";
         foreach($recommendations as $item => $rating){
-            $sql = "select books.book_ID,books.cover_image_loc, books.title, authors.author_name, books.price, books.stock_qty from books left join `authors` on `authors`.author_ID = (select MIN(book_authors.author_ID) from book_authors where book_authors.book_ID = books.book_ID) where books.title = ? and books.is_deleted = '0'";
+            $key = substr($item,1);
+            $sql = "select books.book_ID,books.cover_image_loc, books.title, authors.author_name, books.price, books.stock_qty from books left join `authors` on `authors`.author_ID = (select MIN(book_authors.author_ID) from book_authors where book_authors.book_ID = books.book_ID) where books.book_ID = ? and books.is_deleted = '0'";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("s", $item);
+            $stmt->bind_param("i", $key);
             $stmt->execute();
             $result = $stmt->get_result();
             while($row = $result->fetch_assoc()) {

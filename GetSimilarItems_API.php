@@ -4,57 +4,50 @@
 	require_once 'content_based.php';
 
 	if(isset($_POST["GetSimilarItems"])){
-		$sql = "select books.title from books where books.is_deleted = '0' and books.book_ID = ?";
-		$stmt = $conn->prepare($sql);
-		$stmt->bind_param("i", $_POST["book_ID"]);
-		$stmt->execute();
-		$result = $stmt->get_result();
-		while($row = $result->fetch_assoc()) {
-			$_POST["title"] = $row["title"];
-		}
 
-		$objects = array();
+        $myObj = new stdClass();
+        $objects = array();
 		$user = array();
-		$sql = "select books.title from books where books.is_deleted = '0'";
-		$result = $conn->query($sql);
+
+        $sql = "select books.book_ID from books where books.is_deleted = 0";
+        $result = $conn->query($sql);
 		while($row = $result->fetch_assoc()) {
-			if(strcmp($row["title"],$_POST["title"]) == 0){
-			}
-			else{
-				if(is_numeric($row["title"])){
-					$objects[strval($row["title"])] = array();
-				}
-				else{
-					$objects[$row["title"]] = array();
-				}
-				
-			}
-			$sql2 = "select genres.genre_name from genres join book_genres on genres.genre_ID = book_genres.genre_ID join books on books.book_ID = book_genres.book_ID where books.title = ?";
-			$stmt = $conn->prepare($sql2);
-            $stmt->bind_param("s", $row["title"]);
+            if($row["book_ID"] == $_POST["book_ID"]){
+
+            }
+            else{
+                $key = " " . $row["book_ID"];
+                $objects[$key] = array();
+            }
+            $sql2 = "select genres.genre_name from genres join book_genres on genres.genre_ID = book_genres.genre_ID join books on books.book_ID = book_genres.book_ID where books.book_ID = ?";
+            $stmt = $conn->prepare($sql2);
+            $stmt->bind_param("i", $row["book_ID"]);
             $stmt->execute();
             $result2 = $stmt->get_result();
 			while($row2 = $result2->fetch_assoc()) {
-				if(strcmp($row["title"],$_POST["title"]) == 0){
+                if($row["book_ID"] == $_POST["book_ID"]){
 					array_push($user,$row2["genre_name"]);
 				}
 				else{
-					array_push($objects[$row["title"]],$row2["genre_name"]);
+                    $key = " " . $row["book_ID"];
+					array_push($objects[$key],$row2["genre_name"]);
 				}
-			}
-		}
-		$engine = new ContentBasedRecommend($user, $objects);
+            }
+        }
+
+        $engine = new ContentBasedRecommend($user, $objects);
 		$top5 = array_slice($engine->getRecommendation(),0,5,true);
 		//var_dump($top5);
 		//var_dump($user);
 		//var_dump($objects);
 
-		$myObj->books = array();
+        $myObj->books = array();
 		$i=0;
 		foreach($top5 as $x => $val) {
-			$sql = "select books.book_ID, books.cover_image_loc, books.title, `authors`.`author_name`, books.price from books left join `authors` on `authors`.author_ID = (select MIN(book_authors.author_ID) from book_authors where book_authors.book_ID = books.book_ID) where books.title = ?";
+            $key = substr($x,1);
+			$sql = "select books.book_ID, books.cover_image_loc, books.title, `authors`.`author_name`, books.price from books left join `authors` on `authors`.author_ID = (select MIN(book_authors.author_ID) from book_authors where book_authors.book_ID = books.book_ID) where books.book_ID = ?";
 			$stmt = $conn->prepare($sql);
-            $stmt->bind_param("s", $x);
+            $stmt->bind_param("i", $key);
             $stmt->execute();
             $result = $stmt->get_result();
 			
@@ -72,6 +65,5 @@
 		echo $myJSON;	
 		$conn->close();
 		exit();
-}
-
+    }
 ?>
