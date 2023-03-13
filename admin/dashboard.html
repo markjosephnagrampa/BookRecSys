@@ -444,7 +444,7 @@
                         $("#div-click-impressions").html(obj["r_clicks"] + " recommendation click(s) from "+obj["impressions"]+" product impression(s)");
                     }
                     else if(obj["impressions"] == 0){
-                        var html_element = '<span class="text-danger me-2"><i class="fa-solid fa-arrow-down"></i> 100.00%</span>since last month';
+                        var html_element = '<span class="text-danger me-2"><i class="fa-solid fa-arrow-down"></i> -100.00%</span>since last month';
                         $("#div-click-through-percent").html(html_element);
                         $("#click-through-percent").html("0.00%");
                         $("#div-click-impressions").html(obj["r_clicks"] + " recommendation click(s) from "+obj["impressions"]+" product impression(s)");
@@ -655,13 +655,13 @@
                         $("#div-click-impressions").html(obj["r_clicks"] + " recommendation click(s) from "+obj["impressions"]+" product impression(s)");
                     }
                     else if(obj["impressions"] == 0){
-                        var html_element = '<span class="text-danger me-2"><i class="fa-solid fa-arrow-down"></i> 100.00%</span>since last month';
+                        var html_element = '<span class="text-danger me-2"><i class="fa-solid fa-arrow-down"></i> -100.00%</span>since last month';
                         $("#div-click-through-percent").html(html_element);
                         $("#click-through-percent").html("0.00%");
                         $("#div-click-impressions").html(obj["r_clicks"] + " recommendation click(s) from "+obj["impressions"]+" product impression(s)");
                     }
                     else{
-                        var percent = (((obj["r_clicks"] / (obj["impressions"] * 1.0)) - (obj["prev_month_r_clicks"] / (obj["prev_month_impressions"] * 1.0))) / (obj["prev_month_r_clicks"] / (obj["prev_month_impressions"] * 1.0)) * 100).toFixed();
+                        var percent = (((obj["r_clicks"] / (obj["impressions"] * 1.0)) - (obj["prev_month_r_clicks"] / (obj["prev_month_impressions"] * 1.0))) / (obj["prev_month_r_clicks"] / (obj["prev_month_impressions"] * 1.0)) * 100).toFixed(2);
                         if(percent > 0){
                             var html_element = '<span class="text-success me-2"><i class="fa-solid fa-arrow-up"></i> '+percent+'%</span>since last month';
                             $("#div-click-through-percent").html(html_element);
