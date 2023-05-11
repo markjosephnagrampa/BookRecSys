@@ -419,7 +419,7 @@
         });
         $("#checkout").click(function () {
             // Check if changeFor is less than cart total, check if shipping address is blank, if ok clear cart
-            if(Number($("#changeFor").val()).toFixed(2) < $("#cartTotal").val()){
+            if(parseFloat(Number($("#changeFor").val()).toFixed(2)) < parseFloat(Number($("#cartTotal").val()).toFixed(2))){
                 var html_element = ' \
                 <div class="alert alert-danger alert-dismissible fade show" role="alert"> \
                     Change For amount is less than Cart Total. \
